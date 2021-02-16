@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Tradio</title>
+    <title>CryptoSim</title>
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon.png">
     <link rel="stylesheet" href="{% static './vendor/nice-select/css/nice-select.css' %}">
@@ -34,7 +34,7 @@
                     <div class="col-xl-12">
                         <div class="navigation">
                             <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                                <a class="navbar-brand" href="index.html"><img src="{% static 'images\logo.png' %}" alt="logo"></a>
+                                <a class="navbar-brand" href="index.html" ><img style="height: 35px; width: auto;" src="{% static 'images\logo.png' %}" alt="logo"><p class="m-0 pl-3" style="color: white; font-size: larger;">CryptoSim</p></a>
                                 <button class="navbar-toggler" type="button" data-toggle="collapse"
                                     data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
                                     aria-expanded="false" aria-label="Toggle navigation">
@@ -73,7 +73,7 @@
                                 </div>
                                 
                                 <div class="signin-btn">
-                                    <a class="btn btn-primary" href="./signin.html">Sign in</a>
+                                    <a class="btn btn-primary" href="{% url 'home:login' %}">Sign in</a>
                                 </div>
                             </nav>
                         </div>
@@ -88,10 +88,10 @@
                 <div class="row justify-content-between align-items-center">
                     <div class="col-xl-6 col-lg-6 col-12">
                         <div class="intro-content">
-                            <h1>Trade with <strong class="text-primary">Tradio</strong>. <br> Buy and sell
-                                cryptocurrency
+                            <h1>Get AI Generated Signals with <strong class="text-primary">CryptoSim</strong>. <br> Buy and sell
+                                virtual cryptocurrency
                             </h1>
-                            <p>Fast and secure way to purchase or exchange 150+ cryptocurrencies</p>
+                            <p>Fast and easy way to compare signals using virtual wallet to find your best signal service.</p>
                         </div>
 
                         <div class="intro-btn">
