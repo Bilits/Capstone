@@ -22,15 +22,15 @@ def register(request):
         form = SignUpForm()
     return render(request, 'signup.html', {'form': form})
 
-def LoginView(request):
-    username = request.POST['username']
-    password = request.POST['password']
-    user = authenticate(request, username=username, password=password)
-    if user is not None:
-        login(request, user)
-        return redirect('dashboard')
-    else:
-        return redirect('register')
+# def LoginView(request):
+#     username = request.POST['username']
+#     password = request.POST['password']
+#     user = authenticate(request, username=username, password=password)
+#     if user is not None:
+#         login(request, user)
+#         return redirect('dashboard')
+#     else:
+#         return redirect('register')
 
 
 @login_required
