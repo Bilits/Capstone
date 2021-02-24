@@ -12,7 +12,17 @@ def register(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         if form.is_valid():
-            form.save()
+            user = form.save()
+            user.refresh_from_db()
+            user.profile.first_name = form.cleaned_data.get('first_name')
+            user.profile.last_name = form.cleaned_data.get('last_name')
+            user.profile.email = form.cleaned_data.get('email')
+            if form.cleaned_data.get('inlineRadioOptions') == 'beginner':
+                user.profile.beginner = True
+                user.save()
+            else:
+                user.profile.professional = True
+                user.save()
             username = form.cleaned_data.get('username')
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
@@ -28,7 +38,7 @@ def LoginView(request):
     user = authenticate(request, username=username, password=password)
     if user is not None:
         login(request, user)
-        return redirect('dashboard')
+        return redirect('home:home')
     else:
         return redirect('register')
 

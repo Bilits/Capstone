@@ -1,3 +1,9 @@
 from django.contrib import admin
+from home.models import *
 
-# Register your models here.
+admin.site.site_header = "Admin Panel"
+admin.site.site_title = "CryptoSim"
+admin.site.index_title = "CryptoSim"
+
+
+admin.site.register(Profile)
