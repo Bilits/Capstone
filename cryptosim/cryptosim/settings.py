@@ -122,7 +122,5 @@ STATIC_URL = '/static/'
 MEDIA_URL = "/media/"
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 
-LOGIN_REDIRECT_URL = "/dashboard/"
-
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-
+LOGIN_URL = "/login"
+LOGIN_REDIRECT_URL = '/dashboard'
