@@ -10,13 +10,15 @@ from django.utils.http import urlsafe_base64_encode
 from .tokens import account_activation_token
 from django.template.loader import render_to_string
 from .tokens import account_activation_token
-from .forms import SignUpForm
+from .forms import *
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
 from pycoingecko import CoinGeckoAPI
 cg = CoinGeckoAPI()
+from home.models import *
 
 api = cg.get_price(ids='bitcoin', vs_currencies='cad', include_market_cap='true', include_24hr_vol='true', include_24hr_change='true', include_last_updated_at='true')
+
 
 def index(request):
     context = {
@@ -93,9 +95,35 @@ def LoginView(request):
 
 @login_required
 def dashboard(request):
+    balance = Wallet.objects.get(id = request.user.id).get_balance
+    total = Wallet.objects.get(id = request.user.id).get_total
+    context = {
+        'balance': balance,
+        'total': total
+    }
     user = User.objects.get(id = request.user.id)
     if user.profile.professional == True:
-        return render(request, 'dashboard-professional.html')
+        return render(request, 'dashboard-professional.html', context)
     else:
-        return render(request, 'dashboard-beginner.html')
+        return render(request, 'dashboard-beginner.html', context)
 
+@login_required
+def account(request):
+    return render(request, 'account-overview.html')
+
+@login_required
+def account_deposit(request):
+    balance = Wallet.objects.get(id = request.user.id).get_balance
+    total = Wallet.objects.get(id = request.user.id).get_total
+    context = {
+        'balance': balance,
+        'total': total
+    }
+    if request.method == 'POST':
+        form = DepositForm(request.POST)
+        if form.is_valid():
+            profile = Profile.objects.get(id = request.user.id)
+            profile.wallet.tether += form.cleaned_data.get('tether')
+            profile.save()
+            return redirect('home:account_deposit', context)
+    return render(request, 'account-deposit.html', context)

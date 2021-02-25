@@ -24,13 +24,20 @@ def update_profile_signal(sender, instance, created, **kwargs):
 
 class Wallet(models.Model):
     profile = models.OneToOneField('Profile', on_delete=models.CASCADE, null=True)
-    tether = models.IntegerField(null=True, default=0)
+    tether = models.FloatField(null=True, default=0)
     bitcoin = models.IntegerField(null=True, default=0)
     ethereum = models.IntegerField(null=True, default=0)
     ripple = models.IntegerField(null=True, default=0)
 
     def __str__(self):
         return str(self.profile)
+
+    def get_balance(self):
+        return self.tether
+
+    def get_total(self):
+        return self.tether
+
         
 @receiver(post_save, sender=Profile)
 def wallet_creation(sender, instance, created, **kwargs):
