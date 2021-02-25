@@ -89,7 +89,7 @@
                                             <a href="data-tbi.html" class="dropdown-item">
                                                 <i class="mdi mdi-history"></i> History
                                             </a>
-                                            <a href="settings.html" class="dropdown-item">
+                                            <a href="{% url 'home:setting'%}" class="dropdown-item">
                                                 <i class="mdi mdi-settings"></i> Setting
                                             </a>
                                             <a href="lock.html" class="dropdown-item">
@@ -132,7 +132,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="settings.html" data-toggle="tooltip" data-placement="right" title="Setting">
+                        <a href="{% url 'home:setting'%}" data-toggle="tooltip" data-placement="right" title="Setting">
                             <span><i class="mdi mdi-settings"></i></span>
                         </a>
                     </li>

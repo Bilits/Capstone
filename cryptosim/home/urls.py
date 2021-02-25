@@ -11,6 +11,7 @@ urlpatterns = [
     path("dashboard/", views.dashboard, name="dashboard"),
     path("dashboard/account", views.account, name="account"),
     path("dashboard/account/deposit", views.account_deposit, name="account_deposit"),
+    path("dashboard/account/settings", views.setting, name="setting"),
     path("register", views.register, name="register"),
     path("activation-sent", views.activation_sent_view, name="activation-sent"),
     path('sent/', activation_sent_view, name="activation_sent"),

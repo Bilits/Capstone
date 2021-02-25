@@ -17,8 +17,14 @@ from pycoingecko import CoinGeckoAPI
 cg = CoinGeckoAPI()
 from home.models import *
 
+
+
 api = cg.get_price(ids='bitcoin', vs_currencies='cad', include_market_cap='true', include_24hr_vol='true', include_24hr_change='true', include_last_updated_at='true')
 
+
+def get_user(request):
+    profile = Profile.objects.get(id = request.user.id)
+    return profile
 
 def index(request):
     context = {
@@ -113,8 +119,9 @@ def account(request):
 
 @login_required
 def account_deposit(request):
-    balance = Wallet.objects.get(id = request.user.id).get_balance
-    total = Wallet.objects.get(id = request.user.id).get_total
+    balance = Wallet.objects.get(id = request.user.id).tether
+    total = Wallet.objects.get(id = request.user.id).tether
+    print(balance, total)
     context = {
         'balance': balance,
         'total': total
@@ -122,8 +129,23 @@ def account_deposit(request):
     if request.method == 'POST':
         form = DepositForm(request.POST)
         if form.is_valid():
-            profile = Profile.objects.get(id = request.user.id)
+            profile = get_user(request)
             profile.wallet.tether += form.cleaned_data.get('tether')
             profile.save()
-            return redirect('home:account_deposit', context)
+            # Problem 
     return render(request, 'account-deposit.html', context)
+
+
+@login_required
+def account_data(request):
+    return render(request, 'data-tbi.html')
+
+@login_required
+def setting(request):
+    profile = get_user(request)
+    context = {
+        'first_name': profile.first_name,
+        'last_name': profile.last_name,
+        'email': profile.email,
+    }
+    return render(request, 'settings.html', context)

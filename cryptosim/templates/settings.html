@@ -1,3 +1,4 @@
+{% load static%}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,10 +8,10 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Tradio </title>
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static './images/favicon.png' %}">
     <!-- Custom Stylesheet -->
-    <link rel="stylesheet" href="./vendor/waves/waves.min.css">
-    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="{% static './vendor/waves/waves.min.css' %}">
+    <link rel="stylesheet" href="{% static './css/style.css' %}">
 </head>
 
 <body>
@@ -273,7 +274,7 @@
                                                 <div class="form-group col-xl-6 col-md-6">
                                                     <label class="mr-sm-2">Email</label>
                                                     <input type="email" class="form-control"
-                                                        placeholder="Hello@example.com" name="email">
+                                                        value="{{email}}" name="email">
                                                 </div>
                                                 <div class="form-group col-xl-6 col-md-6">
                                                     <label class="mr-sm-2">Date of birth</label>
@@ -624,14 +625,14 @@
 
 
 
-    <script src="./js/global.js"></script>
+    <script src="{% static './js/global.js' %}"></script>
 
-    <script src="./vendor/waves/waves.min.js"></script>
-    <script src="./vendor/jquery-ui/jquery-ui.min.js"></script>
-    <script src="./js/plugins/jquery-ui-init.js"></script>
-    <script src="./vendor/validator/jquery.validate.js"></script>
-    <script src="./vendor/validator/validator-init.js"></script>
-    <script src="./js/scripts.js"></script>
+    <script src="{% static './vendor/waves/waves.min.js' %}"></script>
+    <script src="{% static './vendor/jquery-ui/jquery-ui.min.js' %}"></script>
+    <script src="{% static './js/plugins/jquery-ui-init.js' %}"></script>
+    <script src="{% static './vendor/validator/jquery.validate.js' %}"></script>
+    <script src="{% static './vendor/validator/validator-init.js' %}"></script>
+    <script src="{% static './js/scripts.js' %}"></script>
 
     <script>
     </script>
