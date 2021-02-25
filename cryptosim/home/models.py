@@ -21,3 +21,19 @@ def update_profile_signal(sender, instance, created, **kwargs):
     if created:
         Profile.objects.create(user=instance)
     instance.profile.save()
+
+class Wallet(models.Model):
+    profile = models.OneToOneField('Profile', on_delete=models.CASCADE, null=True)
+    tether = models.IntegerField(null=True, default=0)
+    bitcoin = models.IntegerField(null=True, default=0)
+    ethereum = models.IntegerField(null=True, default=0)
+    ripple = models.IntegerField(null=True, default=0)
+
+    def __str__(self):
+        return str(self.profile)
+        
+@receiver(post_save, sender=Profile)
+def wallet_creation(sender, instance, created, **kwargs):
+    if created:
+        Wallet.objects.create(profile=instance)
+    instance.wallet.save()

@@ -13,13 +13,21 @@ from .tokens import account_activation_token
 from .forms import SignUpForm
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
+from pycoingecko import CoinGeckoAPI
+cg = CoinGeckoAPI()
 
+api = cg.get_price(ids='bitcoin', vs_currencies='cad', include_market_cap='true', include_24hr_vol='true', include_24hr_change='true', include_last_updated_at='true')
 
 def index(request):
+    context = {
+        'price': api['bitcoin']['cad'],
+        'change24': api['bitcoin']['cad_24h_change']
+    }
     if request.user.is_authenticated:
-        return render(request, "index-loggedin.html")
+        return render(request, "index-loggedin.html", context)
     else:
-        return render(request, "index.html")
+        return render(request, "index.html", context)
+        
 
 def activate(request, uidb64, token):
     try:

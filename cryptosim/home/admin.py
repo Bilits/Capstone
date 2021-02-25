@@ -6,4 +6,6 @@ admin.site.site_title = "CryptoSim"
 admin.site.index_title = "CryptoSim"
 
 
+
 admin.site.register(Profile)
+admin.site.register(Wallet)

@@ -11,9 +11,12 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 import os
 from pathlib import Path
+import cryptocompare
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+cryptocompare.cryptocompare._set_api_key_parameter('fda2e51e87821a7705b33aebffcd1c5a9190018a5dfd2a6fc8692be81f8e903e')
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

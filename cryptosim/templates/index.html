@@ -1,4 +1,7 @@
 {% load static %}
+{% block includes %}
+{{ api }}
+{% endblock includes %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -97,7 +100,9 @@
                                 virtual cryptocurrency
                             </h1>
                             <p>Fast and easy way to compare signals using virtual wallet to find your best signal
-                                service.</p>
+                                service.
+                            </p>
+                                
                         </div>
 
                         <div class="intro-btn text-center">
@@ -180,7 +185,7 @@
             </div>
         </div>
 
-
+        {% block content %}
         <div class="price-grid section-padding" data-scroll-index="1">
             <div class="container">
                 <div class="row">
@@ -196,8 +201,12 @@
                                 <p class="mb-0"> 24h</p>
                             </div>
                             <div class="card-body">
-                                <h3>USD 62,548.2254</h3>
-                                <span class="text-success">+2.05%</span>
+                                <h3>CAD {{price}}</h3>
+                                <span class="text-success">
+                                    {% if change24 > 0 %} +{{change24|floatformat}}% 
+                                    {%else%} -{{change24}}%
+                                    {%endif%}
+                                </span>
                                 <div id="btcChart"></div>
                             </div>
                         </div>
@@ -338,7 +347,7 @@
                 </div>
             </div>
         </div>
-
+        {% endblock content %}
 
 
 
