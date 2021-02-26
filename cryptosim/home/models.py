@@ -30,6 +30,7 @@ def update_profile_signal(sender, instance, created, **kwargs):
 
 class Wallet(models.Model):
     profile = models.OneToOneField('Profile', on_delete=models.CASCADE, null=True)
+    balance = models.FloatField(null=True, default=0)
     tether = models.FloatField(null=True, default=0)
     bitcoin = models.FloatField(null=True, default=0)
     ethereum = models.FloatField(null=True, default=0)
@@ -56,3 +57,14 @@ def wallet_creation(sender, instance, created, **kwargs):
     instance.wallet.save()
 
 
+
+class Coin(models.Model):
+    name = models.CharField(max_length=100, default='hi')
+
+    def __str__(self):
+        return str(self.name)
+
+class CoinInWallet(models.Model):
+    wallet = models.ForeignKey(Wallet, on_delete=models.CASCADE)
+    coin = models.ForeignKey(Coin, on_delete=models.RESTRICT)
+    amount = models.FloatField(null=True, default=0)

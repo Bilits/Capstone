@@ -32,7 +32,8 @@
                 <div class="row">
                     <div class="col-xl-12">
                         <nav class="navbar navbar-expand-lg navbar-light px-0 justify-content-between">
-                            <a class="navbar-brand" href="{% url 'home:dashboard' %}"><img src="./images/logo.png" alt=""></a>
+                            <a class="navbar-brand" href="{% url 'home:dashboard' %}"><img src="./images/logo.png"
+                                    alt=""></a>
 
                             <div class="header-right d-flex my-2 align-items-center">
                                 <div class="language">
@@ -67,7 +68,7 @@
                                                     <i class="thumb"><i class="mdi mdi-account"></i></i>
                                                     <div class="user-info">
                                                         <h6>{{ user.first_name }}</h6>
-                                                        <span>quixlab.com@gmail.com</span>
+                                                        <span>{{ user.email }}</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -116,17 +117,20 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{% url 'home:account_exchange' %}" data-toggle="tooltip" data-placement="right" title="Exchange">
+                        <a href="{% url 'home:account_exchange' %}" data-toggle="tooltip" data-placement="right"
+                            title="Exchange">
                             <span><i class="mdi mdi-tumblr-reblog"></i></span>
                         </a>
                     </li>
                     <li>
-                        <a href="{% url 'home:account' %}" data-toggle="tooltip" data-placement="right" title="Accounts">
+                        <a href="{% url 'home:account' %}" data-toggle="tooltip" data-placement="right"
+                            title="Accounts">
                             <span><i class="mdi mdi-face-profile"></i></span>
                         </a>
                     </li>
                     <li>
-                        <a href="{% url 'home:account_data' %}" data-toggle="tooltip" data-placement="right" title="Data">
+                        <a href="{% url 'home:account_data' %}" data-toggle="tooltip" data-placement="right"
+                            title="Data">
                             <span><i class="mdi mdi-database"></i></span>
                         </a>
                     </li>
@@ -205,7 +209,7 @@
                             <div class="card-header">
                                 <h4 class="card-title">Virtual Wallet Deposit</h4>
                             </div>
-                            <div class="card-body"  id="deposits">
+                            <div class="card-body" id="deposits">
                                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                                     <li class="nav-item">
                                         <a class="nav-link active" data-toggle="tab" href="#tab1">USDT</a>
@@ -219,13 +223,15 @@
                                         <div class="qrcode">
                                             <img src="./images/qr.svg" alt="" width="150">
                                         </div>
-                                        <form action="" method="POST">
+                                        <form method="POST" id="deposit-form">
                                             {% csrf_token %}
                                             <div class="input-group">
                                                 <input type="number" class="form-control"
-                                                    placeholder="current available balance: {{ balance }}" name="tether">
+                                                    placeholder="current available balance: {{ balance }}"
+                                                    name="tether" id="deposit_input">
                                                 <div class="input-group-append">
-                                                    <button class="input-group-text bg-primary text-white">Deposit</button>
+                                                    <button
+                                                        class="input-group-text bg-primary text-white" type="submit" name="submit">Deposit</button>
                                                 </div>
                                             </div>
                                         </form>
@@ -233,11 +239,11 @@
                                         <ul>
                                             <li>
                                                 <i class="mdi mdi-checkbox-blank-circle"></i>
-                                                You can deposit up to 100000 US dollar 
+                                                You can deposit up to 100000 US dollar
                                             </li>
                                             <li>
                                                 <i class="mdi mdi-checkbox-blank-circle"></i>
-                                                The ammount deposited will be added to your available balance 
+                                                The ammount deposited will be added to your available balance
                                             </li>
                                         </ul>
                                     </div>
@@ -312,7 +318,8 @@
                 <div class="row">
                     <div class="col-sm-8 col-12">
                         <div class="copyright">
-                            <p>© Copyright 2020 <a href="https://themeforest.net/user/quixlab/portfolio">Quixlab</a> I All Rights Reserved</p>
+                            <p>© Copyright 2020 <a href="https://themeforest.net/user/quixlab/portfolio">Quixlab</a> I
+                                All Rights Reserved</p>
                         </div>
                     </div>
                     <div class="col-sm-4 col-12">
@@ -337,6 +344,27 @@
     <script src="{% static './vendor/waves/waves.min.js' %}"></script>
 
     <script src="{% static './js/scripts.js' %}"></script>
+
+    <script type="text/javascript">
+        const form = document.getElementById('deposit-form');
+        form.addEventListener("submit", submithandler);
+        function submithandler(e) {
+            e.preventDefault();
+            $.ajax({
+                type: 'POST',
+                url: "{% url 'home:account_deposit' %}",
+                data: {
+                    deposit_input: $('#deposit_input').val(),
+                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+                },
+                success: function (resp) {
+                    $("#deposit_input").attr("placeholder", "current available balance: " + resp.new_balance).val("").focus().blur();
+
+                }
+            });
+        }
+
+    </script>
 </body>
 
 </html>

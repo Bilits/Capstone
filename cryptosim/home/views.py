@@ -138,17 +138,18 @@ def account(request):
 
 @login_required
 def account_deposit(request):
+    if request.method == 'POST' and request.is_ajax():
+        if 'deposit_input' in request.POST and request.POST['deposit_input'] != "":
+            amount = float(request.POST['deposit_input'])
+            profile = get_user(request)
+            profile.wallet.tether += amount
+            profile.save()
+            new_balance = float(profile.wallet.tether)
+            return HttpResponse(json.dumps({'new_balance': new_balance}), content_type="application/json")
     context = {
         'balance': get_balance(request),
         'total': get_total(request)
     }
-    if request.method == 'POST':
-        form = DepositForm(request.POST)
-        if form.is_valid():
-            profile = get_user(request)
-            profile.wallet.tether += form.cleaned_data.get('tether')
-            profile.save()
-            # Problem 
     return render(request, 'account-deposit.html', context)
 
 @login_required
@@ -157,9 +158,56 @@ def account_data(request):
 
 @login_required
 def account_exchange(request):
+    profile = get_user(request)
+    amount = 0.0
+    alarm = ""
+    # bitcoin_price = float(get_btc()['price'])
+    if request.is_ajax():
+        if request.method == 'POST' and 'amount' in request.POST:
+            if request.POST['amount'] != "":
+                amount = float(request.POST['amount'])
+                amountusd = amount * float(get_btc()['price'])
+                if get_user(request).wallet.tether >= amountusd:
+                    profile.wallet.tether -= amountusd
+                    profile.wallet.bitcoin += amount
+                    profile.save()
+                    alarm = "successful"
+                    new_balance = profile.wallet.tether
+                    new_btc_balance = profile.wallet.bitcoin
+                    return HttpResponse(json.dumps({'amount': amount, 'alarm': alarm, 'new_balance': new_balance, 'new_btc_balance':new_btc_balance}), content_type="application/json")
+                    # bitcoin_price = float(get_btc()['price']) * amount
+                else:
+                    alarm = "not_enough"
+                    return HttpResponse(json.dumps({'alarm': alarm}), content_type="application/json")
+            else:
+                alarm = "empty"
+                return HttpResponse(json.dumps({'alarm': alarm}), content_type="application/json")
+        elif request.method == 'POST' and 'amount_sell' in request.POST:
+            if request.POST['amount_sell'] != "":
+                amount = float(request.POST['amount_sell'])
+                if get_user(request).wallet.bitcoin >= amount:
+                    amountusd = amount * float(get_btc()['price'])
+                    profile.wallet.tether += amountusd
+                    profile.wallet.bitcoin -= amount
+                    profile.save()
+                    alarm = "successful"
+                    new_btc_balance = profile.wallet.bitcoin
+                    new_balance = profile.wallet.tether
+                    return HttpResponse(json.dumps({'amount': amount, 'alarm': alarm, 'new_btc_balance': new_btc_balance, 'new_balance': new_balance}), content_type="application/json")
+                else:
+                    alarm = "not_enough"
+                    return HttpResponse(json.dumps({'alarm': alarm}), content_type="application/json")
+            else:
+                alarm = "empty"
+                return HttpResponse(json.dumps({'alarm': alarm}), content_type="application/json")
+        else:
+            amount = 0
     context = {
         'price' : get_btc()['price'],
-        'balance' : get_balance(request)
+        'balance' : get_balance(request),
+        'total' : get_total(request),
+        'btc' : get_user(request).wallet.bitcoin,
+        'amount' : amount,
     }
     return render(request, 'exchange.html', context)
 
