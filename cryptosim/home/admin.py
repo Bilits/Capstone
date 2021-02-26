@@ -10,5 +10,5 @@ admin.site.index_title = "CryptoSim"
 admin.site.register(Profile)
 admin.site.register(Wallet)
 admin.site.register(Coin)
-admin.site.register(CoinInWallet)
+admin.site.register(Transaction)
 
