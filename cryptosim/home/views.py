@@ -177,7 +177,13 @@ def dashboard(request):
 
 @login_required
 def account(request):
-    return render(request, 'account-overview.html')
+    context = {
+        'price' : get_btc()['price'],
+        'balance' : get_balance(request),
+        'total' : get_total(request),
+        'btc' : get_user(request).wallet.bitcoin,
+    }
+    return render(request, 'account-overview.html', context)
 
 @login_required
 def account_deposit(request):
