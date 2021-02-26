@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Tradio </title>
+    <title>CryptoSim </title>
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="{% static './images/favicon.png' %}">
     <!-- Custom Stylesheet -->
@@ -87,7 +87,7 @@
                                             <a href="{% url 'home:account' %}" class="dropdown-item">
                                                 <i class="mdi mdi-account"></i> Account
                                             </a>
-                                            <a href="{% url 'home:account_data' %}" class="dropdown-item">
+                                            <a href="{% url 'home:signals' %}" class="dropdown-item">
                                                 <i class="mdi mdi-history"></i> History
                                             </a>
                                             <a href="{% url 'home:setting'%}" class="dropdown-item">
@@ -130,8 +130,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{% url 'home:account_data' %}" data-toggle="tooltip" data-placement="right"
-                            title="Data">
+                        <a href="{% url 'home:signals' %}" data-toggle="tooltip" data-placement="right" title="Data">
                             <span><i class="mdi mdi-database"></i></span>
                         </a>
                     </li>

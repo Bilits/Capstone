@@ -18,6 +18,41 @@ from django.views.generic import FormView
 from home.price import *
 import json
 from django.http import HttpResponse
+from django.http import JsonResponse
+import requests
+import re
+
+
+SIGNAL_URLS = ["https://www.cryptohopper.com/siteapi.php?todo=marketingnotify&notify_cat=signals&signaller_id=62",
+        "https://www.cryptohopper.com/siteapi.php?todo=marketingnotify&notify_cat=signals&signaller_id=98",
+        "https://www.cryptohopper.com/siteapi.php?todo=marketingnotify&notify_cat=signals&signaller_id=240",
+        "https://www.cryptohopper.com/siteapi.php?todo=marketingnotify&notify_cat=signals&signaller_id=92",
+        "https://www.cryptohopper.com/siteapi.php?todo=marketingnotify&notify_cat=signals&signaller_id=186",
+        "https://www.cryptohopper.com/siteapi.php?todo=marketingnotify&notify_cat=signals&signaller_id=363",
+        "https://www.cryptohopper.com/siteapi.php?todo=marketingnotify&notify_cat=signals&signaller_id=395",
+        "https://www.cryptohopper.com/siteapi.php?todo=marketingnotify&notify_cat=signals&signaller_id=378",
+        # "https://www.cryptohopper.com/siteapi.php?todo=marketingnotify&notify_cat=signals&signaller_id=368",
+        # "https://www.cryptohopper.com/siteapi.php?todo=marketingnotify&notify_cat=signals&signaller_id=225",
+        # "https://www.cryptohopper.com/siteapi.php?todo=marketingnotify&notify_cat=signals&signaller_id=383",
+        # "https://www.cryptohopper.com/siteapi.php?todo=marketingnotify&notify_cat=signals&signaller_id=31",
+        # "https://www.cryptohopper.com/siteapi.php?todo=marketingnotify&notify_cat=signals&signaller_id=390",
+        # "https://www.cryptohopper.com/siteapi.php?todo=marketingnotify&notify_cat=signals&signaller_id=380",
+        # "https://www.cryptohopper.com/siteapi.php?todo=marketingnotify&notify_cat=signals&signaller_id=182",
+        # "https://www.cryptohopper.com/siteapi.php?todo=marketingnotify&notify_cat=signals&signaller_id=154",
+        # "https://www.cryptohopper.com/siteapi.php?todo=marketingnotify&notify_cat=signals&signaller_id=182",
+        # "https://www.cryptohopper.com/siteapi.php?todo=marketingnotify&notify_cat=signals&signaller_id=322",
+        # "https://www.cryptohopper.com/siteapi.php?todo=marketingnotify&notify_cat=signals&signaller_id=381",
+        # "https://www.cryptohopper.com/siteapi.php?todo=marketingnotify&notify_cat=signals&signaller_id=147",
+        # "https://www.cryptohopper.com/siteapi.php?todo=marketingnotify&notify_cat=signals&signaller_id=217",
+        # "https://www.cryptohopper.com/siteapi.php?todo=marketingnotify&notify_cat=signals&signaller_id=243",
+        # "https://www.cryptohopper.com/siteapi.php?todo=marketingnotify&notify_cat=signals&signaller_id=401",
+        # "https://www.cryptohopper.com/siteapi.php?todo=marketingnotify&notify_cat=signals&signaller_id=241",
+        # "https://www.cryptohopper.com/siteapi.php?todo=marketingnotify&notify_cat=signals&signaller_id=224",
+        # "https://www.cryptohopper.com/siteapi.php?todo=marketingnotify&notify_cat=signals&signaller_id=282",
+        # "https://www.cryptohopper.com/siteapi.php?todo=marketingnotify&notify_cat=signals&signaller_id=388",
+        ]
+
+
 
 
 
@@ -153,8 +188,35 @@ def account_deposit(request):
     return render(request, 'account-deposit.html', context)
 
 @login_required
-def account_data(request):
-    return render(request, 'data-tbi.html')
+def signals(request):
+    if request.is_ajax():
+        if request.method == 'POST':
+            signals = {}
+            signals['data'] = []
+            for url in SIGNAL_URLS:
+                r = requests.get(url)
+                s = r.json()['data']
+                for signal in s:
+                    message = signal['message']
+                    title = signal['title']
+                    pair = re.search('Market: (.*) at price', message).group(1)
+                    price = re.search('at price: (.*)', message).group(1)
+                    signaler = re.search('came in from (.*) for exchange', message).group(1)
+                    _type = re.search('New signal: (.*) <strong>', title).group(1)
+                    time = re.search('Just (.*) a new signal', message).group(1)
+                    platform = re.search(' on (.*).', title).group(1)
+                    signals['data'].append({
+                        'platform' : platform ,
+                        'time' : time ,
+                        '_type' : _type ,
+                        'price' : price ,
+                        'pair' : pair ,
+                        'signaler' : signaler
+                    }) 
+                    print(signals)
+            return JsonResponse(signals)
+    return render(request, 'signals.html')
+
 
 @login_required
 def account_exchange(request):
