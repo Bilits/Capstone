@@ -57,14 +57,13 @@ def wallet_creation(sender, instance, created, **kwargs):
     instance.wallet.save()
 
 
-
 class Coin(models.Model):
     name = models.CharField(max_length=100, default='hi')
 
     def __str__(self):
         return str(self.name)
 
-class CoinInWallet(models.Model):
+class Transaction(models.Model):
     wallet = models.ForeignKey(Wallet, on_delete=models.CASCADE)
     coin = models.ForeignKey(Coin, on_delete=models.RESTRICT)
     amount = models.FloatField(null=True, default=0)

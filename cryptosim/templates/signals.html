@@ -79,21 +79,21 @@
 
     <script src="{% static './js/scripts.js' %}"></script>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             console.log('B');
             $.ajax({
                 type: 'POST',
-                url:"{% url 'home:signals' %}", 
+                url: "{% url 'home:signals' %}",
                 dataType: "json",
-                data:  {
-                    ali:"Ali",
-                    csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+                data: {
+                    ali: "Ali",
+                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
                 },
-                error: function(msg){
+                error: function (msg) {
                     console.log(msg.responseText)
                     return msg;
                 },
-                success:function(res){
+                success: function (res) {
                     console.log('data')
                     console.log(res)
                     // rowdata = data

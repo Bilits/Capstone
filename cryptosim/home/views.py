@@ -284,8 +284,6 @@ def account_exchange(request):
     }
     return render(request, 'exchange.html', context)
 
-
-
 @login_required
 def setting(request):
     profile = get_user(request)
