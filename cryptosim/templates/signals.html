@@ -41,17 +41,6 @@
                                             <i class="flag-icon flag-icon-us"></i>
                                             <span>English</span>
                                         </div>
-                                        <div class="dropdown-menu dropdown-menu-right">
-                                            <a href="#" class="dropdown-item">
-                                                <i class="flag-icon flag-icon-bd"></i> Bengali
-                                            </a>
-                                            <a href="#" class="dropdown-item">
-                                                <i class="flag-icon flag-icon-fr"></i> French
-                                            </a>
-                                            <a href="#" class="dropdown-item">
-                                                <i class="flag-icon flag-icon-cn"></i> China
-                                            </a>
-                                        </div>
                                     </div>
                                 </div>
                                 <div class="dashboard_log">
@@ -144,7 +133,9 @@
                 <div class="row">
                     <div class="col-6">
                         <div class="page-title-content">
-                            <p>Singnals</p>
+                            <p>Welcome Back,
+                                <span> {{ user.first_name }}</span>
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -157,7 +148,7 @@
                     <div class="col-xl-12 col-lg-12 col-md-12 col-xxl-4">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">Transactions History</h4>
+                                <h4 class="card-title">Signals</h4>
                             </div>
                             <div class="card-body">
                                 <div class="transaction-table">
