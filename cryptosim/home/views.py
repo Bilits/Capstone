@@ -23,13 +23,14 @@ import requests
 import re
 
 
-SIGNAL_URLS = ["https://www.cryptohopper.com/siteapi.php?todo=marketingnotify&notify_cat=signals&signaller_id=62",
-        "https://www.cryptohopper.com/siteapi.php?todo=marketingnotify&notify_cat=signals&signaller_id=98",
-        "https://www.cryptohopper.com/siteapi.php?todo=marketingnotify&notify_cat=signals&signaller_id=240",
+SIGNAL_URLS = [
+        # "https://www.cryptohopper.com/siteapi.php?todo=marketingnotify&notify_cat=signals&signaller_id=62",
+        # "https://www.cryptohopper.com/siteapi.php?todo=marketingnotify&notify_cat=signals&signaller_id=98",
+        # "https://www.cryptohopper.com/siteapi.php?todo=marketingnotify&notify_cat=signals&signaller_id=240",
         "https://www.cryptohopper.com/siteapi.php?todo=marketingnotify&notify_cat=signals&signaller_id=92",
         "https://www.cryptohopper.com/siteapi.php?todo=marketingnotify&notify_cat=signals&signaller_id=186",
         "https://www.cryptohopper.com/siteapi.php?todo=marketingnotify&notify_cat=signals&signaller_id=363",
-        "https://www.cryptohopper.com/siteapi.php?todo=marketingnotify&notify_cat=signals&signaller_id=395",
+        # "https://www.cryptohopper.com/siteapi.php?todo=marketingnotify&notify_cat=signals&signaller_id=395",
         "https://www.cryptohopper.com/siteapi.php?todo=marketingnotify&notify_cat=signals&signaller_id=378",
         # "https://www.cryptohopper.com/siteapi.php?todo=marketingnotify&notify_cat=signals&signaller_id=368",
         # "https://www.cryptohopper.com/siteapi.php?todo=marketingnotify&notify_cat=signals&signaller_id=225",
@@ -52,6 +53,13 @@ SIGNAL_URLS = ["https://www.cryptohopper.com/siteapi.php?todo=marketingnotify&no
         # "https://www.cryptohopper.com/siteapi.php?todo=marketingnotify&notify_cat=signals&signaller_id=388",
         ]
 
+SIGNAL_SITES = {
+    'CryptoGnome Signals'	: "https://github.com/CryptoGnome/Gnome-Alerts",
+    'TradingView Crypto Screener'	: "https://www.tradingview.com/",
+    'Jackrabbit Premium Sampler'	: "https://discord.com/invite/6m44mV9",
+    'Profit Scalping Signals - DEX'	: "https://www.dexstrats.com/signals",
+    'Killer Whale Bank Robber Signals'	: "https://www.killerwhalecrypto.com/",
+}
 
 
 
@@ -205,13 +213,16 @@ def signals(request):
                     _type = re.search('New signal: (.*) <strong>', title).group(1)
                     time = re.search('Just (.*) a new signal', message).group(1)
                     platform = re.search(' on (.*).', title).group(1)
+                    pairurl = "https://www.binance.com/en/trade/" + pair.replace("/", "_") +"?layout=pro"
                     signals['data'].append({
                         'platform' : platform ,
                         'time' : time ,
                         '_type' : _type ,
                         'price' : price ,
                         'pair' : pair ,
-                        'signaler' : signaler
+                        'signaler' : signaler,
+                        'signalurl' : SIGNAL_SITES[signaler],
+                        'pairurl': pairurl
                     }) 
                     print(signals)
             return JsonResponse(signals)

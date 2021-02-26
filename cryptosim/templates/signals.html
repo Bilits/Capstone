@@ -99,7 +99,14 @@
                     // rowdata = data
                     rows = ''
                     res.data.map( e => {
-                        rows += `<tr><td>${e.signaler}</td><td>${e.platform}</td><td>${e.time}</td><td>${e.pair}</td><td>${e._type}</td><td>${e.price}</td></tr>`
+                        rows += `<tr>
+                            <td><a href="${e.signalurl}" style="text-decoration: none !important; color: inherit;" target="_blank">${e.signaler}</a></td>
+                            <td>${e.platform}</td>
+                            <td>${e.time}</td>
+                            <td><a href="${e.pairurl}" style="text-decoration: none !important; color: inherit;" target="_blank">${e.pair}</td>
+                            <td>${e._type}</td>
+                            <td>${e.price}</td>
+                            </tr>`
                     })
                     $('#signaltable tbody').append(rows)
                 }
