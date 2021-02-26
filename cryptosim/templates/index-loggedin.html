@@ -194,8 +194,16 @@
                                 <p class="mb-0"> 24h</p>
                             </div>
                             <div class="card-body">
-                                <h3>USD 62,548.2254</h3>
-                                <span class="text-success">+2.05%</span>
+                                <h3>CAD {{price}}</h3>
+                                {% if change24 > 0 %} 
+                                    <span class="text-success">
+                                        +{{change24|floatformat}}% 
+                                    </span>
+                                {% else %} 
+                                    <span class="text-danger">
+                                        {{change24|floatformat}}% 
+                                    </span>
+                                {% endif %}    
                                 <div id="btcChart"></div>
                             </div>
                         </div>

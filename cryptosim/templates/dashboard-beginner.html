@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Beginner </title>
+    <title>Pro </title>
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="{% static './images/favicon.png' %}">
     <!-- Custom Stylesheet -->
@@ -67,8 +67,8 @@
                                                 <div class="user">
                                                     <span class="thumb"><i class="mdi mdi-account"></i></span>
                                                     <div class="user-info">
-                                                        <h6>Saiful Islam</h6>
-                                                        <span>quixlab.com@gmail.com</span>
+                                                        <h6>{{user.first_name}}</h6>
+                                                        <span>{{user.email}}</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -80,22 +80,22 @@
                                                 </div>
                                                 <div class="total">
                                                     <p>Total</p>
-                                                    <span>{{ total }} USD</span>
+                                                    <span>{{ total|floatformat:2 }} USD</span>
                                                 </div>
                                             </div>
-                                            <a href="account-overview.html" class="dropdown-item">
+                                            <a href="{% url 'home:account'%}" class="dropdown-item">
                                                 <i class="mdi mdi-account"></i> Account
                                             </a>
-                                            <a href="data-tbi.html" class="dropdown-item">
+                                            <a href="#" class="dropdown-item">
                                                 <i class="mdi mdi-history"></i> History
                                             </a>
-                                            <a href="settings.html" class="dropdown-item">
+                                            <a href="{% url 'home:setting'%}" class="dropdown-item">
                                                 <i class="mdi mdi-settings"></i> Setting
                                             </a>
-                                            <a href="lock.html" class="dropdown-item">
+                                            <a href="#" class="dropdown-item">
                                                 <i class="mdi mdi-lock"></i> Lock
                                             </a>
-                                            <a href="signin.html" class="dropdown-item logout">
+                                            <a href="{% url 'home:logout'%}" class="dropdown-item logout">
                                                 <i class="mdi mdi-logout"></i> Logout
                                             </a>
                                         </div>
@@ -132,7 +132,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="settings.html" data-toggle="tooltip" data-placement="right" title="Setting">
+                        <a href="{% url 'home:setting'%}" data-toggle="tooltip" data-placement="right" title="Setting">
                             <span><i class="mdi mdi-settings"></i></span>
                         </a>
                     </li>
@@ -237,7 +237,8 @@
                                 <div class="tab-content">
                                     <div class="tab-pane fade show active" id="limit" role="tabpanel">
 
-                                        <form method="post" name="myform" class="currency_limit">
+                                        <form method="POST" name="myform" class="currency_limit" id="buybtc">
+                                            {% csrf_token %}
                                             <div class="form-group">
                                                 <!-- <label class="mr-sm-2">Currency</label> -->
                                                 <div class="input-group mb-3">
@@ -246,8 +247,7 @@
                                                         </option>
                                                         <option value="litecoin">Litecoin</option>
                                                     </select>
-                                                    <input type="text" name="usd_amount" class="form-control text-right"
-                                                        placeholder="Enter Size">
+                                                    <input type="text" class="form-control text-right" placeholder="Amount" id="amount">
                                                 </div>
                                             </div>
 
@@ -256,8 +256,8 @@
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text">USD</span>
                                                     </div>
-                                                    <input type="text" name="currency_amount"
-                                                        class="form-control text-right" placeholder="501458">
+                                                    <input type="text"
+                                                        class="form-control text-right" name="usd_amount" id="current" value="{{ current }}" placeholder="USD" readonly="readonly" style="background-color: black;" >
                                                 </div>
                                             </div>
 
@@ -308,9 +308,9 @@
                                             </ul>
 
                                             <div class="btn-group btn-block mt-3">
-                                                <button type="submit" name="submit" class="btn btn-success">Buy
+                                                <button type="submit" value="buy" class="btn btn-success">Buy
                                                     Now</button>
-                                                <button type="submit" name="submit" class="btn btn-danger">Sell
+                                                <button type="submit" value="sell" class="btn btn-danger">Sell
                                                     Now</button>
                                             </div>
 
@@ -2389,7 +2389,32 @@
         );
 
     </script>
+    <script type="text/javascript">
 
+        const form = document.getElementById('buybtc');
+        form.addEventListener("submit", submithandler);
+
+
+        function submithandler(e){
+            e.preventDefault();
+
+            $.ajax({
+            type: 'POST',
+            url:"{% url 'home:dashboard' %}", 
+            data:  {
+                amount:$('#amount').val(),
+                csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+            },
+            success:function(){
+            }
+        });
+
+        const form = document.getElementById('current');
+        const btc = document.getElementById('amount');
+        const usdtotal = form.value * btc.value
+        document.getElementById("current").value = usdtotal;
+        }
+    </script>
 </body>
 
 </html>

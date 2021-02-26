@@ -13,30 +13,33 @@ from .tokens import account_activation_token
 from .forms import *
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
-from pycoingecko import CoinGeckoAPI
-cg = CoinGeckoAPI()
 from home.models import *
-
-
-
-api = cg.get_price(ids='bitcoin', vs_currencies='cad', include_market_cap='true', include_24hr_vol='true', include_24hr_change='true', include_last_updated_at='true')
+from django.views.generic import FormView
+from home.price import *
 
 
 def get_user(request):
     profile = Profile.objects.get(id = request.user.id)
     return profile
 
+def get_balance(request):
+    balance = Wallet.objects.get(id = request.user.id).get_balance
+    return balance
+
+def get_total(request):
+    balance = Wallet.objects.get(id = request.user.id).get_total
+    return balance
+
 def index(request):
     context = {
-        'price': api['bitcoin']['cad'],
-        'change24': api['bitcoin']['cad_24h_change']
+        'price': get_btc()['price'],
+        'change24': get_btc()['change24']
     }
     if request.user.is_authenticated:
         return render(request, "index-loggedin.html", context)
     else:
         return render(request, "index.html", context)
         
-
 def activate(request, uidb64, token):
     try:
         uid = force_text(urlsafe_base64_decode(uidb64))
@@ -54,7 +57,6 @@ def activate(request, uidb64, token):
 
 def activation_sent_view(request):
     return render(request, 'activation_sent.html')
-
 
 def register(request):
     if request.method == 'POST':
@@ -89,27 +91,36 @@ def register(request):
         form = SignUpForm()
     return render(request, 'signup.html', {'form': form})
 
-def LoginView(request):
-    username = request.POST['username']
-    password = request.POST['password']
-    user = authenticate(request, username=username, password=password)
-    if user is not None:
-        login(request, user)
-        return redirect('home')
-    else:
-        return redirect('register')
-
 @login_required
 def dashboard(request):
-    balance = Wallet.objects.get(id = request.user.id).get_balance
-    total = Wallet.objects.get(id = request.user.id).get_total
+    amount = 0.0
+    current = float(get_btc()['price'])
+    profile = get_user(request)
+    if request.is_ajax():
+        if request.method == 'POST' and 'amount' in request.POST:
+            if request.POST['amount'] != "":
+                amount = float(request.POST['amount'])
+                amountusd = amount * float(get_btc()['price'])
+                if get_user(request).wallet.tether >= amountusd:
+                    profile.wallet.tether -= amountusd
+                    profile.wallet.bitcoin += amount
+                    profile.save()
+                    current = float(get_btc()['price']) * amount
+                else:
+                    print("not enough money")
+            else:
+                print("empty string")
+        else:
+            amount = 0
     context = {
-        'balance': balance,
-        'total': total
+        'balance': get_balance(request),
+        'total': get_total(request),
+        'amount' : amount,
+        'current': current
     }
-    user = User.objects.get(id = request.user.id)
-    if user.profile.professional == True:
+    if get_user(request).professional == True:
         return render(request, 'dashboard-professional.html', context)
+        
     else:
         return render(request, 'dashboard-beginner.html', context)
 
@@ -119,12 +130,9 @@ def account(request):
 
 @login_required
 def account_deposit(request):
-    balance = Wallet.objects.get(id = request.user.id).tether
-    total = Wallet.objects.get(id = request.user.id).tether
-    print(balance, total)
     context = {
-        'balance': balance,
-        'total': total
+        'balance': get_balance(request),
+        'total': get_total(request)
     }
     if request.method == 'POST':
         form = DepositForm(request.POST)
@@ -134,7 +142,6 @@ def account_deposit(request):
             profile.save()
             # Problem 
     return render(request, 'account-deposit.html', context)
-
 
 @login_required
 def account_data(request):
@@ -147,5 +154,25 @@ def setting(request):
         'first_name': profile.first_name,
         'last_name': profile.last_name,
         'email': profile.email,
+        'city': profile.city,
+        'address': profile.address,
+        'dob': profile.dob,
+        'country': profile.country,
+        'postal_code': profile.postal_code,
     }
+    if request.method == 'POST':
+        form = PersonalInformationForm(request.POST)
+        if form.is_valid():
+            profile = get_user(request)
+            profile.first_name = form.cleaned_data.get('first_name')
+            profile.last_name = form.cleaned_data.get('last_name')
+            profile.email = form.cleaned_data.get('email')
+            profile.country = form.cleaned_data.get('country')
+            profile.city = form.cleaned_data.get('city')
+            profile.postal_code = form.cleaned_data.get('postal_code')
+            profile.address = form.cleaned_data.get('address')
+            profile.dob = form.cleaned_data.get('dob')
+            profile.save()
+            return redirect('home:setting')
     return render(request, 'settings.html', context)
+

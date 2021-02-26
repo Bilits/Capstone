@@ -202,11 +202,15 @@
                             </div>
                             <div class="card-body">
                                 <h3>CAD {{price}}</h3>
-                                <span class="text-success">
-                                    {% if change24 > 0 %} +{{change24|floatformat}}% 
-                                    {%else%} -{{change24}}%
-                                    {%endif%}
-                                </span>
+                                {% if change24 > 0 %} 
+                                    <span class="text-success">
+                                        +{{change24|floatformat}}% 
+                                    </span>
+                                {% else %} 
+                                    <span class="text-danger">
+                                        {{change24|floatformat}}% 
+                                    </span>
+                                {% endif %}    
                                 <div id="btcChart"></div>
                             </div>
                         </div>

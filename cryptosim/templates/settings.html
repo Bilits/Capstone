@@ -265,11 +265,12 @@
                                     </div>
                                     <div class="card-body">
                                         <form method="post" name="myform" class="personal_validate">
+                                            {% csrf_token %}
                                             <div class="form-row">
                                                 <div class="form-group col-xl-6 col-md-6">
-                                                    <label class="mr-sm-2">Your Name</label>
-                                                    <input type="text" class="form-control" placeholder="Saiful Islam"
-                                                        name="fullname">
+                                                    <label class="mr-sm-2">First Name</label>
+                                                    <input type="text" class="form-control" value="{{first_name}}"
+                                                        name="first_name">
                                                 </div>
                                                 <div class="form-group col-xl-6 col-md-6">
                                                     <label class="mr-sm-2">Email</label>
@@ -277,36 +278,36 @@
                                                         value="{{email}}" name="email">
                                                 </div>
                                                 <div class="form-group col-xl-6 col-md-6">
+                                                    <label class="mr-sm-2">Last Name</label>
+                                                    <input type="text" class="form-control" value="{{last_name}}"
+                                                        id="datepicker" autocomplete="off" name="last_name">
+                                                </div>
+                                                <div class="form-group col-xl-6 col-md-6">
+                                                    <label class="mr-sm-2">Address</label>
+                                                    <input type="text" class="form-control"
+                                                        value="{{address}}" name="address">
+                                                </div>
+                                                <div class="form-group col-xl-6 col-md-6">
                                                     <label class="mr-sm-2">Date of birth</label>
-                                                    <input type="text" class="form-control" placeholder="10-10-2020"
-                                                        id="datepicker" autocomplete="off" name="dob">
-                                                </div>
-                                                <div class="form-group col-xl-6 col-md-6">
-                                                    <label class="mr-sm-2">Present Address</label>
-                                                    <input type="text" class="form-control"
-                                                        placeholder="56, Old Street, Brooklyn" name="presentaddress">
-                                                </div>
-                                                <div class="form-group col-xl-6 col-md-6">
-                                                    <label class="mr-sm-2">Permanent Address</label>
-                                                    <input type="text" class="form-control"
-                                                        placeholder="123, Central Square, Brooklyn"
-                                                        name="permanentaddress">
+                                                    <input type="date" class="form-control"
+                                                        value="{{dob}}"
+                                                        name="dob">
                                                 </div>
                                                 <div class="form-group col-xl-6 col-md-6">
                                                     <label class="mr-sm-2">City</label>
-                                                    <input type="text" class="form-control" placeholder="New York"
+                                                    <input type="text" class="form-control" value="{{city}}"
                                                         name="city">
                                                 </div>
                                                 <div class="form-group col-xl-6 col-md-6">
                                                     <label class="mr-sm-2">Postal Code</label>
-                                                    <input type="text" class="form-control" placeholder="25481"
-                                                        name="postal">
+                                                    <input type="text" class="form-control" value="{{postal_code}}"
+                                                        name="postal_code">
                                                 </div>
                                                 <div class="form-group col-xl-6 col-md-6">
                                                     <label class="mr-sm-2">Country</label>
                                                     <select class="form-control" name="country">
-                                                        <option value="">Select</option>
-                                                        <option value="Afghanistan">Afghanistan</option>
+                                                        <option value="{{country}}">Select</option>
+                                                        <!-- <option value="Afghanistan">Afghanistan</option>
                                                         <option value="Åland Islands">Åland Islands</option>
                                                         <option value="Albania">Albania</option>
                                                         <option value="Algeria">Algeria</option>
@@ -345,8 +346,10 @@
                                                         <option value="Burkina Faso">Burkina Faso</option>
                                                         <option value="Burundi">Burundi</option>
                                                         <option value="Cambodia">Cambodia</option>
-                                                        <option value="Cameroon">Cameroon</option>
+                                                        <option value="Cameroon">Cameroon</option> -->
                                                         <option value="Canada">Canada</option>
+                                                        <option value="United States">United States</option>
+<!-- 
                                                         <option value="Cape Verde">Cape Verde</option>
                                                         <option value="Cayman Islands">Cayman Islands</option>
                                                         <option value="Central African Republic">Central African
@@ -566,7 +569,6 @@
                                                         <option value="United Arab Emirates">United Arab Emirates
                                                         </option>
                                                         <option value="United Kingdom">United Kingdom</option>
-                                                        <option value="United States">United States</option>
                                                         <option value="United States Minor Outlying Islands">United
                                                             States Minor Outlying Islands</option>
                                                         <option value="Uruguay">Uruguay</option>
@@ -582,7 +584,7 @@
                                                         <option value="Western Sahara">Western Sahara</option>
                                                         <option value="Yemen">Yemen</option>
                                                         <option value="Zambia">Zambia</option>
-                                                        <option value="Zimbabwe">Zimbabweoption>
+                                                        <option value="Zimbabwe">Zimbabweoption> -->
                                                     </select>
                                                 </div>
 
