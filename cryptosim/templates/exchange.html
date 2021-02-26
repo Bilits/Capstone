@@ -136,7 +136,7 @@
                                             </div>
                                             <div class="d-flex justify-content-between mt-3">
                                                 <p class="mb-0">Balance:</p>
-                                                <h6 class="mb-0" id="remaining-btc">{{btc|floatformat:2}} BTC</h6>
+                                                <h6 class="mb-0" id="remaining-btc">{{btc|floatformat:6}} BTC</h6>
                                             </div>
                                         </div>
                                         <button type="submit" name="submit" class="btn btn-danger btn-block">Sell
@@ -448,8 +448,8 @@
                                             alert("not enought money in your wallet")
                                             break;
                                         case "successful":
-                                            $("#remaining").html(resp.new_balance)
-                                            $("#remaining-btc").html(resp.new_btc_balance)
+                                            $("#remaining").html(resp.new_balance + " USD")
+                                            $("#remaining-btc").html((resp.new_btc_balance).toFixed(6) + " BTC")
                                             $("#amount").attr("placeholder", "{{amount}} BTC").val("").focus().blur();
                                             alert("you have successfully bought " + resp.amount + " BTC")
                                             break;
@@ -485,8 +485,8 @@
                                             break;
                                         case "successful":
                                             alert("you have successfully sold " + resp.amount + " BTC")
-                                            $("#remaining-btc").html(resp.new_btc_balance)
-                                            $("#remaining").html(resp.new_balance)
+                                            $("#remaining-btc").html((resp.new_btc_balance).toFixed(6)  + " BTC")
+                                            $("#remaining").html(resp.new_balance + " USD")
                                             $("#amount_sell").attr("placeholder", "{{amount}} BTC").val("").focus().blur();
                                             break;
                                         case "empty":
