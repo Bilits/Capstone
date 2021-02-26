@@ -33,7 +33,7 @@
                 <div class="row">
                     <div class="col-xl-12">
                         <nav class="navbar navbar-expand-lg navbar-light px-0 justify-content-between">
-                            <a class="navbar-brand" href="{% url 'home:dashboard' %}"><img src="{% static './images/logo.png' %}" alt=""></a>
+                            <a class="navbar-brand" href="{% url 'home:dashboard' %}"></a>
 
                             <div class="header-right d-flex my-2 align-items-center">
                                 <div class="language">
@@ -117,17 +117,20 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{% url 'home:account_exchange' %}" data-toggle="tooltip" data-placement="right" title="Exchange">
+                        <a href="{% url 'home:account_exchange' %}" data-toggle="tooltip" data-placement="right"
+                            title="Exchange">
                             <span><i class="mdi mdi-tumblr-reblog"></i></span>
                         </a>
                     </li>
                     <li>
-                        <a href="{% url 'home:account' %}" data-toggle="tooltip" data-placement="right" title="Accounts">
+                        <a href="{% url 'home:account' %}" data-toggle="tooltip" data-placement="right"
+                            title="Accounts">
                             <span><i class="mdi mdi-face-profile"></i></span>
                         </a>
                     </li>
                     <li>
-                        <a href="{% url 'home:account_data' %}" data-toggle="tooltip" data-placement="right" title="Data">
+                        <a href="{% url 'home:account_data' %}" data-toggle="tooltip" data-placement="right"
+                            title="Data">
                             <span><i class="mdi mdi-database"></i></span>
                         </a>
                     </li>
@@ -247,7 +250,8 @@
                                                         </option>
                                                         <option value="litecoin">Litecoin</option>
                                                     </select>
-                                                    <input type="text" class="form-control text-right" placeholder="Amount" id="amount">
+                                                    <input type="text" class="form-control text-right"
+                                                        placeholder="Amount" id="amount">
                                                 </div>
                                             </div>
 
@@ -256,8 +260,9 @@
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text">USD</span>
                                                     </div>
-                                                    <input type="text"
-                                                        class="form-control text-right" name="usd_amount" id="current" value="{{ current }}" placeholder="USD" readonly="readonly" style="background-color: black;" >
+                                                    <input type="text" class="form-control text-right" name="usd_amount"
+                                                        id="current" value="{{ current }}" placeholder="USD"
+                                                        readonly="readonly" style="background-color: black;">
                                                 </div>
                                             </div>
 
@@ -1605,7 +1610,8 @@
                             <div class="card-body market-news">
                                 <div class="row">
                                     <div class="col-xl-12">
-                                        <img class="img-fluid" src="{% static './images/blog/1.jpg' %}" alt="..." height="100">
+                                        <img class="img-fluid" src="{% static './images/blog/1.jpg' %}" alt="..."
+                                            height="100">
                                         <a href="#" class="news-content">
                                             <h6 class="mt-2 mb-3">The Cryptocurrency Act of 2020 Is ‘Dead on Arrival,’
                                                 Washington Tells Sponsors</h6>
@@ -2395,24 +2401,30 @@
         form.addEventListener("submit", submithandler);
 
 
-        function submithandler(e){
+        function submithandler(e) {
             e.preventDefault();
 
             $.ajax({
-            type: 'POST',
-            url:"{% url 'home:dashboard' %}", 
-            data:  {
-                amount:$('#amount').val(),
-                csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
-            },
-            success:function(){
-            }
-        });
+                type: 'POST',
+                url: "{% url 'home:dashboard' %}",
+                data: {
+                    amount: $('#amount').val(),
+                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+                },
+                success: function (resp) {
+                    if (resp.alarm == false) {
+                        alert("not enought money in your wallet")
+                    }
+                    if (resp.empty == false) {
+                        alert("You have to enter a number")
+                    }
+                }
+            });
 
-        const form = document.getElementById('current');
-        const btc = document.getElementById('amount');
-        const usdtotal = form.value * btc.value
-        document.getElementById("current").value = usdtotal;
+            const form = document.getElementById('current');
+            const btc = document.getElementById('amount');
+            const usdtotal = form.value * btc.value
+            document.getElementById("current").value = usdtotal;
         }
     </script>
 </body>

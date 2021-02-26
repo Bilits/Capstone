@@ -16,6 +16,9 @@ from django.core.mail import send_mail
 from home.models import *
 from django.views.generic import FormView
 from home.price import *
+import json
+from django.http import HttpResponse
+
 
 
 def get_user(request):
@@ -94,6 +97,8 @@ def register(request):
 @login_required
 def dashboard(request):
     amount = 0.0
+    alarm = True
+    empty = True
     current = float(get_btc()['price'])
     profile = get_user(request)
     if request.is_ajax():
@@ -107,16 +112,19 @@ def dashboard(request):
                     profile.save()
                     current = float(get_btc()['price']) * amount
                 else:
-                    print("not enough money")
+                    alarm = False
+                    return HttpResponse(json.dumps({'alarm': alarm}), content_type="application/json")
             else:
-                print("empty string")
+                empty = False
+                return HttpResponse(json.dumps({'empty': empty}), content_type="application/json")
         else:
             amount = 0
     context = {
         'balance': get_balance(request),
         'total': get_total(request),
         'amount' : amount,
-        'current': current
+        'current': current,
+        
     }
     if get_user(request).professional == True:
         return render(request, 'dashboard-professional.html', context)
@@ -149,7 +157,11 @@ def account_data(request):
 
 @login_required
 def account_exchange(request):
-    return render(request, 'exchange.html')
+    context = {
+        'price' : get_btc()['price'],
+        'balance' : get_balance(request)
+    }
+    return render(request, 'exchange.html', context)
 
 
 

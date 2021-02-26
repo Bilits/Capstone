@@ -170,17 +170,18 @@
                             </div>
                             <div class="card-body">
                                 <div class="buy-sell-widget">
-                                    <form method="post" name="myform" class="currency_validate">
+                                    <form method="post" name="myform" class="currency_validate" id="buying">
+                                        {% csrf_token %}
                                         <div class="form-group">
                                             <label class="mr-sm-2">Currency</label>
-                                            <div class="input-group mb-3">
+                                            <div class="input-group mb-6">
                                                 <select name='currency' class="form-control mw-150">
                                                     <option data-display="Bitcoin" value="bitcoin">Bitcoin
                                                     </option>
-                                                    <option value="litecoin">Litecoin</option>
+                                                    <!-- <option value="litecoin">Litecoin</option> -->
                                                 </select>
-                                                <input type="text" name="usd_amount" class="form-control text-right"
-                                                    value="125.00 USD">
+                                                <!-- <input type="text" name="btc_amount" class="form-control text-right"
+                                                    value="" placeholder="{{ price }} USD"> -->
                                             </div>
                                         </div>
 
@@ -188,9 +189,9 @@
                                             <label class="mr-sm-2">Payment Method</label>
                                             <div class="input-group mb-3">
                                                 <select name='currency' class="form-control">
-                                                    <option data-display="Bitcoin" value="bitcoin">Bitcoin
+                                                    <option data-display="Tether" value="Tether">Tether
                                                     </option>
-                                                    <option value="litecoin">Litecoin</option>
+                                                    <!-- <option value="litecoin">Litecoin</option> -->
                                                 </select>
                                                 <!-- <input type="text" name="usd_amount" class="form-control"
                                                     value="125.00 USD"> -->
@@ -201,13 +202,13 @@
                                             <label class="mr-sm-2">Enter your amount</label>
                                             <div class="input-group">
                                                 <input type="text" name="currency_amount" class="form-control"
-                                                    placeholder="0.0214 BTC">
+                                                    placeholder="0.0 BTC">
                                                 <!-- <input type="text" name="usd_amount" class="form-control"
                                                     placeholder="125.00 USD"> -->
                                             </div>
                                             <div class="d-flex justify-content-between mt-3">
-                                                <p class="mb-0">Monthly Limit</p>
-                                                <h6 class="mb-0">$49750 remaining</h6>
+                                                <p class="mb-0">Balance</p>
+                                                <h6 class="mb-0">{{balance}} remaining</h6>
                                             </div>
                                         </div>
                                         <button type="submit" name="submit" class="btn btn-success btn-block">Buy
@@ -274,7 +275,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-xl-9 col-lg-9 col-md-12">
+                    <!-- <div class="col-xl-9 col-lg-9 col-md-12">
                         <div class="card">
                             <div class="card-body">
                                 <div class="buyer-seller">
@@ -339,19 +340,9 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
 
-                    <div class="col-xl-3 col-lg-3">
-                        <div class="apps-download">
-                            <div class="apps-download-content">
-                                <h4>Get the best mobile app to exchange or buy crypto on the go:</h4>
-                                <div class="mt-4 text-center">
-                                    <a href="#" class="btn btn-primary m-2"><img src="./images/android.svg" alt=""></a>
-                                    <a href="#" class="btn btn-success m-2"><img src="./images/apple.svg" alt=""></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <!-- Bank of America Bank  -->
 
                     <div class="col-xl-12">
                         <div class="card">
@@ -446,7 +437,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-xl-6 col-lg-6 col-md-12">
+                    <!-- <div class="col-xl-6 col-lg-6 col-md-12">
                         <div class="card">
                             <div class="card-header">
                                 <h4 class="card-title">FAQ</h4>
@@ -543,7 +534,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
 
 
         <div class="footer dashboard">
@@ -551,7 +542,8 @@
                 <div class="row">
                     <div class="col-sm-8 col-12">
                         <div class="copyright">
-                            <p>© Copyright 2020 <a href="https://themeforest.net/user/quixlab/portfolio">Quixlab</a> I All Rights Reserved</p>
+                            <p>© Copyright 2020 <a href="#">CryptoSimAll Activities
+                            </a> I All Rights Reserved</p>
                         </div>
                     </div>
                     <div class="col-sm-4 col-12">
@@ -582,6 +574,39 @@
     <script src="{% static './vendor/validator/jquery.validate.js' %}"></script>
     <script src="{% static './vendor/validator/validator-init.js' %}"></script>
     <script src="{% static './js/scripts.js' %}"></script>
+
+    <script type="text/javascript">
+
+        const form = document.getElementById('buying');
+        form.addEventListener("submit", submithandler);
+
+
+        function submithandler(e) {
+            e.preventDefault();
+
+            $.ajax({
+                type: 'POST',
+                url: "{% url 'home:account_exchange' %}",
+                data: {
+                    amount: $('#amount').val(),
+                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+                },
+                success: function (resp) {
+                    if (resp.alarm == false) {
+                        alert("not enought money in your wallet")
+                    }
+                    if (resp.empty == false) {
+                        alert("You have to enter a number")
+                    }
+                }
+            });
+
+            const form = document.getElementById('current');
+            const btc = document.getElementById('amount');
+            const usdtotal = form.value * btc.value
+            document.getElementById("current").value = usdtotal;
+        }
+    </script>
 </body>
 
 </html>
