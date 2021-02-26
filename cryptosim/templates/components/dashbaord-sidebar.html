@@ -1,0 +1,32 @@
+{% load static %}
+<div class="sidebar">
+    <div class="menu">
+        <ul>
+            <li>
+                <a href="{% url 'home:dashboard' %}" data-toggle="tooltip" data-placement="right" title="Trade">
+                    <span><i class="mdi mdi-view-dashboard"></i></span>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'home:account_exchange' %}" data-toggle="tooltip" data-placement="right" title="Exchange">
+                    <span><i class="mdi mdi-tumblr-reblog"></i></span>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'home:account' %}" data-toggle="tooltip" data-placement="right" title="Accounts">
+                    <span><i class="mdi mdi-face-profile"></i></span>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'home:signals' %}" data-toggle="tooltip" data-placement="right" title="Signals">
+                    <span><i class="mdi mdi-database"></i></span>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'home:setting'%}" data-toggle="tooltip" data-placement="right" title="Setting">
+                    <span><i class="mdi mdi-settings"></i></span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>

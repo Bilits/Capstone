@@ -1,29 +1,10 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Tradio </title>
-    <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="{% static './images/favicon.png' %}">
-    <!-- Custom Stylesheet -->
-    <link rel="stylesheet" href="{% static './vendor/waves/waves.min.css' %}">
-    <link rel="stylesheet" href="{% static './css/style.css' %}">
-</head>
-
+    {% include "components/dashboard-preloader.html" %}
 <body>
-
-    <div id="preloader">
-        <div class="sk-three-bounce">
-            <div class="sk-child sk-bounce1"></div>
-            <div class="sk-child sk-bounce2"></div>
-            <div class="sk-child sk-bounce3"></div>
-        </div>
-    </div>
-
+    {% csrf_token %}
+    {% include "components/dashboard-preloader.html" %}
     <div id="main-wrapper" class="mt-0">
 
         <div class="authincation section-padding pt-1">
