@@ -148,6 +148,12 @@ def account_data(request):
     return render(request, 'data-tbi.html')
 
 @login_required
+def account_exchange(request):
+    return render(request, 'exchange.html')
+
+
+
+@login_required
 def setting(request):
     profile = get_user(request)
     context = {
