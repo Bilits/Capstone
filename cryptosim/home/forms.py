@@ -17,8 +17,3 @@ class PersonalInformationForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ('first_name', 'last_name', 'email', 'address', 'dob', 'city', 'postal_code', 'country')
-
-class DepositForm(forms.ModelForm):
-    class Meta:
-        model = Wallet
-        fields = ('tether',)
