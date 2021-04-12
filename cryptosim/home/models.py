@@ -30,25 +30,31 @@ def update_profile_signal(sender, instance, created, **kwargs):
 
 class Wallet(models.Model):
     profile = models.OneToOneField('Profile', on_delete=models.CASCADE, null=True)
-    balance = models.FloatField(null=True, default=0)
-    tether = models.FloatField(null=True, default=0)
-    bitcoin = models.FloatField(null=True, default=0)
-    ethereum = models.FloatField(null=True, default=0)
-    ripple = models.FloatField(null=True, default=0)
+    # balance = models.FloatField(null=True, default=0)
+    # usdt = models.FloatField(null=True, default=0)
+    # btc = models.FloatField(null=True, default=0)
+    # eth = models.FloatField(null=True, default=0)
+    # xrp = models.FloatField(null=True, default=0)
+    # doge = models.FloatField(null=True, default=0)
+    # brd = models.FloatField(null=True, default=0)
+    # mkr = models.FloatField(null=True, default=0)
+    # yfi = models.FloatField(null=True, default=0)
+    # ont = models.FloatField(null=True, default=0)
+    # rsr = models.FloatField(null=True, default=0)
 
-    def save(self, *args, **kwargs):
-        self.tether = round(self.tether, 2)
-        super(Wallet, self).save(*args, **kwargs)
+    # def save(self, *args, **kwargs):
+    #     self.tether = round(self.tether, 2)
+    #     super(Wallet, self).save(*args, **kwargs)
 
-    def __str__(self):
-        return str(self.profile)
+    # def __str__(self):
+    #     return str(self.profile)
 
-    def get_balance(self):
-        return self.tether
+    # def get_balance(self):
+    #     return self.tether
 
-    def get_total(self):
-        total = (get_btc()['price'] * self.bitcoin) + self.tether
-        return total
+    # def get_total(self):
+    #     total = (get_btc()['price'] * self.bitcoin) + self.tether
+    #     return total
         
 @receiver(post_save, sender=Profile)
 def wallet_creation(sender, instance, created, **kwargs):
@@ -58,12 +64,19 @@ def wallet_creation(sender, instance, created, **kwargs):
 
 
 class Coin(models.Model):
-    name = models.CharField(max_length=100, default='hi')
-
+    name = models.CharField(max_length=6, default='hi')
+    price = models.FloatField(null=True, default=0)
     def __str__(self):
         return str(self.name)
 
+class CoinInWallet(models.Model):
+    amount = models.FloatField(null=True, default=0)
+    wallet = models.ForeignKey('Wallet', on_delete=models.CASCADE)
+    coin = models.ForeignKey('Coin', on_delete=models.CASCADE)
+
+
 class Transaction(models.Model):
-    wallet = models.ForeignKey(Wallet, on_delete=models.CASCADE)
-    coin = models.ForeignKey(Coin, on_delete=models.RESTRICT)
+    wallet = models.ForeignKey('Wallet', on_delete=models.CASCADE)
+    sellcoin = models.ForeignKey('Coin', on_delete=models.CASCADE)
+    buycoin = models.ForeignKey('Coin', on_delete=models.CASCADE)
     amount = models.FloatField(null=True, default=0)
