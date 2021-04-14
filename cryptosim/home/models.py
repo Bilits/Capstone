@@ -18,7 +18,6 @@ class Profile(models.Model):
     professional = models.BooleanField(default=False)
     signup_confirmation = models.BooleanField(default=False)
 
-
     def __str__(self):
         return self.user.username
 
@@ -48,6 +47,10 @@ class Wallet(models.Model):
 
     def get_total(self):
         total = (get_btc()['price'] * self.bitcoin) + self.tether
+        return total
+    
+    def get_btc_balance(self):
+        total = this.tether / get_btc()['price']
         return total
         
 @receiver(post_save, sender=Profile)
