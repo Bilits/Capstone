@@ -199,8 +199,16 @@
                                 <p class="mb-0"> 24h</p>
                             </div>
                             <div class="card-body">
-                                <h3>USD 62,548.2254</h3>
-                                <span class="text-success">+2.05%</span>
+                                <h3>CAD {{liteP}}</h3>
+                                {% if lite24 > 0 %} 
+                                    <span class="text-success">
+                                        +{{lite24|floatformat}}% 
+                                    </span>
+                                {% else %} 
+                                    <span class="text-danger">
+                                        {{lite24|floatformat}}% 
+                                    </span>
+                                {% endif %}  
                                 <div id="ltcChart"></div>
                             </div>
                         </div>
@@ -218,8 +226,16 @@
                                 <p class="mb-0"> 24h</p>
                             </div>
                             <div class="card-body">
-                                <h3>USD 62,548.2254</h3>
-                                <span class="text-success">+2.05%</span>
+                                <h3>CAD {{dashP}}</h3>
+                                {% if eth24 > 0 %} 
+                                    <span class="text-success">
+                                        +{{eth24|floatformat}}% 
+                                    </span>
+                                {% else %} 
+                                    <span class="text-danger">
+                                        {{eth24|floatformat}}% 
+                                    </span>
+                                {% endif %}  
                                 <div id="dashChart"></div>
                             </div>
                         </div>
@@ -237,8 +253,16 @@
                                 <p class="mb-0"> 24h</p>
                             </div>
                             <div class="card-body">
-                                <h3>USD 62,548.2254</h3>
-                                <span class="text-success">+2.05%</span>
+                                <h3>CAD {{xrpP}}</h3>
+                                {% if xrp24 > 0 %} 
+                                    <span class="text-success">
+                                        +{{xrp24|floatformat}}% 
+                                    </span>
+                                {% else %} 
+                                    <span class="text-danger">
+                                        {{xrp24|floatformat}}% 
+                                    </span>
+                                {% endif %}  
                                 <div id="xrpChart"></div>
                             </div>
                         </div>
@@ -256,8 +280,16 @@
                                 <p class="mb-0"> 24h</p>
                             </div>
                             <div class="card-body">
-                                <h3>USD 62,548.2254</h3>
-                                <span class="text-success">+2.05%</span>
+                                <h3>CAD {{ethP}}</h3>
+                                {% if eth24 > 0 %} 
+                                    <span class="text-success">
+                                        +{{eth24|floatformat}}% 
+                                    </span>
+                                {% else %} 
+                                    <span class="text-danger">
+                                        {{eth24|floatformat}}% 
+                                    </span>
+                                {% endif %}    
                                 <div id="ethChart"></div>
                             </div>
                         </div>
@@ -275,8 +307,16 @@
                                 <p class="mb-0"> 24h</p>
                             </div>
                             <div class="card-body">
-                                <h3>USD 62,548.2254</h3>
-                                <span class="text-success">+2.05%</span>
+                                <h3>CAD {{usdtP}}</h3>
+                                {% if usdt24 > 0 %} 
+                                    <span class="text-success">
+                                        +{{usdt24|floatformat}}% 
+                                    </span>
+                                {% else %} 
+                                    <span class="text-danger">
+                                        {{usdt24|floatformat}}% 
+                                    </span>
+                                {% endif %}    
                                 <div id="usdtChart"></div>
                             </div>
                         </div>
@@ -288,14 +328,22 @@
                                 <div class="media">
                                     <span><i class="cc EOS"></i></span>
                                     <div class="media-body">
-                                        Eosio
+                                        Dogecoin
                                     </div>
                                 </div>
                                 <p class="mb-0"> 24h</p>
                             </div>
                             <div class="card-body">
-                                <h3>USD 62,548.2254</h3>
-                                <span class="text-success">+2.05%</span>
+                                <h3>CAD {{dogeP}}</h3>
+                                {% if doge24 > 0 %} 
+                                    <span class="text-success">
+                                        +{{doge24|floatformat}}% 
+                                    </span>
+                                {% else %} 
+                                    <span class="text-danger">
+                                        {{doge24|floatformat}}% 
+                                    </span>
+                                {% endif %}  
                                 <div id="eosChart"></div>
                             </div>
                         </div>
@@ -313,8 +361,16 @@
                                 <p class="mb-0"> 24h</p>
                             </div>
                             <div class="card-body">
-                                <h3>USD 62,548.2254</h3>
-                                <span class="text-success">+2.05%</span>
+                                <h3>CAD {{tezosP}}</h3>
+                                {% if tezos24 > 0 %} 
+                                    <span class="text-success">
+                                        +{{tezos24|floatformat}}% 
+                                    </span>
+                                {% else %} 
+                                    <span class="text-danger">
+                                        {{tezos24|floatformat}}% 
+                                    </span>
+                                {% endif %}
                                 <div id="xtzChart"></div>
                             </div>
                         </div>

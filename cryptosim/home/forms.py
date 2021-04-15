@@ -14,6 +14,8 @@ class SignUpForm(UserCreationForm):
         fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'inlineRadioOptions', )
 
 class PersonalInformationForm(forms.ModelForm):
+    first_name = forms.CharField(max_length=30, required=True, help_text='Required.')
+    last_name = forms.CharField(max_length=30, required=True, help_text='Required.')
     class Meta:
         model = Profile
-        fields = ('first_name', 'last_name', 'email', 'address', 'dob', 'city', 'postal_code', 'country')
+        fields = ('first_name', 'last_name')

@@ -17,6 +17,8 @@ class Profile(models.Model):
     beginner = models.BooleanField(default=False)
     professional = models.BooleanField(default=False)
     signup_confirmation = models.BooleanField(default=False)
+    photo = models.ImageField(upload_to='static/images/profile_pic', height_field=None, width_field=None, blank=True)
+
 
     def __str__(self):
         return self.user.username
@@ -68,5 +70,8 @@ class Coin(models.Model):
 
 class Transaction(models.Model):
     wallet = models.ForeignKey(Wallet, on_delete=models.CASCADE)
-    coin = models.ForeignKey(Coin, on_delete=models.RESTRICT)
+    # coin = models.ForeignKey(Coin, on_delete=models.RESTRICT)
+    buy = models.BooleanField(default=False)
+    sell = models.BooleanField(default=False)
+    coin = models.CharField(max_length=100, blank=True)
     amount = models.FloatField(null=True, default=0)
