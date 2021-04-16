@@ -64,10 +64,25 @@ SIGNAL_SITES = {
 
 
 
-
 def get_user(request):
     profile = Profile.objects.get(id = request.user.id)
     return profile
+
+def get_transaction(request):
+    transaction = Transaction.objects.get(id = request.user.id)
+    return transaction
+
+# def get_profile(request):
+#     profile = Profile.objects.get(id = request.user.id)
+#     context = {
+#         'first_name': profile.first_name,
+#         'email': profile.email,
+#         'type': 'Beginner' if profile.beginner else 'Professional',
+#         'image': profile.photo,
+#         'address': profile.address,
+#         'country': profile.country,
+#     }
+#     return context
 
 def get_balance(request):
     balance = Wallet.objects.get(id = request.user.id).get_balance
@@ -80,7 +95,21 @@ def get_total(request):
 def index(request):
     context = {
         'price': get_btc()['price'],
-        'change24': get_btc()['change24']
+        'change24': get_btc()['change24'],
+        'ethP': get_btc()['ethP'],
+        'eth24': get_btc()['eth24'],
+        'liteP': get_btc()['liteP'],
+        'lite24': get_btc()['lite24'],
+        'usdtP': get_btc()['usdtP'],
+        'usdt24': get_btc()['usdt24'],
+        'dashP': get_btc()['dashP'],
+        'dash24': get_btc()['dash24'],
+        'xrpP': get_btc()['xrpP'],
+        'xrp24': get_btc()['xrp24'],
+        'tezosP': get_btc()['tezosP'],
+        'tezos24': get_btc()['tezos24'],
+        'dogeP': get_btc()['dogeP'],
+        'doge24': get_btc()['doge24']
     }
     if request.user.is_authenticated:
         return render(request, "index-loggedin.html", context)
@@ -178,16 +207,27 @@ def dashboard(request):
 
 @login_required
 def account(request):
+    profile = get_user(request)
+    print(profile.photo.url)
     context = {
         'price' : get_btc()['price'],
         'balance' : get_balance(request),
         'total' : get_total(request),
         'btc' : get_user(request).wallet.bitcoin,
+        'first_name': profile.first_name,
+        'email': profile.email,
+        'type': 'Beginner' if profile.beginner else 'Professional',
+        'image': profile.photo,
+        'address': profile.address,
+        'country': profile.country,
+
+
     }
     return render(request, 'account-overview.html', context)
 
 @login_required
 def account_deposit(request):
+    profile = get_user(request)
     if request.method == 'POST' and request.is_ajax():
         if 'deposit_input' in request.POST and request.POST['deposit_input'] != "":
             amount = float(request.POST['deposit_input'])
@@ -198,7 +238,8 @@ def account_deposit(request):
             return HttpResponse(json.dumps({'new_balance': new_balance}), content_type="application/json")
     context = {
         'balance': get_balance(request),
-        'total': get_total(request)
+        'total': get_total(request),
+        'first_name': profile.first_name,
     }
     return render(request, 'account-deposit.html', context)
 
@@ -254,7 +295,18 @@ def account_exchange(request):
                     alarm = "successful"
                     new_balance = profile.wallet.tether
                     new_btc_balance = profile.wallet.bitcoin
-                    return HttpResponse(json.dumps({'amount': amount, 'alarm': alarm, 'new_balance': new_balance, 'new_btc_balance':new_btc_balance}), content_type="application/json")
+                    transaction = Transaction.objects.create(
+                        wallet = profile.wallet,
+                        buy = True,
+                        coin = "Bitcoin",
+                        amount = amount
+                    )
+                    # transaction.wallet = profile.wallet
+                    # transaction.buy = True
+                    # transaction.coin = "Bitcoin"
+                    # transaction.amount = amount
+                    print(request)
+                    return HttpResponse(json.dumps({'amount': amount, 'alarm': alarm, 'new_balance': new_balance, 'new_btc_balance':new_btc_balance, 'coin': 'Bitcoin'}), content_type="application/json")
                     # bitcoin_price = float(get_btc()['price']) * amount
                 else:
                     alarm = "not_enough"
@@ -314,7 +366,11 @@ def account_exchange(request):
         'botdate' : get_user(request).wallet.botdate,
         'botbenefit' : get_user(request).wallet.botbenefit,
         'botstatus' : get_user(request).wallet.botstatus,
-
+        'amount' : amount,
+        'coin': 'BTC' if get_transaction(request).coin == "Bitcoin" else '',
+        'type': 'success' if get_transaction(request).buy else 'danger',
+        'user': get_user(request).wallet,
+        'btcamount': get_transaction(request).amount
     }
     return render(request, 'exchange.html', context)
 
@@ -333,7 +389,10 @@ def setting(request):
     }
     if request.method == 'POST':
         form = PersonalInformationForm(request.POST)
+        print("{PSTTS")
         if form.is_valid():
+            print("post valid")
+            profile = form.save()
             profile = get_user(request)
             profile.first_name = form.cleaned_data.get('first_name')
             profile.last_name = form.cleaned_data.get('last_name')
@@ -343,7 +402,8 @@ def setting(request):
             profile.postal_code = form.cleaned_data.get('postal_code')
             profile.address = form.cleaned_data.get('address')
             profile.dob = form.cleaned_data.get('dob')
-            profile.save()
+            form.save()
             return redirect('home:setting')
+        else:
+            form = PersonalInformationForm()
     return render(request, 'settings.html', context)
-

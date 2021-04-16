@@ -358,6 +358,13 @@
                                             $("#remaining").html(resp.new_balance + " USD")
                                             $("#remaining-btc").html((resp.new_btc_balance).toFixed(6) + " BTC")
                                             $("#amount").attr("placeholder", "{{amount}} BTC").val("").focus().blur();
+                                            // rows = ''
+                                            // resp.data.map( e => {
+                                            //     rows += `<tr>
+                                            //         <td><a href="${e.coin}" style="text-decoration: none !important; color: inherit;" target="_blank">${e.coin}</a></td>
+                                            //         </tr>`
+                                            // })
+                                            // $('#signaltable tbody').append(rows)
                                             alert("you have successfully bought " + resp.amount + " BTC")
                                             break;
                                         case "empty":

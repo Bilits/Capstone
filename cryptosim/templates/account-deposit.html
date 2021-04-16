@@ -15,7 +15,7 @@
                     <div class="col-6">
                         <div class="page-title-content">
                             <p>Welcome Back,
-                                <span> {{ user.first_name }}</span>
+                                <span> {{first_name }}</span>
                             </p>
                         </div>
                     </div>
@@ -43,7 +43,7 @@
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="./account-deposit.html" class="nav-link">
+                                        <a href="{% url 'home:account_deposit' %}" class="nav-link">
                                             <i class="mdi mdi-heart"></i>
                                             <span>Deposit</span>
                                         </a>
@@ -80,9 +80,9 @@
                                     <li class="nav-item">
                                         <a class="nav-link active" data-toggle="tab" href="#tab1">USDT</a>
                                     </li>
-                                    <li class="nav-item">
+                                    <!-- <li class="nav-item">
                                         <a class="nav-link" data-toggle="tab" href="#tab2">BTC</a>
-                                    </li>
+                                    </li> -->
                                 </ul>
                                 <div class="tab-content">
                                     <div class="tab-pane fade show active" id="tab1">
