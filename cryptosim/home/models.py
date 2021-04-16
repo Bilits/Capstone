@@ -36,6 +36,14 @@ class Wallet(models.Model):
     ethereum = models.FloatField(null=True, default=0)
     ripple = models.FloatField(null=True, default=0)
 
+    botname = models.CharField(max_length=100, blank=True)
+    botamount = models.FloatField(null=True, default=0)
+    botsignal = models.CharField(max_length=100, blank=True)
+    botdate = models.DateField(null=True, blank=True)
+    botbenefit = models.FloatField(null=True, default=0)
+    botstatus = models.BooleanField(default=False)
+
+
     def save(self, *args, **kwargs):
         self.tether = round(self.tether, 2)
         super(Wallet, self).save(*args, **kwargs)

@@ -112,7 +112,6 @@
                                                     value="" placeholder="{{amount}} BTC"> -->
                                             </div>
                                         </div>
-
                                         <div class="form-group">
                                             <label class="mr-sm-2">Receive</label>
                                             <div class="input-group mb-3">
@@ -141,7 +140,6 @@
                                         </div>
                                         <button type="submit" name="submit" class="btn btn-danger btn-block">Sell
                                             Virtually</button>
-
                                     </form>
                                 </div>
 
@@ -217,200 +215,109 @@
 
                     <!-- Bank of America Bank  -->
 
+                    {% if not botname %}
+
                     <div class="col-xl-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">All Activities</h4>
+                                <h4 class="card-title">Creat a Trade Bot</h4>
                             </div>
                             <div class="card-body">
-                                <div class="transaction-table">
-                                    <div class="table-responsive">
-                                        <table class="table table-striped mb-0 table-responsive-sm">
-                                            <tbody>
-                                                <!-- <tr>
-                                                    <td><span class="sold-thumb"><i
-                                                                class="mdi mdi-arrow-down"></i></span>
-                                                    </td>
-
-                                                    <td>
-                                                        <span class="badge badge-danger p-2">Sold</span>
-                                                    </td>
-                                                    <td>
-                                                        <i class="cc BTC"></i> BTC
-                                                    </td>
-                                                    <td>
-                                                        Using - Bank *******5264
-                                                    </td>
-                                                    <td class="text-danger">-0.000242 BTC</td>
-                                                    <td>-0.125 USD</td>
-                                                </tr>
-                                                <tr>
-                                                    <td><span class="buy-thumb"><i class="mdi mdi-arrow-up"></i></span>
-                                                    </td>
-                                                    <td>
-                                                        <span class="badge badge-success p-2">Buy</span>
-                                                    </td>
-                                                    <td>
-                                                        <i class="cc LTC"></i> LTC
-                                                    </td>
-                                                    <td>
-                                                        Using - Card *******8475
-                                                    </td>
-                                                    <td class="text-success">-0.000242 BTC</td>
-                                                    <td>-0.125 USD</td>
-                                                </tr>
-                                                <tr>
-                                                    <td><span class="sold-thumb"><i
-                                                                class="mdi mdi-arrow-down"></i></span>
-                                                    </td>
-                                                    <td>
-                                                        <span class="badge badge-danger p-2">Sold</span>
-                                                    </td>
-                                                    <td>
-                                                        <i class="cc XRP"></i> XRP
-                                                    </td>
-                                                    <td>
-                                                        Using - Card *******8475
-                                                    </td>
-                                                    <td class="text-danger">-0.000242 BTC</td>
-                                                    <td>-0.125 USD</td>
-                                                </tr>
-                                                <tr>
-                                                    <td><span class="buy-thumb"><i class="mdi mdi-arrow-up"></i></span>
-                                                    </td>
-                                                    <td>
-                                                        <span class="badge badge-success p-2">Buy</span>
-                                                    </td>
-                                                    <td>
-                                                        <i class="cc DASH"></i> DASH
-                                                    </td>
-                                                    <td>
-                                                        Using - Card *******2321
-                                                    </td>
-                                                    <td class="text-success">-0.000242 BTC</td>
-                                                    <td>-0.125 USD</td>
-                                                </tr>
-                                                <tr>
-                                                    <td><span class="sold-thumb"><i
-                                                                class="mdi mdi-arrow-down"></i></span>
-                                                    </td>
-                                                    <td>
-                                                        <span class="badge badge-danger p-2">Sold</span>
-                                                    </td>
-                                                    <td>
-                                                        <i class="cc BTC"></i> BTC
-                                                    </td>
-                                                    <td>
-                                                        Using - Card *******2321
-                                                    </td>
-                                                    <td class="text-danger">-0.000242 BTC</td>
-                                                    <td>-0.125 USD</td>
-                                                </tr> -->
-                                            </tbody>
-                                        </table>
+                                <form method="post" name="botform" class="botform" id="botform">
+                                    {% csrf_token %}
+                                    <div class="form-group">
+                                        <label class="mr-sm-2">Enter the name of the Bot</label>
+                                        <div class="input-group">
+                                            <input type="text" name="bot-name" id="amount" class="form-control"
+                                                placeholder="Name of the Bot" required>
+                                        </div>
+                                        <label class="mr-sm-2 mt-3">Assign a Signal</label>
+                                        <div class="input-group mb-3">
+                                            <select name='bot-signal' class="form-control">
+                                                <option data-display="CryptoGnome Signals" value="CryptoGnome Signals" selected>CryptoGnome Signals
+                                                </option>
+                                                <option data-display="Jackrabbit Premium Sampler" value="Jackrabbit Premium Sampler">Jackrabbit Premium Sampler
+                                                </option>
+                                                <option data-display="Killer Whale Bank Robber Signals" value="Killer Whale Bank Robber Signals">Killer Whale Bank Robber Signals
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <label class="mr-sm-2">Amount of each signal buy</label>
+                                        <div class="input-group">
+                                            <input type="text" name="btc-amount" id="amount" class="form-control"
+                                                placeholder="0.0 BTC" required>
+                                        </div>
+                                        <div class="row mt-3">
+                                            <div class="col-2">
+                                                <button type="submit" name="submit" class="btn btn-success btn-block">Start the Bot</button>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
+                                </form>
                             </div>
                         </div>
                     </div>
-                    <!-- <div class="col-xl-6 col-lg-6 col-md-12">
+                    {% endif %}
+
+                    {% if botname %}
+                    <div class="col-xl-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">FAQ</h4>
+                                <h4 class="card-title">Running Bot</h4>
                             </div>
                             <div class="card-body">
-                                <div id="accordion-faq" class="accordion">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h5 class="mb-0 collapsed c-pointer" data-toggle="collapse"
-                                                data-target="#collapseOne1" aria-expanded="false"
-                                                aria-controls="collapseOne1"><i class="fa" aria-hidden="true"></i>What
-                                                Shipping Methods are Available?</h5>
+                                <p>Name: {{botname}}</p>
+                                <p>Signal: {{botsignal}}</p>
+                                <p>Buying amount per signal: {{botamount}}</p>
+                                <p>Create Date: {{botdate}}</p>
+                                <p>Status: {% if botstatus %} Running {% else %} Paused {% endif %}</p>
+                                <p>Profit: {{botbenefit}}%</p>
+                            </div>
+                            <form method="post" name="startbot" class="botform" id="botform">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <div class="row mt-2 ml-2">
+                                        <div class="col-2">
+                                            {% if botstatus %}
+                                            <button type="submit" name="stopbot" class="btn btn-danger btn-block">Stop the Bot</button>
+                                            {% else %}
+                                            <button type="submit" name="startbot" class="btn btn-success btn-block">Start the Bot</button>
+                                            {% endif %}
                                         </div>
-                                        <div id="collapseOne1" class="collapse show" data-parent="#accordion-faq">
-                                            <div class="card-body">Anim pariatur cliche reprehenderit, enim eiusmod high
-                                                life accusamus terry richardson ad squid. 3 wolf moon officia aute, non
-                                                cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum
-                                                eiusmod.
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                        {% if botstatus %}
+                            <div class="col-xl-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h4 class="card-title">Bot Activities</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="transaction-table">
+                                            <div class="table-responsive">
+                                                <table class="table table-striped mb-0 table-responsive-sm" id="signaltable">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">Number</th>
+                                                            <th scope="col">Type</th>
+                                                            <th scope="col">Amount</th>
+                                                            <th scope="col">Pair</th>
+                                                            <th scope="col">Price</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    </tbody>
+                                                </table>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h5 class="mb-0 collapsed c-pointer" data-toggle="collapse"
-                                                data-target="#collapseTwo2" aria-expanded="false"
-                                                aria-controls="collapseTwo2"><i class="fa" aria-hidden="true"></i>How
-                                                Long Will it Take To Get My Package?</h5>
-                                        </div>
-                                        <div id="collapseTwo2" class="collapse" data-parent="#accordion-faq">
-                                            <div class="card-body">Anim pariatur cliche reprehenderit, enim eiusmod high
-                                                life accusamus terry richardson ad squid. 3 wolf moon officia aute, non
-                                                cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum
-                                                eiusmod.
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h5 class="mb-0 collapsed c-pointer" data-toggle="collapse"
-                                                data-target="#collapseThree3" aria-expanded="false"
-                                                aria-controls="collapseThree3"><i class="fa" aria-hidden="true"></i>How
-                                                Do I Track My Order?</h5>
-                                        </div>
-                                        <div id="collapseThree3" class="collapse" data-parent="#accordion-faq">
-                                            <div class="card-body">Anim pariatur cliche reprehenderit, enim eiusmod high
-                                                life accusamus terry richardson ad squid. 3 wolf moon officia aute, non
-                                                cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum
-                                                eiusmod.
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h5 class="mb-0 collapsed c-pointer" data-toggle="collapse"
-                                                data-target="#collapseThree4" aria-expanded="false"
-                                                aria-controls="collapseThree4"><i class="fa" aria-hidden="true"></i>Do I
-                                                Need A Account To Place Order?</h5>
-                                        </div>
-                                        <div id="collapseThree4" class="collapse" data-parent="#accordion-faq">
-                                            <div class="card-body">Anim pariatur cliche reprehenderit, enim eiusmod high
-                                                life accusamus terry richardson ad squid. 3 wolf moon officia aute, non
-                                                cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum
-                                                eiusmod.
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h5 class="mb-0 collapsed c-pointer" data-toggle="collapse"
-                                                data-target="#collapseThree5" aria-expanded="false"
-                                                aria-controls="collapseThree5"><i class="fa" aria-hidden="true"></i>How
-                                                do I Place an Order?</h5>
-                                        </div>
-                                        <div id="collapseThree5" class="collapse" data-parent="#accordion-faq">
-                                            <div class="card-body">Anim pariatur cliche reprehenderit, enim eiusmod high
-                                                life accusamus terry richardson ad squid. 3 wolf moon officia aute, non
-                                                cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum
-                                                eiusmod.
-                                            </div>
-                                        </div>
-                                    </div>
-
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-6 col-lg-6 col-md-12">
-                        <div class="intro-video-play">
-                            <div class="play-btn">
-                                <a class="popup-youtube" href="https://www.youtube.com/watch?v=IjzUwnqWc5Q">
-                                    <span><i class="fa fa-play"></i></span></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div> -->
+                        {% endif %}
+                    {% endif %}
 
                     {% include "components/dashboard-footer.html" %}
                     <script src="{% static './js/global.js' %}"></script>
@@ -505,6 +412,40 @@
                                 }
                             });
                         }
+                    </script>
+                    <script>
+                        $(document).ready(function () {
+                            $.ajax({
+                                type: 'POST',
+                                url: "{% url 'home:signals' %}",
+                                dataType: "json",
+                                data: {
+                                    ali: "Ali",
+                                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+                                },
+                                error: function (msg) {
+                                    console.log(msg.responseText)
+                                    return msg;
+                                },
+                                success: function (res) {
+                                    console.log('data')
+                                    console.log(res)
+                                    // rowdata = data
+                                    rows = ''
+                                    res.data.filter(e => e.pair.slice(-3) == "BTC").map( (e, index) => {
+                                        rows += `<tr>
+                                            <td>${index + 1}</td>
+                                            <td>${e._type}</td>
+                                            <td>${'{{botamount}}'}</td>
+                                            <td><a href="${e.pairurl}" style="text-decoration: none !important; color: inherit;" target="_blank">${e.pair}</td>
+                                            <td>${e.price}</td>
+                                            </tr>`
+                                    })
+                                    $('#signaltable tbody').append(rows)
+                                }
+                            })
+                        })
+                
                     </script>
 </body>
 
