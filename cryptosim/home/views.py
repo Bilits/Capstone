@@ -21,6 +21,7 @@ from django.http import HttpResponse
 from django.http import JsonResponse
 import requests
 import re
+import datetime 
 
 
 SIGNAL_URLS = [
@@ -274,7 +275,6 @@ def signals(request):
                         'signalurl' : SIGNAL_SITES[signaler],
                         'pairurl': pairurl
                     }) 
-                    print(signals)
             return JsonResponse(signals)
     return render(request, 'signals.html')
 
@@ -284,8 +284,9 @@ def account_exchange(request):
     profile = get_user(request)
     amount = 0.0
     alarm = ""
+    context = {}
     # bitcoin_price = float(get_btc()['price'])
-    if request.is_ajax():
+    if request.is_ajax():        
         if request.method == 'POST' and 'amount' in request.POST:
             if request.POST['amount'] != "":
                 amount = float(request.POST['amount'])
@@ -334,15 +335,41 @@ def account_exchange(request):
             else:
                 alarm = "empty"
                 return HttpResponse(json.dumps({'alarm': alarm}), content_type="application/json")
+
+
         else:
             amount = 0
 
+    elif request.method == 'POST' and 'bot-name' in request.POST:
+        if request.POST['bot-name'] != "":
+            botname = request.POST['bot-name']
+            botamount = float(request.POST['btc-amount'])
+            botsignal = request.POST['bot-signal']
+            if get_user(request).wallet.bitcoin >= botamount:
+                profile.wallet.botname = botname
+                profile.wallet.botamount = botamount
+                profile.wallet.botdate = datetime.date.today()
+                profile.save()
+                alarm = "successful-bot"
+            else:
+                alarm = "not_enough_bot"
+    elif request.method == 'POST' and 'startbot' in request.POST:
+        profile.wallet.botstatus = True
+        profile.save()
+
     x = Transaction.objects.filter(wallet = Wallet.objects.get(id = request.user.id)).count()
+     
     context = {
         'price' : get_btc()['price'],
         'balance' : get_balance(request),
         'total' : get_total(request),
         'btc' : get_user(request).wallet.bitcoin,
+        'botname' : get_user(request).wallet.botname,
+        'botamount' : get_user(request).wallet.botamount,
+        'botsignal' : get_user(request).wallet.botsignal,
+        'botdate' : get_user(request).wallet.botdate,
+        'botbenefit' : get_user(request).wallet.botbenefit,
+        'botstatus' : get_user(request).wallet.botstatus,
         'amount' : amount,
         'coin': 'BTC' '' if get_transaction(request) == False else get_transaction(request).coin,
         'type': '' if get_transaction(request) == False else 'success' if get_transaction(request).buy == 'success' else 'danger',
