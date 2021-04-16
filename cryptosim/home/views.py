@@ -201,11 +201,9 @@ def dashboard(request):
     x = Transaction.objects.filter(wallet = Wallet.objects.get(id = request.user.id)).count()
     y = Transaction.objects.filter(wallet = Wallet.objects.get(id = request.user.id))
     final = []
-    # typeOf = []
     for i in range(0,x):
         final.append({'amount': y[i].amount, 'types': 'Buy' if y[i].typeOF == True else 'Sell',})
         
-    print(get_btc()['marketCap'])
     context = {
         'balance': get_balance(request),
         'total': get_total(request),
@@ -319,7 +317,8 @@ def account_exchange(request):
                         wallet = profile.wallet,
                         typeOF = True,
                         coin = "Bitcoin",
-                        amount = amount
+                        amount = amount,
+                        amountusd = amount * get_btc()['price']
                     )
                     return HttpResponse(json.dumps({'amount': amount, 'alarm': alarm, 'new_balance': new_balance, 'new_btc_balance':new_btc_balance, 'coin': 'Bitcoin'}), content_type="application/json")
                     # bitcoin_price = float(get_btc()['price']) * amount
@@ -340,6 +339,13 @@ def account_exchange(request):
                     alarm = "successful"
                     new_btc_balance = profile.wallet.bitcoin
                     new_balance = profile.wallet.tether
+                    transaction = Transaction.objects.create(
+                        wallet = profile.wallet,
+                        typeOF = False,
+                        coin = "Bitcoin",
+                        amount = amount,
+                        amountusd = amount * get_btc()['price']
+                    )
                     return HttpResponse(json.dumps({'amount': amount, 'alarm': alarm, 'new_btc_balance': new_btc_balance, 'new_balance': new_balance}), content_type="application/json")
                 else:
                     alarm = "not_enough"
@@ -370,16 +376,16 @@ def account_exchange(request):
         profile.save()
 
     x = Transaction.objects.filter(wallet = Wallet.objects.get(id = request.user.id)).count()
-          
-
-    # if Transaction.objects.filter(wallet = Wallet.objects.get(id = request.user.id)).count() > 0: 
-    #     transaction = Transaction.objects.filter(wallet = profile.wallet)
-    #     trans = []
-    #     for i in transaction:
-    #         trans += [i.typeOF]
-    #     return trans
-    # else:
-    #     return 'empty'
+    y = Transaction.objects.filter(wallet = Wallet.objects.get(id = request.user.id))
+    final = []
+    for i in range(0,x):
+        final.append({
+            'amount': y[i].amount,
+            'types': 'Buy' if y[i].typeOF == True else 'Sell',
+            'color': 'success' if y[i].typeOF == True else 'danger',
+            'usd': y[i].amountusd
+            })
+        
 
     context = {
         'price' : get_btc()['price'],
@@ -394,11 +400,9 @@ def account_exchange(request):
         'botstatus' : get_user(request).wallet.botstatus,
         'amount' : amount,
         'coin': 'BTC' '' if get_transaction(request) == False else get_transaction(request).coin,
-        # 'type': '' if get_transaction(request) == False else 'success' if get_transaction(request).typeOF == True else 'danger',
-        # 'type': Transaction.objects.filter(wallet = profile.wallet).typeOF if Transaction.objects.filter(id = request.user.id).exists() else '',
         'user': get_user(request).wallet,
-        # 'btcamount': '' if get_transaction(request) == False else get_transaction(request).amount,
-        'range': range(x)
+        'range': range(x),
+        'object': final,
     }
     return render(request, 'exchange.html', context)
 

@@ -225,20 +225,20 @@
                             <div class="card-body">
                                 <div class="transaction-table">
                                     <div class="table-responsive">
+                                        
                                         <table class="table table-striped mb-0 table-responsive-sm" id="activitytable">
                                             <thead>
                                             </thead>
                                             <tbody>
-                                                {% if range %}                                                   
-                                                {% for i in range %}
+                                                {% if range %}
+                                                {% for i in object %}
                                                     <tr>
                                                         <td><span class="sold-thumb"><i
                                                                     class="mdi mdi-arrow-down"></i></span>
                                                         </td>
-
                                                         <td>
-                                                            <span class="badge badge-{{type.i}} p-2">
-                                                                    {{i}}
+                                                            <span class="badge badge-{{i.color}} p-2">
+                                                                    {{i.types}}
                                                             </span>
                                                         </td>
                                                         <td>
@@ -247,13 +247,36 @@
                                                         <td>
                                                             User - {{user}}
                                                         </td>
-                                                        <td class="text-{{type}}">+{{btcamount}} BTC</td>
-                                                        <td>- USD</td>
+                                                        <td class="text-{{i.color}}">
+                                                            {% if i.types == 'Buy' %} 
+                                                                <span class="text-success">
+                                                                    +{{i.amount|floatformat:4}} BTC
+                                                                </span>
+                                                            {% else %} 
+                                                                <span class="text-danger">
+                                                                    -{{i.amount|floatformat:4}} BTC
+                                                                </span>
+                                                            {% endif %}                                                         
+                                                        </td>
+                                                        <td>
+                                                            {% if i.types == 'Buy' %} 
+                                                                <span class="text-danger">
+                                                                    -{{i.usd|floatformat}} USDT
+                                                                </span>
+                                                            {% else %} 
+                                                                <span class="text-success">
+                                                                    +{{i.usd|floatformat}} USDT
+                                                                </span>
+                                                            {% endif %} 
+
+                                                        </td>
                                                     </tr>
                                                 {% endfor %}
                                                 {% endif %}
                                             </tbody>
                                         </table>
+                                        
+                                        
                                     </div>
                                 </div>
                             </div>

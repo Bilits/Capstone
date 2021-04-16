@@ -80,3 +80,4 @@ class Transaction(models.Model):
     typeOF = models.BooleanField(default=False)
     coin = models.CharField(max_length=100, blank=True)
     amount = models.FloatField(null=True, default=0)
+    amountusd = models.FloatField(null=True, default=0)
