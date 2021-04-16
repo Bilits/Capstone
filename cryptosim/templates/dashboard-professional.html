@@ -1,157 +1,169 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-    {% include "components/dashboard-head.html" %}
+{% include "components/dashboard-head.html" %}
+
 <body id="dashboard">
     {% csrf_token %}
     {% include "components/dashboard-preloader.html" %}
     <div id="main-wrapper">
         {% include "components/dashboard-topnav.html" %}
+    </div>
+
+    <div class="sidebar">
+        <div class="menu">
+            <ul>
+                <li>
+                    <a href="{% url 'home:dashboard' %}" data-toggle="tooltip" data-placement="right" title="Trade">
+                        <span><i class="mdi mdi-view-dashboard"></i></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'home:account_exchange' %}" data-toggle="tooltip" data-placement="right"
+                        title="Exchange">
+                        <span><i class="mdi mdi-tumblr-reblog"></i></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'home:account' %}" data-toggle="tooltip" data-placement="right" title="Accounts">
+                        <span><i class="mdi mdi-face-profile"></i></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'home:signals' %}" data-toggle="tooltip" data-placement="right" title="Data">
+                        <span><i class="mdi mdi-database"></i></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'home:setting'%}" data-toggle="tooltip" data-placement="right" title="Setting">
+                        <span><i class="mdi mdi-settings"></i></span>
+                    </a>
+                </li>
+            </ul>
         </div>
+    </div>
 
-        <div class="sidebar">
-            <div class="menu">
-                <ul>
-                    <li>
-                        <a href="{% url 'home:dashboard' %}" data-toggle="tooltip" data-placement="right" title="Trade">
-                            <span><i class="mdi mdi-view-dashboard"></i></span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{% url 'home:account_exchange' %}" data-toggle="tooltip" data-placement="right" title="Exchange">
-                            <span><i class="mdi mdi-tumblr-reblog"></i></span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{% url 'home:account' %}" data-toggle="tooltip" data-placement="right" title="Accounts">
-                            <span><i class="mdi mdi-face-profile"></i></span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{% url 'home:signals' %}" data-toggle="tooltip" data-placement="right" title="Data">
-                            <span><i class="mdi mdi-database"></i></span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{% url 'home:setting'%}" data-toggle="tooltip" data-placement="right" title="Setting">
-                            <span><i class="mdi mdi-settings"></i></span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
+    <div class="content-body">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xl-6 col-xxl-12 col-lg-12 col-xxl-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">BTC - USDT Perpetual Swap</h4>
+                            <span>24h Change <strong class="text-success">
 
-        <div class="content-body">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-xl-6 col-xxl-12 col-lg-12 col-xxl-6">
-                        <div class="card">
-                            <div class="card-header">
-                                <h4 class="card-title">BTC - USDT Perpetual Swap</h4>
-                                <span>24h Change <strong class="text-success">
-
-                                    {% if change24 > 0 %} 
+                                    {% if change24 > 0 %}
                                     <span class="text-success">
-                                        +{{change24|floatformat}}% 
+                                        +{{change24|floatformat}}%
                                     </span>
-                                {% else %} 
+                                    {% else %}
                                     <span class="text-danger">
-                                        {{change24|floatformat}}% 
+                                        {{change24|floatformat}}%
                                     </span>
-                                {% endif %}  
-                                    
+                                    {% endif %}
+
                                 </strong></span>
-                            </div>
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-xl col-lg col-md col-sm-auto col-6">
-                                        <p class="mb-0">24h Volume</p>
-                                        {% if change24 > 0 %} 
-                                        <span class="text-success">
-                                            +{{change24|floatformat}}% 
-                                        </span>
-                                    {% else %} 
-                                        <span class="text-danger">
-                                            {{change24|floatformat}}% 
-                                        </span>
-                                    {% endif %}  
-                                    </div>
-                                    <div class="col-xl col-lg col-md col-sm-auto col-6">
-                                        <p class="mb-0">Market Cap</p>
-                                        {{marketcap|floatformat}}
-                                    </div>
-                                    <div class="col-xl col-lg col-md col-sm-auto col-6">
-                                        <p class="mb-0">VOLUME</p>
-                                        63.22B
-                                    </div>
-                                    <div class="col-xl col-lg col-md col-sm-auto col-6">
-                                        <p class="mb-0">Last Price</p>
-                                        {{price|floatformat:3}}
-                                    </div>
-                                    <div class="col-xl col-lg col-md col-sm-auto col-6">
-                                        <p class="mb-0">Funding Rate</p>
-                                        ---
-                                    </div>
-                                </div>
-                            </div>
                         </div>
-                    </div>
-                    <div class="col-xl-6 col-xxl-12 col-lg-12 col-xxl-6">
-                        <div class="card">
-                            <div class="card-header">
-                                <h4 class="card-title">Your Wallet</h4>
-                                <span>Update <span>10</span> minutes ago</span>
-                            </div>
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-xl col-lg col-md col-sm-auto col-6">
-                                        <p class="mb-0">Equity</p>
-                                        <!-- <h6>34.00 USD</h6> -->
-                                    </div>
-                                    <div class="col-xl col-lg col-md col-sm-auto col-6">
-                                        <p class="mb-0">Available Margin</p>
-                                        <!-- <h6>47.00 USD</h6> -->
-                                    </div>
-                                    <div class="col-xl col-lg col-md col-sm-auto col-6">
-                                        <p class="mb-0">Unrealized P&L</p>
-                                        <!-- <h6>92.00 USD</h6> -->
-                                    </div>
-                                    <div class="col-xl col-lg col-md col-sm-auto col-6">
-                                        <p class="mb-0">Position Margin</p>
-                                        <!-- <h6>58.00 USD</h6> -->
-                                    </div>
-                                    <div class="col-xl col-lg col-md col-sm-auto col-6">
-                                        <p class="mb-0">Active Orders</p>
-                                        <!-- <h6>15.00 USD</h6> -->
-                                    </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-xl col-lg col-md col-sm-auto col-6">
+                                    <p class="mb-0">24h Volume</p>
+                                    {% if change24 > 0 %}
+                                    <span class="text-success">
+                                        +{{change24|floatformat}}%
+                                    </span>
+                                    {% else %}
+                                    <span class="text-danger">
+                                        {{change24|floatformat}}%
+                                    </span>
+                                    {% endif %}
+                                </div>
+                                <div class="col-xl col-lg col-md col-sm-auto col-6">
+                                    <p class="mb-0">Market Cap</p>
+                                    {{marketcap|floatformat}}
+                                </div>
+                                <div class="col-xl col-lg col-md col-sm-auto col-6">
+                                    <p class="mb-0">VOLUME</p>
+                                    63.22B
+                                </div>
+                                <div class="col-xl col-lg col-md col-sm-auto col-6">
+                                    <p class="mb-0">Last Price</p>
+                                    {{price|floatformat:3}}
+                                </div>
+                                <div class="col-xl col-lg col-md col-sm-auto col-6">
+                                    <p class="mb-0">Funding Rate</p>
+                                    ---
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                {%if user %}
+                <div class="col-xl-6 col-xxl-12 col-lg-12 col-xxl-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Your Trade Bot</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-xl col-lg col-md col-sm-auto col-6">
+                                    <p class="mb-0">Name</p>
+                                    <h6>{% if botname %}{{botname}}{% else %}
+                                        {% endif %}</h6>
+                                </div>
+                                <div class="col-xl col-lg col-md col-sm-auto col-6">
+                                    <p class="mb-0">Status</p>
+                                    {% if botname %}{% if botstatus %}Running{% else %}Paused{% endif %}{% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {%else%}
+                <div class="col-xl-6 col-xxl-12 col-lg-12 col-xxl-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Your Trade Bot</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-xl col-lg col-md col-sm-auto col-6">
+                                    <p class="mb-0"></p><br>
+                                    <h6>Need to upgrade to Professional
+                                        </h6>
+                                </div>
+                                <div class="col-xl col-lg col-md col-sm-auto col-6">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {%endif%}
+            </div>
 
-                <div class="row">
-                    <div class="col-xl-3 col-lg-6 col-md-12 col-xxl-6">
-                        <div class="card">
-                            <div class="card-header">
-                                <ul class="nav nav-pills" role="tablist">
-                                    <li class="nav-item">
-                                        <a class="nav-link active" data-toggle="pill" href="#limit" role="tab"
-                                            aria-selected="true">Account Overview</a>
-                                    </li>
-                                    <!-- <!-- <li class="nav-item">
+
+            <div class="row">
+                <div class="col-xl-3 col-lg-6 col-md-12 col-xxl-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <ul class="nav nav-pills" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" data-toggle="pill" href="#limit" role="tab"
+                                        aria-selected="true">Account Overview</a>
+                                </li>
+                                <!-- <!-- <li class="nav-item">
                                         <a class="nav-link" data-toggle="pill" href="#market" role="tab"
                                             aria-selected="false">Market</a>
                                     </li> -->
-                                
-                            </div>
-                            <div class="card-body market-limit">
-                                <div class="tab-content">
-                                    <div class="tab-pane fade show active" id="limit" role="tabpanel">
 
-                                        <form method="POST" name="myform" class="currency_limit" id="buybtc">
-                                            {% csrf_token %}
-                                            <!-- <div class="form-group">
+                        </div>
+                        <div class="card-body market-limit">
+                            <div class="tab-content">
+                                <div class="tab-pane fade show active" id="limit" role="tabpanel">
+
+                                    <form method="POST" name="myform" class="currency_limit" id="buybtc">
+                                        {% csrf_token %}
+                                        <!-- <div class="form-group">
                                                 <div class="input-group mb-3">
                                                     <select name='currency' class="form-control mw-150">
                                                         <option data-display="Bitcoin" value="bitcoin">Bitcoin
@@ -171,8 +183,8 @@
                                                 </div>
                                             </div> -->
 
-                                            <ul class="list-group limit-nested">
-                                                <!-- <li
+                                        <ul class="list-group limit-nested">
+                                            <!-- <li
                                                     class="list-group-item border-0 px-0 py-1 d-flex justify-content-between align-items-center">
                                                     Lorem ipsum
                                                     <select name='currency' class="border-0 h-0">
@@ -182,7 +194,7 @@
                                                         <option value="">Immediate Or Cancel</option>
                                                     </select>
                                                 </li> -->
-                                                <!-- <li
+                                            <!-- <li
                                                     class="list-group-item border-0 px-0 py-1 d-flex justify-content-between align-items-center">
                                                     Lorem ipsum
                                                     <label class="toggle mb-0">
@@ -190,537 +202,412 @@
                                                         <span class="toggle-switch"></span>
                                                     </label>
                                                 </li> -->
-                                                <li
-                                                    class="list-group-item border-0 px-0 py-1 d-flex justify-content-between align-items-center">
-                                                    total USDT
-                                                    <strong class="strong">{{balance}}</strong>
-                                                </li>
-                                                <li
-                                                    class="list-group-item border-0 px-0 py-1 d-flex justify-content-between align-items-center">
-                                                    total BTC
-                                                    <strong class="strong">{{btc|floatformat:5}}</strong>
-                                                </li>
-                                                <li
-                                                    class="list-group-item border-0 px-0 py-1 d-flex justify-content-between align-items-center">
-                                                    total Balance
-                                                    <strong class="strong">{{total|floatformat:3}}</strong>
-                                                </li>
-                                                <li
-                                                    class="list-group-item border-0 px-0 py-1 d-flex justify-content-between align-items-center">
-                                                    total Balance in BTC
-                                                    <strong class="strong">{{totalinbtc|floatformat:5}}</strong>
-                                                </li>
-                                            </ul>
+                                            <li
+                                                class="list-group-item border-0 px-0 py-1 d-flex justify-content-between align-items-center">
+                                                total USDT
+                                                <strong class="strong">{{balance}}</strong>
+                                            </li>
+                                            <li
+                                                class="list-group-item border-0 px-0 py-1 d-flex justify-content-between align-items-center">
+                                                total BTC
+                                                <strong class="strong">{{btc|floatformat:5}}</strong>
+                                            </li>
+                                            <li
+                                                class="list-group-item border-0 px-0 py-1 d-flex justify-content-between align-items-center">
+                                                total Balance
+                                                <strong class="strong">{{total|floatformat:3}}</strong>
+                                            </li>
+                                            <li
+                                                class="list-group-item border-0 px-0 py-1 d-flex justify-content-between align-items-center">
+                                                total Balance in BTC
+                                                <strong class="strong">{{totalinbtc|floatformat:5}}</strong>
+                                            </li>
+                                        </ul>
 
-                                            <div class="btn-group btn-block mt-3" style="padding-top: 100px;">
-                                                <button type="submit" value="buy" class="btn btn-success">
-                                                    <a href="{% url 'home:account_exchange' %}" style="color:white">
-                                                        Buy Now
-                                                    </a>
-                                                </button>
-                                                <button type="submit" value="sell" class="btn btn-danger">
-                                                    <a href="{% url 'home:account_exchange' %}" style="color:white">
-                                                        Sell Now
-                                                    </a>
-                                                </button>
-                                            </div>
+                                        <div class="btn-group btn-block mt-3" style="padding-top: 100px;">
+                                            <button type="submit" value="buy" class="btn btn-success">
+                                                <a href="{% url 'home:account_exchange' %}" style="color:white">
+                                                    Buy Now
+                                                </a>
+                                            </button>
+                                            <button type="submit" value="sell" class="btn btn-danger">
+                                                <a href="{% url 'home:account_exchange' %}" style="color:white">
+                                                    Sell Now
+                                                </a>
+                                            </button>
+                                        </div>
 
-                                        </form>
+                                    </form>
 
-                                    </div>
-                                    <div class="tab-pane fade" id="market" role="tabpanel">
+                                </div>
+                                <div class="tab-pane fade" id="market" role="tabpanel">
 
-                                        <form method="post" name="myform" class="currency_limit">
+                                    <form method="post" name="myform" class="currency_limit">
 
-                                            <div class="form-group">
-                                                <div class="input-group">
-                                                    <div class="input-group-prepend">
-                                                        <span class="input-group-text">USD</span>
-                                                    </div>
-                                                    <input type="text" name="currency_amount"
-                                                        class="form-control text-right" placeholder="501458">
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">USD</span>
                                                 </div>
+                                                <input type="text" name="currency_amount"
+                                                    class="form-control text-right" placeholder="501458">
                                             </div>
+                                        </div>
 
-                                            <ul class="list-group market-nested">
-                                                <li
-                                                    class="list-group-item border-0 px-0 py-1 d-flex justify-content-between align-items-center">
-                                                    Size in BTC
-                                                    <span class="strong"> 0.00254 BTC</span>
-                                                </li>
-                                                <li
-                                                    class="list-group-item border-0 px-0 py-1 d-flex justify-content-between align-items-center">
-                                                    Order Value
-                                                    <span class="strong">65850 USD</span>
-                                                </li>
-                                                <li
-                                                    class="list-group-item border-0 px-0 py-1 d-flex justify-content-between align-items-center">
-                                                    Available Margin
-                                                    <span class="strong">15458 USD</span>
-                                                </li>
-                                                <li
-                                                    class="list-group-item border-0 px-0 py-1 d-flex justify-content-between align-items-center">
-                                                    Buy Cost @ 1.0x
-                                                    <span class="strong">0.00 USD</span>
-                                                </li>
-                                                <li
-                                                    class="list-group-item border-0 px-0 py-1 d-flex justify-content-between align-items-center">
-                                                    Sell Cost @ 1.0x
-                                                    <span class="strong">0.00 USD</span>
-                                                </li>
-                                            </ul>
+                                        <ul class="list-group market-nested">
+                                            <li
+                                                class="list-group-item border-0 px-0 py-1 d-flex justify-content-between align-items-center">
+                                                Size in BTC
+                                                <span class="strong"> 0.00254 BTC</span>
+                                            </li>
+                                            <li
+                                                class="list-group-item border-0 px-0 py-1 d-flex justify-content-between align-items-center">
+                                                Order Value
+                                                <span class="strong">65850 USD</span>
+                                            </li>
+                                            <li
+                                                class="list-group-item border-0 px-0 py-1 d-flex justify-content-between align-items-center">
+                                                Available Margin
+                                                <span class="strong">15458 USD</span>
+                                            </li>
+                                            <li
+                                                class="list-group-item border-0 px-0 py-1 d-flex justify-content-between align-items-center">
+                                                Buy Cost @ 1.0x
+                                                <span class="strong">0.00 USD</span>
+                                            </li>
+                                            <li
+                                                class="list-group-item border-0 px-0 py-1 d-flex justify-content-between align-items-center">
+                                                Sell Cost @ 1.0x
+                                                <span class="strong">0.00 USD</span>
+                                            </li>
+                                        </ul>
 
-                                            <div class="btn-group btn-block mt-3">
-                                                <button type="submit" name="submit" class="btn btn-success">Buy
-                                                    Now</button>
-                                                <button type="submit" name="submit" class="btn btn-danger">Sell
-                                                    Now</button>
+                                        <div class="btn-group btn-block mt-3">
+                                            <button type="submit" name="submit" class="btn btn-success">Buy
+                                                Now</button>
+                                            <button type="submit" name="submit" class="btn btn-danger">Sell
+                                                Now</button>
+                                        </div>
+
+                                    </form>
+
+                                </div>
+                                <div class="tab-pane fade" id="stop-limit" role="tabpanel">
+
+                                    <form method="post" name="myform" class="currency_limit">
+                                        <div class="form-group">
+                                            <!-- <label class="mr-sm-2">Currency</label> -->
+                                            <div class="input-group mb-3">
+                                                <select name='currency' class="form-control mw-150">
+                                                    <option data-display="Bitcoin" value="bitcoin">Bitcoin
+                                                    </option>
+                                                    <option value="litecoin">Litecoin</option>
+                                                </select>
+                                                <input type="text" name="usd_amount" class="form-control text-right"
+                                                    placeholder="Enter Size">
                                             </div>
+                                        </div>
 
-                                        </form>
-
-                                    </div>
-                                    <div class="tab-pane fade" id="stop-limit" role="tabpanel">
-
-                                        <form method="post" name="myform" class="currency_limit">
-                                            <div class="form-group">
-                                                <!-- <label class="mr-sm-2">Currency</label> -->
-                                                <div class="input-group mb-3">
-                                                    <select name='currency' class="form-control mw-150">
-                                                        <option data-display="Bitcoin" value="bitcoin">Bitcoin
-                                                        </option>
-                                                        <option value="litecoin">Litecoin</option>
-                                                    </select>
-                                                    <input type="text" name="usd_amount" class="form-control text-right"
-                                                        placeholder="Enter Size">
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">USD</span>
                                                 </div>
+                                                <input type="text" name="currency_amount"
+                                                    class="form-control text-right" placeholder="501458">
                                             </div>
+                                        </div>
 
-                                            <div class="form-group">
-                                                <div class="input-group">
-                                                    <div class="input-group-prepend">
-                                                        <span class="input-group-text">USD</span>
-                                                    </div>
-                                                    <input type="text" name="currency_amount"
-                                                        class="form-control text-right" placeholder="501458">
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">USD</span>
                                                 </div>
+                                                <input type="text" name="currency_amount"
+                                                    class="form-control text-right" placeholder="501458">
                                             </div>
+                                        </div>
 
-                                            <div class="form-group">
-                                                <div class="input-group">
-                                                    <div class="input-group-prepend">
-                                                        <span class="input-group-text">USD</span>
-                                                    </div>
-                                                    <input type="text" name="currency_amount"
-                                                        class="form-control text-right" placeholder="501458">
+                                        <ul class="list-group stop-limit-nested">
+                                            <li
+                                                class="list-group-item border-0 px-0 py-1 d-flex justify-content-between align-items-center">
+                                                Stop Trigger
+                                                <select name='currency' class="border-0 h-0">
+                                                    <option data-display="Mark Price" value="">Mark Price</option>
+                                                    <option value="">Last Price</option>
+                                                </select>
+                                            </li>
+                                            <li
+                                                class="list-group-item border-0 px-0 py-1 d-flex justify-content-between align-items-center">
+                                                Time In Force
+                                                <select name='currency' class="border-0 h-0">
+                                                    <option data-display="Good 'Til Cancelled" value="">Good 'Til
+                                                        Cancelled</option>
+                                                    <option value="">Fill Or Kill</option>
+                                                    <option value="">Immediate Or Cancel</option>
+                                                </select>
+                                            </li>
+                                            <li
+                                                class="list-group-item border-0 px-0 py-1 d-flex justify-content-between align-items-center">
+                                                Post Only
+                                                <label class="toggle mb-0">
+                                                    <input class="toggle-checkbox" type="checkbox" checked>
+                                                    <span class="toggle-switch"></span>
+                                                </label>
+                                            </li>
+                                            <li
+                                                class="list-group-item border-0 px-0 py-1 d-flex justify-content-between align-items-center">
+                                                Size in BTC
+                                                <span class="strong"> 0.00254 BTC</span>
+                                            </li>
+                                            <li
+                                                class="list-group-item border-0 px-0 py-1 d-flex justify-content-between align-items-center">
+                                                Order Value
+                                                <span class="strong">65850 USD</span>
+                                            </li>
+                                            <li
+                                                class="list-group-item border-0 px-0 py-1 d-flex justify-content-between align-items-center">
+                                                Available Margin
+                                                <span class="strong">15458 USD</span>
+                                            </li>
+                                            <li
+                                                class="list-group-item border-0 px-0 py-1 d-flex justify-content-between align-items-center">
+                                                Buy Cost @ 1.0x
+                                                <span class="strong">0.00 USD</span>
+                                            </li>
+                                            <li
+                                                class="list-group-item border-0 px-0 py-1 d-flex justify-content-between align-items-center">
+                                                Sell Cost @ 1.0x
+                                                <span class="strong">0.00 USD</span>
+                                            </li>
+                                        </ul>
+
+                                        <div class="btn-group btn-block mt-3">
+                                            <button type="submit" name="submit" class="btn btn-success">Buy
+                                                Now</button>
+                                            <button type="submit" name="submit" class="btn btn-danger">Sell
+                                                Now</button>
+                                        </div>
+
+                                    </form>
+
+                                </div>
+                                <div class="tab-pane fade" id="stop-market" role="tabpanel">
+
+                                    <form method="post" name="myform" class="currency_limit">
+                                        <div class="form-group">
+                                            <!-- <label class="mr-sm-2">Currency</label> -->
+                                            <div class="input-group mb-3">
+                                                <select name='currency' class="form-control mw-150">
+                                                    <option data-display="Bitcoin" value="bitcoin">Bitcoin
+                                                    </option>
+                                                    <option value="litecoin">Litecoin</option>
+                                                </select>
+                                                <input type="text" name="usd_amount" class="form-control text-right"
+                                                    placeholder="Enter Size">
+                                            </div>
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">USD</span>
                                                 </div>
+                                                <input type="text" name="currency_amount"
+                                                    class="form-control text-right" placeholder="501458">
                                             </div>
+                                        </div>
 
-                                            <ul class="list-group stop-limit-nested">
-                                                <li
-                                                    class="list-group-item border-0 px-0 py-1 d-flex justify-content-between align-items-center">
-                                                    Stop Trigger
-                                                    <select name='currency' class="border-0 h-0">
-                                                        <option data-display="Mark Price" value="">Mark Price</option>
-                                                        <option value="">Last Price</option>
-                                                    </select>
-                                                </li>
-                                                <li
-                                                    class="list-group-item border-0 px-0 py-1 d-flex justify-content-between align-items-center">
-                                                    Time In Force
-                                                    <select name='currency' class="border-0 h-0">
-                                                        <option data-display="Good 'Til Cancelled" value="">Good 'Til
-                                                            Cancelled</option>
-                                                        <option value="">Fill Or Kill</option>
-                                                        <option value="">Immediate Or Cancel</option>
-                                                    </select>
-                                                </li>
-                                                <li
-                                                    class="list-group-item border-0 px-0 py-1 d-flex justify-content-between align-items-center">
-                                                    Post Only
-                                                    <label class="toggle mb-0">
-                                                        <input class="toggle-checkbox" type="checkbox" checked>
-                                                        <span class="toggle-switch"></span>
-                                                    </label>
-                                                </li>
-                                                <li
-                                                    class="list-group-item border-0 px-0 py-1 d-flex justify-content-between align-items-center">
-                                                    Size in BTC
-                                                    <span class="strong"> 0.00254 BTC</span>
-                                                </li>
-                                                <li
-                                                    class="list-group-item border-0 px-0 py-1 d-flex justify-content-between align-items-center">
-                                                    Order Value
-                                                    <span class="strong">65850 USD</span>
-                                                </li>
-                                                <li
-                                                    class="list-group-item border-0 px-0 py-1 d-flex justify-content-between align-items-center">
-                                                    Available Margin
-                                                    <span class="strong">15458 USD</span>
-                                                </li>
-                                                <li
-                                                    class="list-group-item border-0 px-0 py-1 d-flex justify-content-between align-items-center">
-                                                    Buy Cost @ 1.0x
-                                                    <span class="strong">0.00 USD</span>
-                                                </li>
-                                                <li
-                                                    class="list-group-item border-0 px-0 py-1 d-flex justify-content-between align-items-center">
-                                                    Sell Cost @ 1.0x
-                                                    <span class="strong">0.00 USD</span>
-                                                </li>
-                                            </ul>
+                                        <ul class="list-group stop-market-nested">
+                                            <li
+                                                class="list-group-item border-0 px-0 py-1 d-flex justify-content-between align-items-center">
+                                                Stop Trigger
+                                                <select name='currency' class="border-0 h-0">
+                                                    <option data-display="Mark Price" value="">Mark Price</option>
+                                                    <option value="">Last Price</option>
+                                                </select>
+                                            </li>
+                                            <li
+                                                class="list-group-item border-0 px-0 py-1 d-flex justify-content-between align-items-center">
+                                                Post Only
+                                                <label class="toggle mb-0">
+                                                    <input class="toggle-checkbox" type="checkbox" checked>
+                                                    <span class="toggle-switch"></span>
+                                                </label>
+                                            </li>
+                                            <li
+                                                class="list-group-item border-0 px-0 py-1 d-flex justify-content-between align-items-center">
+                                                Size in BTC
+                                                <span class="strong"> 0.00254 BTC</span>
+                                            </li>
+                                            <li
+                                                class="list-group-item border-0 px-0 py-1 d-flex justify-content-between align-items-center">
+                                                Order Value
+                                                <span class="strong">65850 USD</span>
+                                            </li>
+                                            <li
+                                                class="list-group-item border-0 px-0 py-1 d-flex justify-content-between align-items-center">
+                                                Available Margin
+                                                <span class="strong">15458 USD</span>
+                                            </li>
+                                            <li
+                                                class="list-group-item border-0 px-0 py-1 d-flex justify-content-between align-items-center">
+                                                Buy Cost @ 1.0x
+                                                <span class="strong">0.00 USD</span>
+                                            </li>
+                                            <li
+                                                class="list-group-item border-0 px-0 py-1 d-flex justify-content-between align-items-center">
+                                                Sell Cost @ 1.0x
+                                                <span class="strong">0.00 USD</span>
+                                            </li>
+                                        </ul>
 
-                                            <div class="btn-group btn-block mt-3">
-                                                <button type="submit" name="submit" class="btn btn-success">Buy
-                                                    Now</button>
-                                                <button type="submit" name="submit" class="btn btn-danger">Sell
-                                                    Now</button>
-                                            </div>
+                                        <div class="btn-group btn-block mt-3">
+                                            <button type="submit" name="submit" class="btn btn-success">Buy
+                                                Now</button>
+                                            <button type="submit" name="submit" class="btn btn-danger">Sell
+                                                Now</button>
+                                        </div>
 
-                                        </form>
+                                    </form>
 
-                                    </div>
-                                    <div class="tab-pane fade" id="stop-market" role="tabpanel">
-
-                                        <form method="post" name="myform" class="currency_limit">
-                                            <div class="form-group">
-                                                <!-- <label class="mr-sm-2">Currency</label> -->
-                                                <div class="input-group mb-3">
-                                                    <select name='currency' class="form-control mw-150">
-                                                        <option data-display="Bitcoin" value="bitcoin">Bitcoin
-                                                        </option>
-                                                        <option value="litecoin">Litecoin</option>
-                                                    </select>
-                                                    <input type="text" name="usd_amount" class="form-control text-right"
-                                                        placeholder="Enter Size">
-                                                </div>
-                                            </div>
-
-
-                                            <div class="form-group">
-                                                <div class="input-group">
-                                                    <div class="input-group-prepend">
-                                                        <span class="input-group-text">USD</span>
-                                                    </div>
-                                                    <input type="text" name="currency_amount"
-                                                        class="form-control text-right" placeholder="501458">
-                                                </div>
-                                            </div>
-
-                                            <ul class="list-group stop-market-nested">
-                                                <li
-                                                    class="list-group-item border-0 px-0 py-1 d-flex justify-content-between align-items-center">
-                                                    Stop Trigger
-                                                    <select name='currency' class="border-0 h-0">
-                                                        <option data-display="Mark Price" value="">Mark Price</option>
-                                                        <option value="">Last Price</option>
-                                                    </select>
-                                                </li>
-                                                <li
-                                                    class="list-group-item border-0 px-0 py-1 d-flex justify-content-between align-items-center">
-                                                    Post Only
-                                                    <label class="toggle mb-0">
-                                                        <input class="toggle-checkbox" type="checkbox" checked>
-                                                        <span class="toggle-switch"></span>
-                                                    </label>
-                                                </li>
-                                                <li
-                                                    class="list-group-item border-0 px-0 py-1 d-flex justify-content-between align-items-center">
-                                                    Size in BTC
-                                                    <span class="strong"> 0.00254 BTC</span>
-                                                </li>
-                                                <li
-                                                    class="list-group-item border-0 px-0 py-1 d-flex justify-content-between align-items-center">
-                                                    Order Value
-                                                    <span class="strong">65850 USD</span>
-                                                </li>
-                                                <li
-                                                    class="list-group-item border-0 px-0 py-1 d-flex justify-content-between align-items-center">
-                                                    Available Margin
-                                                    <span class="strong">15458 USD</span>
-                                                </li>
-                                                <li
-                                                    class="list-group-item border-0 px-0 py-1 d-flex justify-content-between align-items-center">
-                                                    Buy Cost @ 1.0x
-                                                    <span class="strong">0.00 USD</span>
-                                                </li>
-                                                <li
-                                                    class="list-group-item border-0 px-0 py-1 d-flex justify-content-between align-items-center">
-                                                    Sell Cost @ 1.0x
-                                                    <span class="strong">0.00 USD</span>
-                                                </li>
-                                            </ul>
-
-                                            <div class="btn-group btn-block mt-3">
-                                                <button type="submit" name="submit" class="btn btn-success">Buy
-                                                    Now</button>
-                                                <button type="submit" name="submit" class="btn btn-danger">Sell
-                                                    Now</button>
-                                            </div>
-
-                                        </form>
-
-                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
 
-                    <div class="col-xl-5 col-lg-6 col-md-12 col-xxl-6">
-                        <!-- TradingView Widget BEGIN -->
-                        <div class="tradingview-widget-container card">
-                            <div id="tradingview_e8053"></div>
+                <div class="col-xl-5 col-lg-6 col-md-12 col-xxl-6">
+                    <!-- TradingView Widget BEGIN -->
+                    <div class="tradingview-widget-container card">
+                        <div id="tradingview_e8053"></div>
 
-                        </div>
-                        <!-- TradingView Widget END -->
                     </div>
-
-                    <div class="col-xl-2 col-lg-4 col-md-6 col-xxl-4">
+                    <!-- TradingView Widget END -->
+                </div>
+                {% if user %}
+                    <div class="col-xl-4 col-lg-4 col-md-6 col-xxl-4">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">Order Book</h4>
+                                <h4 class="card-title">Bot Trade Activities</h4>
                             </div>
                             <div class="card-body order-book">
-                                <table class="table">
+                                {% if botname %}
+                                <table class="table" id="bottable">
                                     <thead>
                                         <tr>
-                                            <th scope="col">Price (USD)</th>
-                                            <th scope="col">Price (BTC)</th>
-                                            <th scope="col">Total</th>
+                                            <th scope="col">Amount</th>
+                                            <th scope="col">Pair</th>
+                                            <th scope="col">Price</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td class="text-danger">10393.50</td>
-                                            <td>0.010</td>
-                                            <td>14.109</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-danger">10393.50</td>
-                                            <td>0.010</td>
-                                            <td>14.109</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-danger">10393.50</td>
-                                            <td>0.010</td>
-                                            <td>14.109</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-danger">10393.50</td>
-                                            <td>0.010</td>
-                                            <td>14.109</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-danger">10393.50</td>
-                                            <td>0.010</td>
-                                            <td>14.109</td>
-                                        </tr>
+                                        
                                     </tbody>
                                 </table>
-
-                                <div class="order-book-divider">
-                                    <h6 class="text-danger"> <i class="la la-arrow-down"></i> 6587.35</h6>
-                                    <span>6520.220 / 4835.00</span>
-                                </div>
+                                {% else %}
 
                                 <table class="table">
                                     <thead>
                                         <tr>
-                                            <th scope="col">Price (USD)</th>
-                                            <th scope="col">Price (BTC)</th>
-                                            <th scope="col">Total</th>
+                                            <th scope="col" style="text-align: left">No Actitvity</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td class="text-success">10393.50</td>
-                                            <td>0.010</td>
-                                            <td>14.109</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-success">10393.50</td>
-                                            <td>0.010</td>
-                                            <td>14.109</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-success">10393.50</td>
-                                            <td>0.010</td>
-                                            <td>14.109</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-success">10393.50</td>
-                                            <td>0.010</td>
-                                            <td>14.109</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-success">10393.50</td>
-                                            <td>0.010</td>
-                                            <td>14.109</td>
-                                        </tr>
-                                    </tbody>
                                 </table>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
-
-                    <div class="col-xl-2 col-lg-4 col-md-6 col-xxl-4">
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h4 class="card-title">Trade History</h4>
-                                    </div>
-                                    <div class="card-body trade-history">
-                                        <div class="table-responsive">
-                                            <table class="table table-borderless">
-                                                <thead>
-                                                    <tr>
-                                                        <th scope="col">Price</th>
-                                                        <th scope="col">Size</th>
-                                                        <th scope="col">Time</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td class="text-danger">10393.50</td>
-                                                        <td>0.010</td>
-                                                        <td>14.109</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-danger">10393.50</td>
-                                                        <td>0.010</td>
-                                                        <td>14.109</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-danger">10393.50</td>
-                                                        <td>0.010</td>
-                                                        <td>14.109</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-danger">10393.50</td>
-                                                        <td>0.010</td>
-                                                        <td>14.109</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-danger">10393.50</td>
-                                                        <td>0.010</td>
-                                                        <td>14.109</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-danger">10393.50</td>
-                                                        <td>0.010</td>
-                                                        <td>14.109</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-danger">10393.50</td>
-                                                        <td>0.010</td>
-                                                        <td>14.109</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-danger">10393.50</td>
-                                                        <td>0.010</td>
-                                                        <td>14.109</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-danger">10393.50</td>
-                                                        <td>0.010</td>
-                                                        <td>14.109</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-danger">10393.50</td>
-                                                        <td>0.010</td>
-                                                        <td>14.109</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-danger">10393.50</td>
-                                                        <td>0.010</td>
-                                                        <td>14.109</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-danger">10393.50</td>
-                                                        <td>0.010</td>
-                                                        <td>14.109</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-danger">10393.50</td>
-                                                        <td>0.010</td>
-                                                        <td>14.109</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-danger">10393.50</td>
-                                                        <td>0.010</td>
-                                                        <td>14.109</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-danger">10393.50</td>
-                                                        <td>0.010</td>
-                                                        <td>14.109</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-xl-3 col-lg-4 col-md-12 col-xxl-4">
+                {%else%}
+                    <div class="col-xl-4 col-lg-4 col-md-6 col-xxl-4">
                         <div class="card">
                             <div class="card-header">
-                                <ul class="nav nav-pills" role="tablist">
-                                    <!-- <li class="nav-item">
+                                <h4 class="card-title">Bot Trade Activities</h4>
+                            </div>
+                            <div class="card-body order-book">
+                                <table class="table" id="bottable">
+                                    <thead>
+                                        <!-- <tr>
+                                            <th scope="col">Amount</th>
+                                            <th scope="col">Pair</th>
+                                            <th scope="col">Price</th>
+                                        </tr> -->
+                                    </thead>
+                                    <tbody>
+                                        
+                                    </tbody>
+                                </table>
+
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col" style="text-align: left">Needs to upgrade</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                                
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+
+                <div class="col-xl-3 col-lg-4 col-md-12 col-xxl-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <ul class="nav nav-pills" role="tablist">
+                                <!-- <li class="nav-item">
                                         <a class="nav-link" data-toggle="pill" href="#STAR" role="tab"
                                             aria-selected="true"><i class="mdi mdi-star"></i></a>
                                     </li> -->
-                                    <li class="nav-item">
-                                        <a class="nav-link active" href="{% url 'home:account_exchange' %}"
-                                            aria-selected="true">BTC Exchange Activities</a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="card-body  price-pair">
+                                <li class="nav-item">
+                                    <a class="nav-link active" href="{% url 'home:account_exchange' %}"
+                                        aria-selected="true">BTC Exchange Activities</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="card-body  price-pair">
 
-                                <div class="tab-content">
-                                    <!-- <div class="tab-pane fade show" id="STAR" role="tabpanel">
+                            <div class="tab-content">
+                                <!-- <div class="tab-pane fade show" id="STAR" role="tabpanel">
                                     </div> -->
-                                    <div class="tab-pane fade show active" id="BTC" role="tabpanel">
-                                        {% if range %}
-                                        <table class="table">
-                                            <thead>
-                                                <tr>
-                                                    <th>Pairs</th>
-                                                    <th>Last Price</th>
-                                                    <th>Type</th>
-                                                </tr>
-                                            </thead>          
-                                            <tbody>
-                                                {% for i in transactionamount %}
-                                                    <tr>
-                                                        <td><i class="mdi "></i>USDT/BTC</td>
-                                                        <td>
-                                                            {{i.amount}}
-                                                        </td>
-                                                        <td class="red">{{i.types}}</td>
-                                                    </tr>
-                                                {% endfor %} 
-                                            </tbody>                                      
-                                        </table>
-                                        {% else %}
-                                        <p>No activities yet</p>
-                                        {% endif %}
-                                    </div>
-                                    <div class="tab-pane fade show" id="ETH" role="tabpanel">
-                                        
-                                    </div>
-                                    <div class="tab-pane fade show" id="NEO" role="tabpanel">
-                                        
-                                    </div>
-                                    <div class="tab-pane fade show" id="USDT" role="tabpanel">
-                                        
-                                    </div>
-                                    <div class="tab-pane fade show" id="DAI" role="tabpanel">
-                                        <!-- <table class="table">
+                                <div class="tab-pane fade show active" id="BTC" role="tabpanel">
+                                    {% if range %}
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Pairs</th>
+                                                <th>Last Price</th>
+                                                <th>Type</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for i in transactionamount %}
+                                            <tr>
+                                                <td><i class="mdi "></i>USDT/BTC</td>
+                                                <td>
+                                                    {{i.amount}}
+                                                </td>
+                                                <td class="red">{{i.types}}</td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                    {% else %}
+                                    <p>No activities yet</p>
+                                    {% endif %}
+                                </div>
+                                <div class="tab-pane fade show" id="ETH" role="tabpanel">
+
+                                </div>
+                                <div class="tab-pane fade show" id="NEO" role="tabpanel">
+
+                                </div>
+                                <div class="tab-pane fade show" id="USDT" role="tabpanel">
+
+                                </div>
+                                <div class="tab-pane fade show" id="DAI" role="tabpanel">
+                                    <!-- <table class="table">
                                             <thead>
                                                 <tr>
                                                     <th>Pairs</th>
@@ -856,27 +743,27 @@
                                                 </tr>
                                             </tbody>
                                         </table> -->
-                                    </div>
-
                                 </div>
+
                             </div>
                         </div>
                     </div>
+                </div>
 
 
 
-                    <div class="col-xl-5 col-lg-8 col-md-12 col-xxl-8">
-                        <div class="card">
-                            <div class="card-header">
-                                <h4 class="card-title">Depth Chart</h4>
-                            </div>
-                            <div class="card-body">
-                                <div id="chartdiv"></div>
-                            </div>
+                <div class="col-xl-5 col-lg-8 col-md-12 col-xxl-8">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Depth Chart</h4>
+                        </div>
+                        <div class="card-body">
+                            <div id="chartdiv"></div>
                         </div>
                     </div>
+                </div>
 
-                    <!-- <div class="col-xl-2 col-lg-4 col-xxl-4">
+                <!-- <div class="col-xl-2 col-lg-4 col-xxl-4">
                         <div class="card">
                             <div class="card-header">
                                 <h4 class="card-title">Your Portfolio </h4>
@@ -944,7 +831,7 @@
                         </div>
                     </div> -->
 
-                    <!-- <div class="col-xl-2 col-lg-6 col-md-6 col-xxl-6">
+                <!-- <div class="col-xl-2 col-lg-6 col-md-6 col-xxl-6">
                         <div class="card">
                             <div class="card-header">
                                 <h4 class="card-title">Market News</h4>
@@ -984,7 +871,7 @@
                         </div>
                     </div> -->
 
-                    <!-- <div class="col-xl-2 col-lg-6 col-md-6 col-xxl-6">
+                <!-- <div class="col-xl-2 col-lg-6 col-md-6 col-xxl-6">
                         <div class="card">
                             <div class="card-header">
                                 <h4 class="card-title">Your Position</h4>
@@ -1038,7 +925,7 @@
                         </div>
                     </div> -->
 
-                    <!-- <div class="col-xl-10 col-lg-12 col-xxl-12">
+                <!-- <div class="col-xl-10 col-lg-12 col-xxl-12">
                         <div class="card">
                             <div class="card-header">
                                 <ul class="nav nav-pills" role="tablist">
@@ -1653,88 +1540,122 @@
             </div>
 
         </div> -->
-        {% include "components/dashboard-footer.html" %}
+                {% include "components/dashboard-footer.html" %}
 
-    <script src="{% static './js/global.js' %}"></script>
+                <script src="{% static './js/global.js' %}"></script>
 
-    <script src="{% static './vendor/amchart/amcharts.js' %}"></script>
-    <script src="{% static './vendor/amchart/serial.js' %}"></script>
-    <script src="{% static './vendor/amchart/dataloader.min.js' %}"></script>
-    <script src="{% static './vendor/amchart/dark.js' %}"></script>
-    <script src="{% static './js/plugins/amchart-init.js' %}"></script>
+                <script src="{% static './vendor/amchart/amcharts.js' %}"></script>
+                <script src="{% static './vendor/amchart/serial.js' %}"></script>
+                <script src="{% static './vendor/amchart/dataloader.min.js' %}"></script>
+                <script src="{% static './vendor/amchart/dark.js' %}"></script>
+                <script src="{% static './js/plugins/amchart-init.js' %}"></script>
 
-    <script src="{% static './vendor/toastr/toastr.min.js' %}"></script>
-    <!-- <script src="{% static './vendor/toastr/toastr-init.js' %}"></script> -->
+                <script src="{% static './vendor/toastr/toastr.min.js' %}"></script>
+                <!-- <script src="{% static './vendor/toastr/toastr-init.js' %}"></script> -->
 
-    <script src="{% static './vendor/circle-progress/circle-progress.min.js' %}"></script>
-    <script src="{% static './vendor/circle-progress/circle-progress-init.js' %}"></script>
-
-
-    <!--  flot-chart js -->
-    <script src="{% static './vendor/perfect-scrollbar/perfect-scrollbar.min.js' %}"></script>
-    <script src="{% static './vendor/apexchart/apexchart-init.js' %}"></script>
+                <script src="{% static './vendor/circle-progress/circle-progress.min.js' %}"></script>
+                <script src="{% static './vendor/circle-progress/circle-progress-init.js' %}"></script>
 
 
-    <script src="{% static './js/dashboard.js' %}"></script>
-    <script src="{% static './js/scripts.js' %}"></script>
+                <!--  flot-chart js -->
+                <script src="{% static './vendor/perfect-scrollbar/perfect-scrollbar.min.js' %}"></script>
+                <script src="{% static './vendor/apexchart/apexchart-init.js' %}"></script>
 
 
-    <script src="{% static './js/settings.js' %}"></script>
-    <script src="{% static './js/quixnav-init.js' %}"></script>
-    <script src="{% static './js/styleSwitcher.js' %}"></script>
-    <script src="https://s3.tradingview.com/tv.js"></script>
-    <!-- <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script> -->
-    <script>
-        new TradingView.widget(
-            {
-                "width": "100%",
-                "height": 460,
-                "symbol": "BITSTAMP:BTCUSD",
-                "interval": "D",
-                "timezone": "Etc/UTC",
-                "theme": "Dark",
-                "style": "1",
-                "locale": "en",
-                "toolbar_bg": "#f1f3f6",
-                "enable_publishing": false,
-                "withdateranges": true,
-                "hide_side_toolbar": false,
-                "allow_symbol_change": true,
-                "show_popup_button": true,
-                "popup_width": "1000",
-                "popup_height": "650",
-                "container_id": "tradingview_e8053"
-            }
-
-        );
-
-    </script>
-    <script type="text/javascript">
-
-        const form = document.getElementById('buybtc');
-        form.addEventListener("submit", submithandler);
+                <script src="{% static './js/dashboard.js' %}"></script>
+                <script src="{% static './js/scripts.js' %}"></script>
 
 
-        function submithandler(e){
-            e.preventDefault();
+                <script src="{% static './js/settings.js' %}"></script>
+                <script src="{% static './js/quixnav-init.js' %}"></script>
+                <script src="{% static './js/styleSwitcher.js' %}"></script>
+                <script src="https://s3.tradingview.com/tv.js"></script>
+                <!-- <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script> -->
+                <script>
+                    new TradingView.widget(
+                        {
+                            "width": "100%",
+                            "height": 460,
+                            "symbol": "BITSTAMP:BTCUSD",
+                            "interval": "D",
+                            "timezone": "Etc/UTC",
+                            "theme": "Dark",
+                            "style": "1",
+                            "locale": "en",
+                            "toolbar_bg": "#f1f3f6",
+                            "enable_publishing": false,
+                            "withdateranges": true,
+                            "hide_side_toolbar": false,
+                            "allow_symbol_change": true,
+                            "show_popup_button": true,
+                            "popup_width": "1000",
+                            "popup_height": "650",
+                            "container_id": "tradingview_e8053"
+                        }
 
-            $.ajax({
-            type: 'POST',
-            url:"{% url 'home:dashboard' %}", 
-            data:  {
-                amount:$('#amount').val(),
-                csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
-            },
-            success:function(){
-            }
-        });
+                    );
 
-        const form = document.getElementById('current');
-        const btc = document.getElementById('amount');
-        const usdtotal = form.value * btc.value
-        document.getElementById("current").value = usdtotal;
-        }
-    </script>
+                </script>
+                <script type="text/javascript">
+
+                    const form = document.getElementById('buybtc');
+                    form.addEventListener("submit", submithandler);
+
+
+                    function submithandler(e) {
+                        e.preventDefault();
+
+                        $.ajax({
+                            type: 'POST',
+                            url: "{% url 'home:dashboard' %}",
+                            data: {
+                                amount: $('#amount').val(),
+                                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+                            },
+                            success: function () {
+                            }
+                        });
+
+                        const form = document.getElementById('current');
+                        const btc = document.getElementById('amount');
+                        const usdtotal = form.value * btc.value
+                        document.getElementById("current").value = usdtotal;
+                    }
+                </script>
+                {% if user %}
+                <script>
+                    $(document).ready(function () {
+                        $.ajax({
+                            type: 'POST',
+                            url: "{% url 'home:signals' %}",
+                            dataType: "json",
+                            data: {
+                                ali: "Ali",
+                                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+                            },
+                            error: function (msg) {
+                                console.log(msg.responseText)
+                                return msg;
+                            },
+                            success: function (res) {
+                                console.log('data')
+                                console.log(res)
+                                // rowdata = data
+                                rows = ''
+                                res.data.filter(e => e.pair.slice(-3) == "BTC").filter(e => e._type == "BUY").map( (e, index) => {
+                                    rows += `<tr>
+                                        <td>${'{{botamount}}'}</td>
+                                        <td><a href="${e.pairurl}" style="text-decoration: none !important; color: inherit;" target="_blank">${e.pair}</td>
+                                        <td>${e.price}</td>
+                                        </tr>`
+                                })
+                                $('#bottable tbody').append(rows)
+                            }
+                        })
+                    })
+            
+                </script>
+                {% endif%}
 </body>
 
 </html>
