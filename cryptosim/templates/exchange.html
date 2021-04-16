@@ -345,9 +345,14 @@
                                     <div class="row mt-2 ml-2">
                                         <div class="col-2">
                                             {% if botstatus %}
-                                            <button type="submit" name="stopbot" class="btn btn-danger btn-block">Stop the Bot</button>
+                                            <button type="submit" name="deletebot" class="btn btn-danger btn-block">Delete the Bot</button>
                                             {% else %}
                                             <button type="submit" name="startbot" class="btn btn-success btn-block">Start the Bot</button>
+                                            {% endif %}
+                                        </div>
+                                        <div class="col-2">
+                                            {% if botstatus %}
+                                            <button type="submit" name="pausebot" class="btn btn-info btn-block">Pause the Bot</button>
                                             {% endif %}
                                         </div>
                                     </div>
@@ -612,6 +617,40 @@
                                 }
                             });
                         }
+                    </script>
+                    <script>
+                        $(document).ready(function () {
+                            $.ajax({
+                                type: 'POST',
+                                url: "{% url 'home:signals' %}",
+                                dataType: "json",
+                                data: {
+                                    ali: "Ali",
+                                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+                                },
+                                error: function (msg) {
+                                    console.log(msg.responseText)
+                                    return msg;
+                                },
+                                success: function (res) {
+                                    console.log('data')
+                                    console.log(res)
+                                    // rowdata = data
+                                    rows = ''
+                                    res.data.filter(e => e.pair.slice(-3) == "BTC").filter(e => e._type == "BUY").map( (e, index) => {
+                                        rows += `<tr>
+                                            <td>${index + 1}</td>
+                                            <td>${e._type}</td>
+                                            <td>${'{{botamount}}'}</td>
+                                            <td><a href="${e.pairurl}" style="text-decoration: none !important; color: inherit;" target="_blank">${e.pair}</td>
+                                            <td>${e.price}</td>
+                                            </tr>`
+                                    })
+                                    $('#signaltable tbody').append(rows)
+                                }
+                            })
+                        })
+                
                     </script>
 </body>
 

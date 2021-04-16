@@ -68,69 +68,6 @@
                     </div>
                     <div class="col-xl-12">
                         <div class="row">
-                            <div class="col-xl-6 col-md-6">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h4 class="card-title">User Profile</h4>
-                                    </div>
-                                    <div class="card-body">
-                                        <form action="#">
-                                            <div class="form-row">
-                                                <div class="form-group col-xl-12">
-                                                    <label class="mr-sm-2">Your Name</label>
-                                                    <input type="text" class="form-control" placeholder="{{user.first_name}}">
-                                                </div>
-                                                <div class="form-group col-xl-12">
-                                                    <div class="media align-items-center mb-3">
-                                                        <img class="mr-3 rounded-circle mr-0 mr-sm-3"
-                                                            src="images/profile/2.png" width="50" height="50" alt="">
-                                                        <div class="media-body">
-                                                            <h5 class="mb-0">{{user.first_name}}</h5>
-                                                            <p class="mb-0">Max file size is 20mb
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="file-upload-wrapper" data-text="Change Photo">
-                                                        <input name="file-upload-field" type="file"
-                                                            class="file-upload-field">
-                                                    </div>
-                                                </div>
-                                                <div class="col-12">
-                                                    <button class="btn btn-success waves-effect px-4">Save</button>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-6 col-md-6">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h4 class="card-title">User Profile</h4>
-                                    </div>
-                                    <div class="card-body">
-                                        <form action="#">
-                                            <div class="form-row">
-                                                <div class="form-group col-xl-12">
-                                                    <label class="mr-sm-2">New Email</label>
-                                                    <input type="email" class="form-control" placeholder="Email">
-                                                </div>
-                                                <div class="form-group col-xl-12">
-                                                    <label class="mr-sm-2">New Password</label>
-                                                    <input type="password" class="form-control"
-                                                        placeholder="**********">
-                                                    <p class="mt-2 mb-0">Enable two factor authencation on the security
-                                                        page
-                                                    </p>
-                                                </div>
-                                                <div class="col-12">
-                                                    <button class="btn btn-success waves-effect px-4">Save</button>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
                             <div class="col-xl-12">
                                 <div class="card">
                                     <div class="card-header">
@@ -142,43 +79,43 @@
                                             <div class="form-row">
                                                 <div class="form-group col-xl-6 col-md-6">
                                                     <label class="mr-sm-2">First Name</label>
-                                                    <input type="text" class="form-control" placeholder="{{first_name}}"
+                                                    <input type="text" class="form-control" value="{{first_name}}"
                                                         name="first_name">
                                                 </div>
-                                                <div class="form-group col-xl-6 col-md-6">
+                                                <!-- <div class="form-group col-xl-6 col-md-6">
                                                     <label class="mr-sm-2">Email</label>
                                                     <input type="text" class="form-control"
-                                                        placeholder="{{email}}" name="email" >
-                                                </div>
+                                                        placeholder="{{email}}" name="email">
+                                                </div> -->
                                                 <div class="form-group col-xl-6 col-md-6">
                                                     <label class="mr-sm-2">Last Name</label>
-                                                    <input type="text" class="form-control" placeholder="{{last_name}}"
+                                                    <input type="text" class="form-control" value="{{last_name}}"
                                                          name="last_name">
                                                 </div>
                                                 <div class="form-group col-xl-6 col-md-6">
                                                     <label class="mr-sm-2">Address</label>
                                                     <input type="text" class="form-control"
-                                                        placeholder="{{address}}" name="address">
+                                                    value="{{address}}" name="address">
                                                 </div>
-                                                <div class="form-group col-xl-6 col-md-6">
-                                                    <label class="mr-sm-2">Date of birth</label>
-                                                    <input type="text" class="form-control"
-                                                        placeholder="{{dob}}"
-                                                        name="dob">
-                                                </div>
+                                                    <!-- <div class="form-group col-xl-6 col-md-6">
+                                                        <label class="mr-sm-2">Date of birth</label>
+                                                        <input type="text" class="form-control"
+                                                        value="{{dob}}"
+                                                            name="dob">
+                                                    </div> -->
                                                 <div class="form-group col-xl-6 col-md-6">
                                                     <label class="mr-sm-2">City</label>
-                                                    <input type="text" class="form-control" placeholder="{{city}}"
+                                                    <input type="text" class="form-control" value="{{city|default_if_none:''}}"
                                                         name="city">
                                                 </div>
                                                 <div class="form-group col-xl-6 col-md-6">
                                                     <label class="mr-sm-2">Postal Code</label>
-                                                    <input type="text" class="form-control" placeholder="{{postal_code}}"
+                                                    <input type="text" class="form-control" value="{{postal_code|default_if_none:''}}"
                                                         name="postal_code">
                                                 </div>
                                                 <div class="form-group col-xl-6 col-md-6">
                                                     <label class="mr-sm-2">Country</label>
-                                                    <input type="text" class="form-control" placeholder="{{country}}"
+                                                    <input type="text" class="form-control" value="{{country|default_if_none:''}}"
                                                         name="country">                                  
                              
                                                 </div>

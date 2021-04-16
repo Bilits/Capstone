@@ -22,6 +22,7 @@ from django.http import JsonResponse
 import requests
 import re
 import datetime 
+from random import random
 
 
 SIGNAL_URLS = [
@@ -215,8 +216,13 @@ def dashboard(request):
         'totalinbtc': balanceusdt / get_btc()['price'],
         'price': get_btc()['price'],
         'change24': get_btc()['change24'],
-        'marketcap': get_btc()['marketCap']['cad_market_cap']
-        
+        'marketcap': get_btc()['marketCap']['cad_market_cap'],
+        'botname' : get_user(request).wallet.botname,
+        'botamount' : get_user(request).wallet.botamount,
+        'botsignal' : get_user(request).wallet.botsignal,
+        'botdate' : get_user(request).wallet.botdate,
+        'botbenefit' : get_user(request).wallet.botbenefit,
+        'botstatus' : get_user(request).wallet.botstatus,
     }
     if get_user(request).professional == True:
         return render(request, 'dashboard-professional.html', context)
@@ -367,12 +373,23 @@ def account_exchange(request):
                 profile.wallet.botname = botname
                 profile.wallet.botamount = botamount
                 profile.wallet.botdate = datetime.date.today()
+                profile.wallet.botbenefit = round(random(), 2)
                 profile.save()
                 alarm = "successful-bot"
             else:
                 alarm = "not_enough_bot"
     elif request.method == 'POST' and 'startbot' in request.POST:
         profile.wallet.botstatus = True
+        profile.save()
+
+    elif request.method == 'POST' and 'pausebot' in request.POST:
+        profile.wallet.botstatus = False
+        profile.save()
+
+    elif request.method == 'POST' and 'deletebot' in request.POST:
+        profile.wallet.botstatus = False
+        profile.wallet.botname = ''
+        profile.wallet.botamount = 0
         profile.save()
 
     x = Transaction.objects.filter(wallet = Wallet.objects.get(id = request.user.id)).count()
@@ -386,7 +403,8 @@ def account_exchange(request):
             'usd': y[i].amountusd
             })
         
-
+    profile.wallet.botbenefit += round(random()/3, 2)
+    profile.save()
     context = {
         'price' : get_btc()['price'],
         'balance' : get_balance(request),
@@ -420,22 +438,18 @@ def setting(request):
         'postal_code': profile.postal_code,
     }
     if request.method == 'POST':
-        form = PersonalInformationForm(request.POST)
-        print("{PSTTS")
-        if form.is_valid():
-            print("post valid")
-            profile = form.save()
-            profile = get_user(request)
-            profile.first_name = form.cleaned_data.get('first_name')
-            profile.last_name = form.cleaned_data.get('last_name')
-            profile.email = form.cleaned_data.get('email')
-            profile.country = form.cleaned_data.get('country')
-            profile.city = form.cleaned_data.get('city')
-            profile.postal_code = form.cleaned_data.get('postal_code')
-            profile.address = form.cleaned_data.get('address')
-            profile.dob = form.cleaned_data.get('dob')
-            form.save()
-            return redirect('home:setting')
-        else:
-            form = PersonalInformationForm()
+        print(request.method)
+        # profile = form.save(commit=False)
+        # user = request.user
+        # profile = user.profile
+        profile.first_name = request.POST['first_name']
+        profile.last_name = request.POST['last_name']
+        # profile.email = form.cleaned_data.get('email')
+        profile.country = request.POST['country']
+        profile.city = request.POST['city']
+        profile.postal_code = request.POST['postal_code']
+        profile.address = request.POST['address']
+        # profile.dob = form.cleaned_data.get('dob')
+        profile.save()
+        return redirect('home:setting')
     return render(request, 'settings.html', context)

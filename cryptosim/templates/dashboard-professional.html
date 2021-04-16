@@ -99,30 +99,17 @@
                     <div class="col-xl-6 col-xxl-12 col-lg-12 col-xxl-6">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">Your Wallet</h4>
-                                <span>Update <span>10</span> minutes ago</span>
+                                <h4 class="card-title">Your Trade Bot</h4>
                             </div>
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-xl col-lg col-md col-sm-auto col-6">
-                                        <p class="mb-0">Equity</p>
-                                        <!-- <h6>34.00 USD</h6> -->
+                                        <p class="mb-0">Name</p>
+                                        <h6>{% if botname %}{{botname}}{% else %}No bot assigned! {% endif %}</h6>
                                     </div>
                                     <div class="col-xl col-lg col-md col-sm-auto col-6">
-                                        <p class="mb-0">Available Margin</p>
-                                        <!-- <h6>47.00 USD</h6> -->
-                                    </div>
-                                    <div class="col-xl col-lg col-md col-sm-auto col-6">
-                                        <p class="mb-0">Unrealized P&L</p>
-                                        <!-- <h6>92.00 USD</h6> -->
-                                    </div>
-                                    <div class="col-xl col-lg col-md col-sm-auto col-6">
-                                        <p class="mb-0">Position Margin</p>
-                                        <!-- <h6>58.00 USD</h6> -->
-                                    </div>
-                                    <div class="col-xl col-lg col-md col-sm-auto col-6">
-                                        <p class="mb-0">Active Orders</p>
-                                        <!-- <h6>15.00 USD</h6> -->
+                                        <p class="mb-0">Status</p>
+                                        {% if botname %}{% if botstatus %}Running{% else %}Paused{% endif %}{% endif %}
                                     </div>
                                 </div>
                             </div>
@@ -475,195 +462,43 @@
                         <!-- TradingView Widget END -->
                     </div>
 
-                    <div class="col-xl-2 col-lg-4 col-md-6 col-xxl-4">
+                    <div class="col-xl-4 col-lg-4 col-md-6 col-xxl-4">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">Order Book</h4>
+                                <h4 class="card-title">Bot Trade Activities</h4>
                             </div>
                             <div class="card-body order-book">
-                                <table class="table">
+                                {% if botname %}
+                                <table class="table" id="bottable">
                                     <thead>
                                         <tr>
-                                            <th scope="col">Price (USD)</th>
-                                            <th scope="col">Price (BTC)</th>
-                                            <th scope="col">Total</th>
+                                            <th scope="col">Amount</th>
+                                            <th scope="col">Pair</th>
+                                            <th scope="col">Price</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td class="text-danger">10393.50</td>
-                                            <td>0.010</td>
-                                            <td>14.109</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-danger">10393.50</td>
-                                            <td>0.010</td>
-                                            <td>14.109</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-danger">10393.50</td>
-                                            <td>0.010</td>
-                                            <td>14.109</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-danger">10393.50</td>
-                                            <td>0.010</td>
-                                            <td>14.109</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-danger">10393.50</td>
-                                            <td>0.010</td>
-                                            <td>14.109</td>
-                                        </tr>
+                                        
                                     </tbody>
                                 </table>
-
-                                <div class="order-book-divider">
-                                    <h6 class="text-danger"> <i class="la la-arrow-down"></i> 6587.35</h6>
-                                    <span>6520.220 / 4835.00</span>
-                                </div>
-
+                                {% else %}
+                                
                                 <table class="table">
                                     <thead>
                                         <tr>
-                                            <th scope="col">Price (USD)</th>
-                                            <th scope="col">Price (BTC)</th>
-                                            <th scope="col">Total</th>
+                                            <th scope="col" style="text-align: left">No Actitvity</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td class="text-success">10393.50</td>
-                                            <td>0.010</td>
-                                            <td>14.109</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-success">10393.50</td>
-                                            <td>0.010</td>
-                                            <td>14.109</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-success">10393.50</td>
-                                            <td>0.010</td>
-                                            <td>14.109</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-success">10393.50</td>
-                                            <td>0.010</td>
-                                            <td>14.109</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-success">10393.50</td>
-                                            <td>0.010</td>
-                                            <td>14.109</td>
-                                        </tr>
-                                    </tbody>
                                 </table>
+                                {% endif %}
+
+
+                                
                             </div>
                         </div>
                     </div>
 
-                    <div class="col-xl-2 col-lg-4 col-md-6 col-xxl-4">
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h4 class="card-title">Trade History</h4>
-                                    </div>
-                                    <div class="card-body trade-history">
-                                        <div class="table-responsive">
-                                            <table class="table table-borderless">
-                                                <thead>
-                                                    <tr>
-                                                        <th scope="col">Price</th>
-                                                        <th scope="col">Size</th>
-                                                        <th scope="col">Time</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td class="text-danger">10393.50</td>
-                                                        <td>0.010</td>
-                                                        <td>14.109</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-danger">10393.50</td>
-                                                        <td>0.010</td>
-                                                        <td>14.109</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-danger">10393.50</td>
-                                                        <td>0.010</td>
-                                                        <td>14.109</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-danger">10393.50</td>
-                                                        <td>0.010</td>
-                                                        <td>14.109</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-danger">10393.50</td>
-                                                        <td>0.010</td>
-                                                        <td>14.109</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-danger">10393.50</td>
-                                                        <td>0.010</td>
-                                                        <td>14.109</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-danger">10393.50</td>
-                                                        <td>0.010</td>
-                                                        <td>14.109</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-danger">10393.50</td>
-                                                        <td>0.010</td>
-                                                        <td>14.109</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-danger">10393.50</td>
-                                                        <td>0.010</td>
-                                                        <td>14.109</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-danger">10393.50</td>
-                                                        <td>0.010</td>
-                                                        <td>14.109</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-danger">10393.50</td>
-                                                        <td>0.010</td>
-                                                        <td>14.109</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-danger">10393.50</td>
-                                                        <td>0.010</td>
-                                                        <td>14.109</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-danger">10393.50</td>
-                                                        <td>0.010</td>
-                                                        <td>14.109</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-danger">10393.50</td>
-                                                        <td>0.010</td>
-                                                        <td>14.109</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-danger">10393.50</td>
-                                                        <td>0.010</td>
-                                                        <td>14.109</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    
 
                     <div class="col-xl-3 col-lg-4 col-md-12 col-xxl-4">
                         <div class="card">
@@ -1734,6 +1569,38 @@
         const usdtotal = form.value * btc.value
         document.getElementById("current").value = usdtotal;
         }
+    </script>
+    <script>
+        $(document).ready(function () {
+            $.ajax({
+                type: 'POST',
+                url: "{% url 'home:signals' %}",
+                dataType: "json",
+                data: {
+                    ali: "Ali",
+                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+                },
+                error: function (msg) {
+                    console.log(msg.responseText)
+                    return msg;
+                },
+                success: function (res) {
+                    console.log('data')
+                    console.log(res)
+                    // rowdata = data
+                    rows = ''
+                    res.data.filter(e => e.pair.slice(-3) == "BTC").filter(e => e._type == "BUY").map( (e, index) => {
+                        rows += `<tr>
+                            <td>${'{{botamount}}'}</td>
+                            <td><a href="${e.pairurl}" style="text-decoration: none !important; color: inherit;" target="_blank">${e.pair}</td>
+                            <td>${e.price}</td>
+                            </tr>`
+                    })
+                    $('#bottable tbody').append(rows)
+                }
+            })
+        })
+
     </script>
 </body>
 
