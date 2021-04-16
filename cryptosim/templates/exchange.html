@@ -1,154 +1,155 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-    {% include "components/dashboard-head.html" %}
+{% include "components/dashboard-head.html" %}
+
 <body>
     {% csrf_token %}
     {% include "components/dashboard-preloader.html" %}
     <div id="main-wrapper">
         {% include "components/dashboard-topnav.html" %}
-        </div>
-        {% include "components/dashbaord-sidebar.html" %}
-        <div class="page-title dashboard">
-            <div class="container">
-                <div class="row">
-                    <div class="col-6">
-                        <div class="page-title-content">
-                            <p>Welcome Back,
-                                <span> {{user.first_name}}</span>
-                            </p>
-                        </div>
+    </div>
+    {% include "components/dashbaord-sidebar.html" %}
+    <div class="page-title dashboard">
+        <div class="container">
+            <div class="row">
+                <div class="col-6">
+                    <div class="page-title-content">
+                        <p>Welcome Back,
+                            <span> {{user.first_name}}</span>
+                        </p>
                     </div>
-                    <div class="col-6">
-                        <ul class="text-right breadcrumbs list-unstyle">
-                            <li><a href="{% url 'home:setting'%}">Settings </a></li>
-                            <li class="active"><a href="#">Security</a></li>
-                        </ul>
-                    </div>
+                </div>
+                <div class="col-6">
+                    <ul class="text-right breadcrumbs list-unstyle">
+                        <li><a href="{% url 'home:setting'%}">Settings </a></li>
+                        <li class="active"><a href="#">Security</a></li>
+                    </ul>
                 </div>
             </div>
         </div>
+    </div>
 
-        <div class="content-body">
-            <div class="container">
-                <div class="row">
-                    <div class="col-xl-6 col-lg-6 col-md-6">
-                        <div class="card">
-                            <div class="card-header">
-                                <h4 class="card-title">Buy</h4>
-                            </div>
-                            <div class="card-body">
-                                <div class="buy-sell-widget">
-                                    <form method="post" name="myform" class="currency_validate" id="buying">
-                                        {% csrf_token %}
-                                        <div class="form-group">
-                                            <label class="mr-sm-2">Cryptocurrency</label>
-                                            <div class="input-group mb-3">
-                                                <select name='currency' class="form-control mw-300">
-                                                    <!-- mw-150 -->
-                                                    <option data-display="Bitcoin at {{price}} USD" value="bitcoin">
-                                                        Bitcoin
-                                                    </option>
-                                                    <!-- <option value="litecoin">Litecoin</option> -->
-                                                </select>
-                                                <!-- <input type="text" name="btc_amount" class="form-control text-right"
+    <div class="content-body">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-6 col-lg-6 col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Buy</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="buy-sell-widget">
+                                <form method="post" name="myform" class="currency_validate" id="buying">
+                                    {% csrf_token %}
+                                    <div class="form-group">
+                                        <label class="mr-sm-2">Cryptocurrency</label>
+                                        <div class="input-group mb-3">
+                                            <select name='currency' class="form-control mw-300">
+                                                <!-- mw-150 -->
+                                                <option data-display="Bitcoin at {{price}} USD" value="bitcoin">
+                                                    Bitcoin
+                                                </option>
+                                                <!-- <option value="litecoin">Litecoin</option> -->
+                                            </select>
+                                            <!-- <input type="text" name="btc_amount" class="form-control text-right"
                                                     value="" placeholder="{{ price }} USD"> -->
-                                            </div>
                                         </div>
+                                    </div>
 
-                                        <div class="form-group">
-                                            <label class="mr-sm-2">With</label>
-                                            <div class="input-group mb-3">
-                                                <select name='currency' class="form-control">
-                                                    <option data-display="Tether" value="Tether">Tether
-                                                    </option>
-                                                    <!-- <option value="litecoin">Litecoin</option> -->
-                                                </select>
-                                                <!-- <input type="text" name="usd_amount" class="form-control"
+                                    <div class="form-group">
+                                        <label class="mr-sm-2">With</label>
+                                        <div class="input-group mb-3">
+                                            <select name='currency' class="form-control">
+                                                <option data-display="Tether" value="Tether">Tether
+                                                </option>
+                                                <!-- <option value="litecoin">Litecoin</option> -->
+                                            </select>
+                                            <!-- <input type="text" name="usd_amount" class="form-control"
                                                     value="125.00 USD"> -->
-                                            </div>
                                         </div>
+                                    </div>
 
-                                        <div class="form-group">
-                                            <label class="mr-sm-2">Enter amount</label>
-                                            <div class="input-group">
-                                                <input type="text" name="btc-amount" id="amount" class="form-control"
-                                                    placeholder="{{amount}} BTC">
-                                                <!-- <input type="text" name="usd_amount" class="form-control"
+                                    <div class="form-group">
+                                        <label class="mr-sm-2">Enter amount</label>
+                                        <div class="input-group">
+                                            <input type="text" name="btc-amount" id="amount" class="form-control"
+                                                placeholder="{{amount}} BTC">
+                                            <!-- <input type="text" name="usd_amount" class="form-control"
                                                     placeholder="125.00 USD"> -->
-                                            </div>
-                                            <div class="d-flex justify-content-between mt-3">
-                                                <p class="mb-0">Balance:</p>
-                                                <h6 class="mb-0" id="remaining">{{balance|floatformat:2}} USD</h6>
-                                            </div>
                                         </div>
-                                        <button type="submit" name="submit" class="btn btn-success btn-block">Buy
-                                            Virtually</button>
+                                        <div class="d-flex justify-content-between mt-3">
+                                            <p class="mb-0">Balance:</p>
+                                            <h6 class="mb-0" id="remaining">{{balance|floatformat:2}} USD</h6>
+                                        </div>
+                                    </div>
+                                    <button type="submit" name="submit" class="btn btn-success btn-block">Buy
+                                        Virtually</button>
 
-                                    </form>
-                                </div>
+                                </form>
                             </div>
                         </div>
                     </div>
-                    <div class="col-xl-6 col-lg-6 col-md-6">
-                        <div class="card">
-                            <div class="card-header">
-                                <h4 class="card-title">Sell</h4>
-                            </div>
-                            <div class="card-body">
-                                <div class="buy-sell-widget">
-                                    <form method="post" name="myform" class="currency_validate" id="selling">
-                                        {% csrf_token %}
-                                        <div class="form-group">
-                                            <label class="mr-sm-2">Cryptocurrency</label>
-                                            <div class="input-group mb-3">
-                                                <select name='currency' class="form-control mw-300">
-                                                    <option data-display="Bitcoin at {{price}} USD" value="bitcoin">
-                                                        Bitcoin
-                                                    </option>
-                                                    <!-- <option value="litecoin">Litecoin</option> -->
-                                                </select>
-                                                <!-- <input type="text" name="usd_amount" id="amount-id" class="form-control text-right"
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Sell</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="buy-sell-widget">
+                                <form method="post" name="myform" class="currency_validate" id="selling">
+                                    {% csrf_token %}
+                                    <div class="form-group">
+                                        <label class="mr-sm-2">Cryptocurrency</label>
+                                        <div class="input-group mb-3">
+                                            <select name='currency' class="form-control mw-300">
+                                                <option data-display="Bitcoin at {{price}} USD" value="bitcoin">
+                                                    Bitcoin
+                                                </option>
+                                                <!-- <option value="litecoin">Litecoin</option> -->
+                                            </select>
+                                            <!-- <input type="text" name="usd_amount" id="amount-id" class="form-control text-right"
                                                     value="" placeholder="{{amount}} BTC"> -->
-                                            </div>
                                         </div>
+                                    </div>
 
-                                        <div class="form-group">
-                                            <label class="mr-sm-2">Receive</label>
-                                            <div class="input-group mb-3">
-                                                <select name='currency' class="form-control">
-                                                    <option data-display="Tether" value="Tether">Tether
-                                                    </option>
-                                                    <!-- <option value="litecoin">Litecoin</option> -->
-                                                </select>
-                                                <!-- <input type="text" name="usd_amount" class="form-control"
+                                    <div class="form-group">
+                                        <label class="mr-sm-2">Receive</label>
+                                        <div class="input-group mb-3">
+                                            <select name='currency' class="form-control">
+                                                <option data-display="Tether" value="Tether">Tether
+                                                </option>
+                                                <!-- <option value="litecoin">Litecoin</option> -->
+                                            </select>
+                                            <!-- <input type="text" name="usd_amount" class="form-control"
                                                     value="125.00 USD"> -->
-                                            </div>
                                         </div>
+                                    </div>
 
-                                        <div class="form-group">
-                                            <label class="mr-sm-2">Enter amount</label>
-                                            <div class="input-group">
-                                                <input required type="text" name="btc-amount-sell" id="amount_sell"
-                                                    class="form-control" placeholder="{{amount}} BTC">
-                                                <!-- <input type="text" name="usd_amount" class="form-control"
+                                    <div class="form-group">
+                                        <label class="mr-sm-2">Enter amount</label>
+                                        <div class="input-group">
+                                            <input required type="text" name="btc-amount-sell" id="amount_sell"
+                                                class="form-control" placeholder="{{amount}} BTC">
+                                            <!-- <input type="text" name="usd_amount" class="form-control"
                                                     placeholder="125.00 USD"> -->
-                                            </div>
-                                            <div class="d-flex justify-content-between mt-3">
-                                                <p class="mb-0">Balance:</p>
-                                                <h6 class="mb-0" id="remaining-btc">{{btc|floatformat:6}} BTC</h6>
-                                            </div>
                                         </div>
-                                        <button type="submit" name="submit" class="btn btn-danger btn-block">Sell
-                                            Virtually</button>
+                                        <div class="d-flex justify-content-between mt-3">
+                                            <p class="mb-0">Balance:</p>
+                                            <h6 class="mb-0" id="remaining-btc">{{btc|floatformat:6}} BTC</h6>
+                                        </div>
+                                    </div>
+                                    <button type="submit" name="submit" class="btn btn-danger btn-block">Sell
+                                        Virtually</button>
 
-                                    </form>
-                                </div>
-
+                                </form>
                             </div>
+
                         </div>
                     </div>
-                    <!-- <div class="col-xl-9 col-lg-9 col-md-12">
+                </div>
+                <!-- <div class="col-xl-9 col-lg-9 col-md-12">
                         <div class="card">
                             <div class="card-body">
                                 <div class="buyer-seller">
@@ -215,134 +216,106 @@
                         </div>
                     </div> -->
 
-                    <!-- Bank of America Bank  -->
+                <!-- Bank of America Bank  -->
 
-                    <div class="col-xl-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <h4 class="card-title">All activities</h4>
-                            </div>
-                            <div class="card-body">
-                                <div class="transaction-table">
-                                    <div class="table-responsive">
-                                        
-                                        <table class="table table-striped mb-0 table-responsive-sm" id="activitytable">
-                                            <thead>
-                                            </thead>
-                                            <tbody>
-                                                {% if range %}
-                                                {% for i in object %}
-                                                    <tr>
-                                                        <td><span class="sold-thumb"><i
-                                                                    class="mdi mdi-arrow-down"></i></span>
-                                                        </td>
-                                                        <td>
-                                                            <span class="badge badge-{{i.color}} p-2">
-                                                                    {{i.types}}
-                                                            </span>
-                                                        </td>
-                                                        <td>
-                                                            <i class="cc {{coin}}"></i> {{coin}}
-                                                        </td>
-                                                        <td>
-                                                            User - {{user}}
-                                                        </td>
-                                                        <td class="text-{{i.color}}">
-                                                            {% if i.types == 'Buy' %} 
-                                                                <span class="text-success">
-                                                                    +{{i.amount|floatformat:4}} BTC
-                                                                </span>
-                                                            {% else %} 
-                                                                <span class="text-danger">
-                                                                    -{{i.amount|floatformat:4}} BTC
-                                                                </span>
-                                                            {% endif %}                                                         
-                                                        </td>
-                                                        <td>
-                                                            {% if i.types == 'Buy' %} 
-                                                                <span class="text-danger">
-                                                                    -{{i.usd|floatformat}} USDT
-                                                                </span>
-                                                            {% else %} 
-                                                                <span class="text-success">
-                                                                    +{{i.usd|floatformat}} USDT
-                                                                </span>
-                                                            {% endif %} 
-                                                        </td>
-                                                    </tr>
-                                                {% endfor %}
-                                                {% endif %}
-                                            </tbody>
-                                        </table>
-                                        
-                                        
-                                    </div>
+                <div class="col-xl-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">All activities</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="transaction-table">
+                                <div class="table-responsive">
+
+                                    <table class="table table-striped mb-0 table-responsive-sm" id="activitytable">
+                                        <thead>
+                                        </thead>
+                                        <tbody>
+                                            {% if range %}
+                                            {% for i in object %}
+                                            <tr>
+                                                <td><span class="sold-thumb"><i class="mdi mdi-arrow-down"></i></span>
+                                                </td>
+                                                <td>
+                                                    <span class="badge badge-{{i.color}} p-2">
+                                                        {{i.types}}
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <i class="cc {{coin}}"></i> {{coin}}
+                                                </td>
+                                                <td>
+                                                    User - {{user}}
+                                                </td>
+                                                <td class="text-{{i.color}}">
+                                                    {% if i.types == 'Buy' %}
+                                                    <span class="text-success" id="buyhere">
+                                                        +{{i.amount|floatformat:4}} BTC
+                                                    </span>
+                                                    {% else %}
+                                                    <span class="text-danger">
+                                                        -{{i.amount|floatformat:4}} BTC
+                                                    </span>
+                                                    {% endif %}
+                                                </td>
+                                                <td>
+                                                    {% if i.types == 'Buy' %}
+                                                    <span class="text-danger">
+                                                        -{{i.usd|floatformat}} USDT
+                                                    </span>
+                                                    {% else %}
+                                                    <span class="text-success">
+                                                        +{{i.usd|floatformat}} USDT
+                                                    </span>
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                            {% endif %}
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    {% if not botname %}
+                </div>
+                {% if not botname %}
 
-                    <div class="col-xl-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <h4 class="card-title">Creat a Trade Bot</h4>
-                            </div>
-                            <div class="card-body">
-                                <form method="post" name="botform" class="botform" id="botform">
-                                    {% csrf_token %}
-                                    <div class="form-group">
-                                        <label class="mr-sm-2">Enter the name of the Bot</label>
-                                        <div class="input-group">
-                                            <input type="text" name="bot-name" id="amount" class="form-control"
-                                                placeholder="Name of the Bot" required>
-                                        </div>
-                                        <label class="mr-sm-2 mt-3">Assign a Signal</label>
-                                        <div class="input-group mb-3">
-                                            <select name='bot-signal' class="form-control">
-                                                <option data-display="CryptoGnome Signals" value="CryptoGnome Signals" selected>CryptoGnome Signals
-                                                </option>
-                                                <option data-display="Jackrabbit Premium Sampler" value="Jackrabbit Premium Sampler">Jackrabbit Premium Sampler
-                                                </option>
-                                                <option data-display="Killer Whale Bank Robber Signals" value="Killer Whale Bank Robber Signals">Killer Whale Bank Robber Signals
-                                                </option>
-                                            </select>
-                                        </div>
-                                        <label class="mr-sm-2">Amount of each signal buy</label>
-                                        <div class="input-group">
-                                            <input type="text" name="btc-amount" id="amount" class="form-control"
-                                                placeholder="0.0 BTC" required>
-                                        </div>
-                                        <div class="row mt-3">
-                                            <div class="col-2">
-                                                <button type="submit" name="submit" class="btn btn-success btn-block">Start the Bot</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
+                <div class="col-xl-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Creat a Trade Bot</h4>
                         </div>
-                    </div>
-                    {% endif %}
-
-                    {% if botname %}
-                    <div class="col-xl-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <h4 class="card-title">Running Bot</h4>
-                            </div>
-                            <div class="card-body">
-                                <p>Name: {{botname}}</p>
-                                <p>Signal: {{botsignal}}</p>
-                                <p>Buying amount per signal: {{botamount}}</p>
-                                <p>Create Date: {{botdate}}</p>
-                                <p>Status: {% if botstatus %} Running {% else %} Paused {% endif %}</p>
-                                <p>Profit: {{botbenefit}}%</p>
-                            </div>
-                            <form method="post" name="startbot" class="botform" id="botform">
+                        <div class="card-body">
+                            <form method="post" name="botform" class="botform" id="botform">
                                 {% csrf_token %}
                                 <div class="form-group">
-                                    <div class="row mt-2 ml-2">
+                                    <label class="mr-sm-2">Enter the name of the Bot</label>
+                                    <div class="input-group">
+                                        <input type="text" name="bot-name" id="amount" class="form-control"
+                                            placeholder="Name of the Bot" required>
+                                    </div>
+                                    <label class="mr-sm-2 mt-3">Assign a Signal</label>
+                                    <div class="input-group mb-3">
+                                        <select name='bot-signal' class="form-control">
+                                            <option data-display="CryptoGnome Signals" value="CryptoGnome Signals"
+                                                selected>CryptoGnome Signals
+                                            </option>
+                                            <option data-display="Jackrabbit Premium Sampler"
+                                                value="Jackrabbit Premium Sampler">Jackrabbit Premium Sampler
+                                            </option>
+                                            <option data-display="Killer Whale Bank Robber Signals"
+                                                value="Killer Whale Bank Robber Signals">Killer Whale Bank Robber
+                                                Signals
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <label class="mr-sm-2">Amount of each signal buy</label>
+                                    <div class="input-group">
+                                        <input type="text" name="btc-amount" id="amount" class="form-control"
+                                            placeholder="0.0 BTC" required>
+                                    </div>
+                                    <div class="row mt-3">
                                         <div class="col-2">
                                             {% if botstatus %}
                                             <button type="submit" name="deletebot" class="btn btn-danger btn-block">Delete the Bot</button>
@@ -360,36 +333,71 @@
                             </form>
                         </div>
                     </div>
-                        {% if botstatus %}
-                            <div class="col-xl-12">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h4 class="card-title">Bot Activities</h4>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="transaction-table">
-                                            <div class="table-responsive">
-                                                <table class="table table-striped mb-0 table-responsive-sm" id="signaltable">
-                                                    <thead>
-                                                        <tr>
-                                                            <th scope="col">Number</th>
-                                                            <th scope="col">Type</th>
-                                                            <th scope="col">Amount</th>
-                                                            <th scope="col">Pair</th>
-                                                            <th scope="col">Price</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
+                </div>
+                {% endif %}
+
+                {% if botname %}
+                <div class="col-xl-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Running Bot</h4>
+                        </div>
+                        <div class="card-body">
+                            <p>Name: {{botname}}</p>
+                            <p>Signal: {{botsignal}}</p>
+                            <p>Buying amount per signal: {{botamount}}</p>
+                            <p>Create Date: {{botdate}}</p>
+                            <p>Status: {% if botstatus %} Running {% else %} Paused {% endif %}</p>
+                            <p>Profit: {{botbenefit}}%</p>
+                        </div>
+                        <form method="post" name="startbot" class="botform" id="botform">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <div class="row mt-2 ml-2">
+                                    <div class="col-2">
+                                        {% if botstatus %}
+                                        <button type="submit" name="stopbot" class="btn btn-danger btn-block">Stop the
+                                            Bot</button>
+                                        {% else %}
+                                        <button type="submit" name="startbot" class="btn btn-success btn-block">Start
+                                            the Bot</button>
+                                        {% endif %}
                                     </div>
                                 </div>
                             </div>
-                        {% endif %}
-                    {% endif %}
-                    <!-- <div class="col-xl-6 col-lg-6 col-md-12">
+                        </form>
+                    </div>
+                </div>
+                {% if botstatus %}
+                <div class="col-xl-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Bot Activities</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="transaction-table">
+                                <div class="table-responsive">
+                                    <table class="table table-striped mb-0 table-responsive-sm" id="signaltable">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Number</th>
+                                                <th scope="col">Type</th>
+                                                <th scope="col">Amount</th>
+                                                <th scope="col">Pair</th>
+                                                <th scope="col">Price</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                {% endif %}
+                <!-- <div class="col-xl-6 col-lg-6 col-md-12">
                         <div class="card">
                             <div class="card-header">
                                 <h4 class="card-title">FAQ</h4>
@@ -488,132 +496,143 @@
             </div>
         </div> -->
 
-                    {% include "components/dashboard-footer.html" %}
-                    <script src="{% static './js/global.js' %}"></script>
+                {% include "components/dashboard-footer.html" %}
+                <script src="{% static './js/global.js' %}"></script>
 
-                    <script src="{% static './vendor/waves/waves.min.js' %}"></script>
-                    <script src="{% static './vendor/magnific-popup/magnific-popup.js' %}"></script>
-                    <script src="{% static './vendor/magnific-popup/magnific-popup-init.js' %}"></script>
-
-
-
-                    <script src="{% static './vendor/validator/jquery.validate.js' %}"></script>
-                    <script src="{% static './vendor/validator/validator-init.js' %}"></script>
-                    <script src="{% static './vendor/perfect-scrollbar/perfect-scrollbar.min.js' %}"></script>
-                    <script src="{% static './js/scripts.js' %}"></script>
-
-                    <script type="text/javascript">
-
-                        const form = document.getElementById('buying');
-                        form.addEventListener("submit", submithandler);
+                <script src="{% static './vendor/waves/waves.min.js' %}"></script>
+                <script src="{% static './vendor/magnific-popup/magnific-popup.js' %}"></script>
+                <script src="{% static './vendor/magnific-popup/magnific-popup-init.js' %}"></script>
 
 
-                        function submithandler(e) {
-                            e.preventDefault();
 
-                            $.ajax({
-                                type: 'POST',
-                                url: "{% url 'home:account_exchange' %}",
-                                data: {
-                                    amount: $('#amount').val(),
-                                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
-                                },
-                                success: function (resp) {
-                                    switch (resp.alarm) {
-                                        case "not_enough":
-                                            alert("not enought money in your wallet")
-                                            break;
-                                        case "successful":
-                                            $("#remaining").html(resp.new_balance + " USD")
-                                            $("#remaining-btc").html((resp.new_btc_balance).toFixed(6) + " BTC")
-                                            $("#amount").attr("placeholder", "{{amount}} BTC").val("").focus().blur();
-                                            rows = `<tr>
-                                                    <td><span class="sold-thumb"><i
-                                                                class="mdi mdi-arrow-down"></i></span>
-                                                    </td>
+                <script src="{% static './vendor/validator/jquery.validate.js' %}"></script>
+                <script src="{% static './vendor/validator/validator-init.js' %}"></script>
+                <script src="{% static './vendor/perfect-scrollbar/perfect-scrollbar.min.js' %}"></script>
+                <script src="{% static './js/scripts.js' %}"></script>
 
-                                                    <td>
-                                                        <span class="badge badge-{{type}} p-2">Buy</span>
-                                                    </td>
-                                                    <td>
-                                                        <i class="cc {{coin}}"></i> {{coin}}
-                                                    </td>
-                                                    <td>
-                                                        User - {{user}}
-                                                    </td>
-                                                    <td class="text-{{type}}">+{{btcamount}} BTC</td>
-                                                    <td>- USD</td>
-                                                </tr>`
-                                            $('#activitytable tbody').append(rows)
-                                            alert("you have successfully bought " + resp.amount + " BTC")
-                                            break;
-                                        case "empty":
-                                            alert("You have to enter a number")
-                                            break;
-                                        default:
-                                        // code block
-                                    }
+                <script type="text/javascript">
+
+                    const form = document.getElementById('buying');
+                    form.addEventListener("submit", submithandler);
+
+
+                    function submithandler(e) {
+                        e.preventDefault();
+
+                        $.ajax({
+                            type: 'POST',
+                            url: "{% url 'home:account_exchange' %}",
+                            data: {
+                                amount: $('#amount').val(),
+                                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+                            },
+                            success: function (resp) {
+                                switch (resp.alarm) {
+                                    case "not_enough":
+                                        alert("not enought money in your wallet")
+                                        break;
+                                    case "successful":
+                                        $("#remaining").html(resp.new_balance + " USD")
+                                        $("#remaining-btc").html((resp.new_btc_balance).toFixed(6) + " BTC")
+                                        $("#amount").attr("placeholder", "{{amount}} BTC").val("").focus().blur();
+                                        rows = `<tr>
+                                                <td><span class="sold-thumb"><i class="mdi mdi-arrow-down"></i></span>
+                                                </td>
+                                                <td>
+                                                    <span class="badge badge-success p-2">
+                                                        Buy
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <i class="cc {{coin}}"></i> {{coin}}
+                                                </td>
+                                                <td>
+                                                    User - {{user}}
+                                                </td>
+                                                <td class="text-success">
+                                                    <span class="text-success">
+                                                        +{{i.amount|floatformat:4}} BTC
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <span class="text-danger">
+                                                        -{{i.usd|floatformat}} USDT
+                                                    </span>
+                                                </td>
+                                            </tr>`
+                                        $('#activitytable tbody').append(rows)
+                                        var url = $("#amount").val();
+                                        console.log(url)
+                                        $('#buyhere').append(url)
+                                        alert("you have successfully bought " + resp.amount + " BTC")
+                                        break;
+                                    case "empty":
+                                        alert("You have to enter a number")
+                                        break;
+                                    default:
+                                    // code block
                                 }
-                            });
-                        }
+                            }
+                        });
+                    }
 
 
-                        const form2 = document.getElementById('selling');
-                        form2.addEventListener("submit", submithandler2);
+                    const form2 = document.getElementById('selling');
+                    form2.addEventListener("submit", submithandler2);
 
 
-                        function submithandler2(e) {
-                            e.preventDefault();
+                    function submithandler2(e) {
+                        e.preventDefault();
 
-                            $.ajax({
-                                type: 'POST',
-                                url: "{% url 'home:account_exchange' %}",
-                                data: {
-                                    amount_sell: $('#amount_sell').val(),
-                                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
-                                },
-                                success: function (resp) {
-                                    switch (resp.alarm) {
-                                        case "not_enough":
-                                            alert("not enought Bitcoin in your wallet")
-                                            break;
-                                        case "successful":
-                                            alert("you have successfully sold " + resp.amount + " BTC")
-                                            $("#remaining-btc").html((resp.new_btc_balance).toFixed(6)  + " BTC")
-                                            $("#remaining").html(resp.new_balance + " USD")
-                                            $("#amount_sell").attr("placeholder", "{{amount}} BTC").val("").focus().blur();
-                                            rows = `<tr>
-                                                    <td><span class="sold-thumb"><i
-                                                                class="mdi mdi-arrow-down"></i></span>
-                                                    </td>
-
-                                                    <td>
-                                                        <span class="badge badge-{{type}} p-2">Buy</span>
-                                                    </td>
-                                                    <td>
-                                                        <i class="cc {{coin}}"></i> {{coin}}
-                                                    </td>
-                                                    <td>
-                                                        User - {{user}}
-                                                    </td>
-                                                    <td class="text-{{type}}">+{{btcamount}} BTC</td>
-                                                    <td>- USD</td>
-                                                </tr>`
-                                            $('#activitytable tbody').append(rows)
-                                            break;
-                                        case "empty":
-                                            alert("You have to enter a number")
-                                            break;
-                                        default:
-                                        // code block
-                                    }
-                                    $("#selling").submit(function () {
-                                        var $input = $(this).find("input[name=btc-amount-sell]");
-                                        var $output = $(this).find("#remaining")
-                                        if ($input.val() != null) {
-                                            $input.val("");
-                                        }
-                                    });
+                        $.ajax({
+                            type: 'POST',
+                            url: "{% url 'home:account_exchange' %}",
+                            data: {
+                                amount_sell: $('#amount_sell').val(),
+                                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+                            },
+                            success: function (resp) {
+                                switch (resp.alarm) {
+                                    case "not_enough":
+                                        alert("not enought Bitcoin in your wallet")
+                                        break;
+                                    case "successful":
+                                        alert("you have successfully sold " + resp.amount + " BTC")
+                                        $("#remaining-btc").html((resp.new_btc_balance).toFixed(6) + " BTC")
+                                        $("#remaining").html(resp.new_balance + " USD")
+                                        $("#amount_sell").attr("placeholder", "{{amount}} BTC").val("").focus().blur();
+                                        rows = `<tr>
+                                                <td><span class="sold-thumb"><i class="mdi mdi-arrow-down"></i></span>
+                                                </td>
+                                                <td>
+                                                    <span class="badge badge-danger p-2">
+                                                        Sell
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <i class="cc {{coin}}"></i> {{coin}}
+                                                </td>
+                                                <td>
+                                                    User - {{user}}
+                                                </td>
+                                                <td class="text-danger">
+                                                    <span class="text-danger">
+                                                        -{{i.amount|floatformat:4}} BTC
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <span class="text-success">
+                                                        +{{i.usd|floatformat}} USDT
+                                                    </span>                                       
+                                                </td>
+                                            </tr>`
+                                        $('#activitytable tbody').append(rows)
+                                        break;
+                                    case "empty":
+                                        alert("You have to enter a number")
+                                        break;
+                                    default:
+                                    // code block
                                 }
                             });
                         }

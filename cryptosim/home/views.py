@@ -359,8 +359,6 @@ def account_exchange(request):
             else:
                 alarm = "empty"
                 return HttpResponse(json.dumps({'alarm': alarm}), content_type="application/json")
-
-
         else:
             amount = 0
 
