@@ -68,8 +68,11 @@ def get_user(request):
     return profile
 
 def get_transaction(request):
-    transaction = Transaction.objects.get(id = request.user.id)
-    return transaction
+    if Transaction.objects.filter(id = request.user.id).exists():
+        transaction = Transaction.objects.get(id = request.user.id)
+        return transaction
+    else:
+        return False
 
 # def get_profile(request):
 #     profile = Profile.objects.get(id = request.user.id)
@@ -304,7 +307,7 @@ def account_exchange(request):
                     # transaction.buy = True
                     # transaction.coin = "Bitcoin"
                     # transaction.amount = amount
-                    print(request)
+                    # print(get_transaction(request).count())
                     return HttpResponse(json.dumps({'amount': amount, 'alarm': alarm, 'new_balance': new_balance, 'new_btc_balance':new_btc_balance, 'coin': 'Bitcoin'}), content_type="application/json")
                     # bitcoin_price = float(get_btc()['price']) * amount
                 else:
@@ -334,16 +337,18 @@ def account_exchange(request):
         else:
             amount = 0
 
+    x = Transaction.objects.filter(wallet = Wallet.objects.get(id = request.user.id)).count()
     context = {
         'price' : get_btc()['price'],
         'balance' : get_balance(request),
         'total' : get_total(request),
         'btc' : get_user(request).wallet.bitcoin,
         'amount' : amount,
-        'coin': 'BTC' if get_transaction(request).coin == "Bitcoin" else '',
-        'type': 'success' if get_transaction(request).buy else 'danger',
+        'coin': 'BTC' '' if get_transaction(request) == False else get_transaction(request).coin,
+        'type': '' if get_transaction(request) == False else 'success' if get_transaction(request).buy == 'success' else 'danger',
         'user': get_user(request).wallet,
-        'btcamount': get_transaction(request).amount
+        'btcamount': '' if get_transaction(request) == False else get_transaction(request).amount,
+        'range': range(x)
     }
     return render(request, 'exchange.html', context)
 

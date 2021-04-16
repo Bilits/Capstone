@@ -227,92 +227,29 @@
                                     <div class="table-responsive">
                                         <table class="table table-striped mb-0 table-responsive-sm" id="signaltable">
                                             <thead>
-                                                <!-- <tr>
-                                                    <th scope="col">Type</th>
-                                                    <th scope="col">Amount</th>
-                                                    <th scope="col">Pair</th>
-                                                </tr> -->
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td><span class="sold-thumb"><i
-                                                                class="mdi mdi-arrow-down"></i></span>
-                                                    </td>
+                                                {% if range %}                                                   
+                                                {% for i in range %}
+                                                    <tr>
+                                                        <td><span class="sold-thumb"><i
+                                                                    class="mdi mdi-arrow-down"></i></span>
+                                                        </td>
 
-                                                    <td>
-                                                        <span class="badge badge-{{type}} p-2">Buy</span>
-                                                    </td>
-                                                    <td>
-                                                        <i class="cc {{coin}}"></i> {{coin}}
-                                                    </td>
-                                                    <td>
-                                                        User - {{user}}
-                                                    </td>
-                                                    <td class="text-{{type}}">+{{btcamount}} BTC</td>
-                                                    <td>- USD</td>
-                                                </tr>
-                                                <!-- <tr>
-                                                    <td><span class="buy-thumb"><i class="mdi mdi-arrow-up"></i></span>
-                                                    </td>
-                                                    <td>
-                                                        <span class="badge badge-success p-2">Buy</span>
-                                                    </td>
-                                                    <td>
-                                                        <i class="cc LTC"></i> LTC
-                                                    </td>
-                                                    <td>
-                                                        Using - Card *******8475
-                                                    </td>
-                                                    <td class="text-success">-0.000242 BTC</td>
-                                                    <td>-0.125 USD</td>
-                                                </tr>
-                                                <tr>
-                                                    <td><span class="sold-thumb"><i
-                                                                class="mdi mdi-arrow-down"></i></span>
-                                                    </td>
-                                                    <td>
-                                                        <span class="badge badge-danger p-2">Sold</span>
-                                                    </td>
-                                                    <td>
-                                                        <i class="cc XRP"></i> XRP
-                                                    </td>
-                                                    <td>
-                                                        Using - Card *******8475
-                                                    </td>
-                                                    <td class="text-danger">-0.000242 BTC</td>
-                                                    <td>-0.125 USD</td>
-                                                </tr>
-                                                <tr>
-                                                    <td><span class="buy-thumb"><i class="mdi mdi-arrow-up"></i></span>
-                                                    </td>
-                                                    <td>
-                                                        <span class="badge badge-success p-2">Buy</span>
-                                                    </td>
-                                                    <td>
-                                                        <i class="cc DASH"></i> DASH
-                                                    </td>
-                                                    <td>
-                                                        Using - Card *******2321
-                                                    </td>
-                                                    <td class="text-success">-0.000242 BTC</td>
-                                                    <td>-0.125 USD</td>
-                                                </tr>
-                                                <tr>
-                                                    <td><span class="sold-thumb"><i
-                                                                class="mdi mdi-arrow-down"></i></span>
-                                                    </td>
-                                                    <td>
-                                                        <span class="badge badge-danger p-2">Sold</span>
-                                                    </td>
-                                                    <td>
-                                                        <i class="cc BTC"></i> BTC
-                                                    </td>
-                                                    <td>
-                                                        Using - Card *******2321
-                                                    </td>
-                                                    <td class="text-danger">-0.000242 BTC</td>
-                                                    <td>-0.125 USD</td>
-                                                </tr> -->
+                                                        <td>
+                                                            <span class="badge badge-{{type}} p-2">Buy</span>
+                                                        </td>
+                                                        <td>
+                                                            <i class="cc {{coin}}"></i> {{coin}}
+                                                        </td>
+                                                        <td>
+                                                            User - {{user}}
+                                                        </td>
+                                                        <td class="text-{{type}}">+{{btcamount}} BTC</td>
+                                                        <td>- USD</td>
+                                                    </tr>
+                                                {% endfor %}
+                                                {% endif %}
                                             </tbody>
                                         </table>
                                     </div>
@@ -458,13 +395,24 @@
                                             $("#remaining").html(resp.new_balance + " USD")
                                             $("#remaining-btc").html((resp.new_btc_balance).toFixed(6) + " BTC")
                                             $("#amount").attr("placeholder", "{{amount}} BTC").val("").focus().blur();
-                                            // rows = ''
-                                            // resp.data.map( e => {
-                                            //     rows += `<tr>
-                                            //         <td><a href="${e.coin}" style="text-decoration: none !important; color: inherit;" target="_blank">${e.coin}</a></td>
-                                            //         </tr>`
-                                            // })
-                                            // $('#signaltable tbody').append(rows)
+                                            rows = `<tr>
+                                                    <td><span class="sold-thumb"><i
+                                                                class="mdi mdi-arrow-down"></i></span>
+                                                    </td>
+
+                                                    <td>
+                                                        <span class="badge badge-{{type}} p-2">Buy</span>
+                                                    </td>
+                                                    <td>
+                                                        <i class="cc {{coin}}"></i> {{coin}}
+                                                    </td>
+                                                    <td>
+                                                        User - {{user}}
+                                                    </td>
+                                                    <td class="text-{{type}}">+{{btcamount}} BTC</td>
+                                                    <td>- USD</td>
+                                                </tr>`
+                                            $('#signaltable tbody').append(rows)
                                             alert("you have successfully bought " + resp.amount + " BTC")
                                             break;
                                         case "empty":
@@ -502,6 +450,24 @@
                                             $("#remaining-btc").html((resp.new_btc_balance).toFixed(6)  + " BTC")
                                             $("#remaining").html(resp.new_balance + " USD")
                                             $("#amount_sell").attr("placeholder", "{{amount}} BTC").val("").focus().blur();
+                                            rows = `<tr>
+                                                    <td><span class="sold-thumb"><i
+                                                                class="mdi mdi-arrow-down"></i></span>
+                                                    </td>
+
+                                                    <td>
+                                                        <span class="badge badge-{{type}} p-2">Buy</span>
+                                                    </td>
+                                                    <td>
+                                                        <i class="cc {{coin}}"></i> {{coin}}
+                                                    </td>
+                                                    <td>
+                                                        User - {{user}}
+                                                    </td>
+                                                    <td class="text-{{type}}">+{{btcamount}} BTC</td>
+                                                    <td>- USD</td>
+                                                </tr>`
+                                            $('#signaltable tbody').append(rows)
                                             break;
                                         case "empty":
                                             alert("You have to enter a number")
