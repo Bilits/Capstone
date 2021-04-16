@@ -13,6 +13,7 @@ def get_btc():
     args = {
         'price': btc['bitcoin']['cad'],
         'change24': btc['bitcoin']['cad_24h_change'],
+        'marketCap': btc['bitcoin'],
         'ethP': eth['ethereum']['cad'],
         'eth24': eth['ethereum']['cad_24h_change'],
         'liteP': lite['litecoin']['cad'],

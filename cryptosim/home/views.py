@@ -172,6 +172,7 @@ def register(request):
 
 @login_required
 def dashboard(request):
+    balanceusdt = Wallet.objects.get(id = request.user.id).tether
     amount = 0.0
     alarm = True
     empty = True
@@ -195,23 +196,41 @@ def dashboard(request):
                 return HttpResponse(json.dumps({'empty': empty}), content_type="application/json")
         else:
             amount = 0
+
+    
+    x = Transaction.objects.filter(wallet = Wallet.objects.get(id = request.user.id)).count()
+    y = Transaction.objects.filter(wallet = Wallet.objects.get(id = request.user.id))
+    final = []
+    # typeOf = []
+    for i in range(0,x):
+        final.append({'amount': y[i].amount, 'types': 'Buy' if y[i].typeOF == True else 'Sell',})
+        
+    print(get_btc()['marketCap'])
     context = {
         'balance': get_balance(request),
         'total': get_total(request),
+        'btc': Wallet.objects.get(id = request.user.id).bitcoin,
         'amount' : amount,
         'current': current,
+        'range': range(x),
+        'transactionamount': final,
+        'totalinbtc': balanceusdt / get_btc()['price'],
+        'price': get_btc()['price'],
+        'change24': get_btc()['change24'],
+        'marketcap': get_btc()['marketCap']['cad_market_cap']
         
     }
     if get_user(request).professional == True:
         return render(request, 'dashboard-professional.html', context)
         
     else:
-        return render(request, 'dashboard-beginner.html', context)
+        return render(request, 'dashboard-professional.html', context)
 
 @login_required
 def account(request):
     profile = get_user(request)
-    print(profile.photo.url)
+    balanceusdt = Wallet.objects.get(id = request.user.id).tether
+    print(balanceusdt)
     context = {
         'price' : get_btc()['price'],
         'balance' : get_balance(request),
@@ -220,11 +239,9 @@ def account(request):
         'first_name': profile.first_name,
         'email': profile.email,
         'type': 'Beginner' if profile.beginner else 'Professional',
-        'image': profile.photo,
         'address': profile.address,
         'country': profile.country,
-
-
+        'balancebtc': balanceusdt / get_btc()['price']
     }
     return render(request, 'account-overview.html', context)
 
@@ -300,15 +317,10 @@ def account_exchange(request):
                     new_btc_balance = profile.wallet.bitcoin
                     transaction = Transaction.objects.create(
                         wallet = profile.wallet,
-                        buy = True,
+                        typeOF = True,
                         coin = "Bitcoin",
                         amount = amount
                     )
-                    # transaction.wallet = profile.wallet
-                    # transaction.buy = True
-                    # transaction.coin = "Bitcoin"
-                    # transaction.amount = amount
-                    # print(get_transaction(request).count())
                     return HttpResponse(json.dumps({'amount': amount, 'alarm': alarm, 'new_balance': new_balance, 'new_btc_balance':new_btc_balance, 'coin': 'Bitcoin'}), content_type="application/json")
                     # bitcoin_price = float(get_btc()['price']) * amount
                 else:
@@ -358,7 +370,17 @@ def account_exchange(request):
         profile.save()
 
     x = Transaction.objects.filter(wallet = Wallet.objects.get(id = request.user.id)).count()
-     
+          
+
+    # if Transaction.objects.filter(wallet = Wallet.objects.get(id = request.user.id)).count() > 0: 
+    #     transaction = Transaction.objects.filter(wallet = profile.wallet)
+    #     trans = []
+    #     for i in transaction:
+    #         trans += [i.typeOF]
+    #     return trans
+    # else:
+    #     return 'empty'
+
     context = {
         'price' : get_btc()['price'],
         'balance' : get_balance(request),
@@ -372,9 +394,10 @@ def account_exchange(request):
         'botstatus' : get_user(request).wallet.botstatus,
         'amount' : amount,
         'coin': 'BTC' '' if get_transaction(request) == False else get_transaction(request).coin,
-        'type': '' if get_transaction(request) == False else 'success' if get_transaction(request).buy == 'success' else 'danger',
+        # 'type': '' if get_transaction(request) == False else 'success' if get_transaction(request).typeOF == True else 'danger',
+        # 'type': Transaction.objects.filter(wallet = profile.wallet).typeOF if Transaction.objects.filter(id = request.user.id).exists() else '',
         'user': get_user(request).wallet,
-        'btcamount': '' if get_transaction(request) == False else get_transaction(request).amount,
+        # 'btcamount': '' if get_transaction(request) == False else get_transaction(request).amount,
         'range': range(x)
     }
     return render(request, 'exchange.html', context)

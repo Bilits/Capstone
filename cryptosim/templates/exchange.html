@@ -220,12 +220,12 @@
                     <div class="col-xl-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">All Activities</h4>
+                                <h4 class="card-title">All activities</h4>
                             </div>
                             <div class="card-body">
                                 <div class="transaction-table">
                                     <div class="table-responsive">
-                                        <table class="table table-striped mb-0 table-responsive-sm" id="signaltable">
+                                        <table class="table table-striped mb-0 table-responsive-sm" id="activitytable">
                                             <thead>
                                             </thead>
                                             <tbody>
@@ -237,7 +237,9 @@
                                                         </td>
 
                                                         <td>
-                                                            <span class="badge badge-{{type}} p-2">Buy</span>
+                                                            <span class="badge badge-{{type.i}} p-2">
+                                                                    {{i}}
+                                                            </span>
                                                         </td>
                                                         <td>
                                                             <i class="cc {{coin}}"></i> {{coin}}
@@ -515,7 +517,7 @@
                                                     <td class="text-{{type}}">+{{btcamount}} BTC</td>
                                                     <td>- USD</td>
                                                 </tr>`
-                                            $('#signaltable tbody').append(rows)
+                                            $('#activitytable tbody').append(rows)
                                             alert("you have successfully bought " + resp.amount + " BTC")
                                             break;
                                         case "empty":
@@ -570,7 +572,7 @@
                                                     <td class="text-{{type}}">+{{btcamount}} BTC</td>
                                                     <td>- USD</td>
                                                 </tr>`
-                                            $('#signaltable tbody').append(rows)
+                                            $('#activitytable tbody').append(rows)
                                             break;
                                         case "empty":
                                             alert("You have to enter a number")

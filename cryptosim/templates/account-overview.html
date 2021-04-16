@@ -7,6 +7,7 @@
     {% include "components/dashboard-preloader.html" %}
     <div id="main-wrapper">
         {% include "components/dashboard-topnav.html" %}
+        
         </div>
 
         {% include "components/dashbaord-sidebar.html" %}
@@ -77,8 +78,8 @@
                         <div class="card profile_card">
                             <div class="card-body">
                                 <div class="media">
-                                    <img class="mr-3 rounded-circle mr-0 mr-sm-3" src="{{image}}" width="60"
-                                        height="60" alt="">
+                                    <!-- <img class="mr-3 rounded-circle mr-0 mr-sm-3" src="{{image}}" width="60" -->
+                                        <!-- height="60" alt=""> -->
                                     <div class="media-body">
                                         <span>Hello</span>
                                         <h4 class="mb-2">{{ first_name }}</h4>
@@ -126,7 +127,7 @@
                             </div>
                             <div class="card-body">
                                 <span>Available BTC</span>
-                                <h3>{{balance|floatformat:6}}</h3>
+                                <h3>{{balancebtc|floatformat:6}}</h3>
 
                                 <div class="d-flex justify-content-between my-3">
                                     <div>
